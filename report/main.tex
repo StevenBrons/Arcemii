@@ -1,0 +1,32 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{graphicx}
+\graphicspath{{graphics/}{../graphics/}}
+
+\usepackage{appendix}
+
+\usepackage{biblatex}
+\usepackage{csquotes}
+\addbibresource{references.bib}
+
+\usepackage{subfiles}
+
+\begin{document}
+    \subfile{frontpage.tex}
+
+    \pagebreak
+    \tableofcontents
+
+    \subfile{chapters/introduction.tex}
+    \subfile{chapters/description.tex}
+    \subfile{chapters/design.tex}
+    \subfile{chapters/management.tex}
+    \subfile{chapters/evaluation.tex}
+
+    %\appendix
+    %\subfile{appendices.tex}
+
+\end{document}
