@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public abstract class Room {
 
-	private ArrayList<Player> players;
+	private ArrayList<Player> players = new ArrayList<>();
 	private int ID;
-	
+	private boolean isPublic = false;
+
 	public Room() {
-		ID = (int) (Math.random() * 9999); 
+		ID = (int) (Math.random() * 9999);
 	}
-	
+
 	public void outputAll(Message message) {
 		for (Player p : players) {
 			output(p, message);
@@ -25,7 +26,7 @@ public abstract class Room {
 
 	@Override
 	public String toString() {
-		return this.getClass().getName();
+		return "Room: " + getName() + "\tID: " + getId();
 	}
 
 	public abstract String getName();
@@ -46,9 +47,12 @@ public abstract class Room {
 
 	public String getRoomInfo() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.toString() + "\n");
+		sb.append(this + "\n");
 		for (Player p : players) {
 			sb.append("\t- " + p + "\n");
+		}
+		if (players.size() == 0) {
+			sb.append("\t- No active players\n");
 		}
 		return sb.toString();
 	}
@@ -56,6 +60,6 @@ public abstract class Room {
 	public abstract void update();
 
 	public Object getId() {
-		return this.getName() + ID;
+		return ID;
 	}
 }

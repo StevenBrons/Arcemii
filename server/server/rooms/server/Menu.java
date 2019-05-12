@@ -8,7 +8,7 @@ public class Menu extends Room{
 
 	@Override
 	public String getName() {
-		return "Menu";
+		return "MENU";
 	}
 
 	@Override
@@ -21,6 +21,11 @@ public class Menu extends Room{
 
 	@Override
 	public void update() {
+	}
+	
+	@Override
+	public Object getId() {
+		return "MENU";
 	}
 
 }

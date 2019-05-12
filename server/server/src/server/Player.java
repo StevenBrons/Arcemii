@@ -22,7 +22,9 @@ public class Player {
 	}
 
 	public void switchRoom(Room r) {
-		currentRoom.onLeave(this);
+		if (currentRoom != null) {
+			currentRoom.onLeave(this);
+		}
 		send(Message.getSwitchMessage(r));
 		currentRoom = r;
 	}

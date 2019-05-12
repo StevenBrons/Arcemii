@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class RoomHandler {
 
-	private ArrayList<Room> rooms = new ArrayList<>();
+	public ArrayList<Room> rooms = new ArrayList<>();
 
 	Thread roomLoop;
 	
 	public RoomHandler() {
+		rooms.add(new Menu());
 		roomLoop = new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				updateRooms();
@@ -40,13 +40,6 @@ public class RoomHandler {
 		}	
 	}
 
-	public Room getMenuRoom() {
-		if (rooms.size() == 0) {
-			rooms.add(new Menu());
-		}
-		return rooms.get(0);
-	}
-	
 	public void listRooms() {
 		for (Room r: rooms) {
 			System.out.println(r.getRoomInfo());
