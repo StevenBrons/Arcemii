@@ -1,0 +1,3 @@
+module server {
+	exports server;
+}

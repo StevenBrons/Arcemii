@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.debernardi.minigames">
+    package="com.debernardi.archemii">
 
     <application
         android:allowBackup="true"
@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GameActivity"></activity>
-        <activity android:name=".GameSelectActivity" />
-        <activity android:name=".LobbyActivity" />
-        <activity android:name=".JoinRoomActivity" />
-        <activity android:name=".CreateRoomActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.debernardi.archemii.GameActivity"></activity>
+        <activity android:name="com.debernardi.archemii.GameSelectActivity" />
+        <activity android:name="com.debernardi.archemii.LobbyActivity" />
+        <activity android:name="com.debernardi.archemii.JoinRoomActivity" />
+        <activity android:name="com.debernardi.archemii.CreateRoomActivity" />
+        <activity android:name="com.debernardi.archemii.SettingsActivity" />
+        <activity android:name="com.debernardi.archemii.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
