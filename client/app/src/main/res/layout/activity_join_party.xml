@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="client.activities.LobbyActivity">
+    tools:context="client.activities.JoinPartyActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,21 +12,12 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnGameSelect"
+            android:id="@+id/btnStartParty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/pantone448C"
-            android:onClick="onGameSelect"
-            android:text="@string/select_game"
-            android:textColor="@android:color/background_light" />
-
-        <Button
-            android:id="@+id/btnRandomGame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/pantone448C"
-            android:onClick="onRandomGame"
-            android:text="@string/random_game"
+            android:onClick="onStartParty"
+            android:text="@string/join_party2"
             android:textColor="@android:color/background_light" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

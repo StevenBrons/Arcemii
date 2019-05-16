@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="client.activities.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,21 +12,21 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnCreateRoom"
+            android:id="@+id/btnCreateParty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/pantone448C"
-            android:onClick="onCreateRoom"
-            android:text="@string/create_room"
+            android:onClick="onCreateParty"
+            android:text="@string/create_party"
             android:textColor="@android:color/background_light" />
 
         <Button
-            android:id="@+id/btnJoinRoom"
+            android:id="@+id/btnJoinParty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/pantone448C"
-            android:onClick="onJoinRoom"
-            android:text="@string/join_room"
+            android:onClick="onJoinParty"
+            android:text="@string/join_party"
             android:textColor="@android:color/background_light" />
 
         <Button

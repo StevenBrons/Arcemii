@@ -9,13 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.debernardi.archemii.GameActivity"></activity>
-        <activity android:name="com.debernardi.archemii.GameSelectActivity" />
-        <activity android:name="com.debernardi.archemii.LobbyActivity" />
-        <activity android:name="com.debernardi.archemii.JoinRoomActivity" />
-        <activity android:name="com.debernardi.archemii.CreateRoomActivity" />
-        <activity android:name="com.debernardi.archemii.SettingsActivity" />
-        <activity android:name="com.debernardi.archemii.MainActivity">
+        <activity android:name="client.activities.GameActivity"></activity>
+        <activity android:name="client.activities.GameSelectActivity" />
+        <activity android:name="client.activities.LobbyActivity" />
+        <activity android:name="client.activities.JoinPartyActivity" />
+        <activity android:name="client.activities.SettingsActivity" />
+        <activity android:name="client.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
