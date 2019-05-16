@@ -16,13 +16,9 @@ public class SinglePlayerServer extends ArchemiiServer {
     private ObjectInputStream oIn2;
 
     /*          client              server
-
         1       in1     ---->        out1
-
         2       out2    <----        in2
-
      */
-
 
     SinglePlayerServer() {
         try {

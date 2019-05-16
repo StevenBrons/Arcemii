@@ -7,7 +7,7 @@ public class ClientGameHandler {
   public static ClientGameHandler handler;
   public Connection connection;
 
-  ClientGameHandler() {
+  public ClientGameHandler() {
      connection = new Connection(true);
      start();
   }
@@ -35,6 +35,10 @@ public class ClientGameHandler {
     thread.start();
   }
 
+  /**
+   * Send a message to the server from the client.
+   * @param msg message
+   */
   public static void sendMessage(Message msg) {
     handler.connection.sendMessage(msg);
   }

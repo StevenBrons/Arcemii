@@ -10,6 +10,7 @@ import com.debernardi.archemii.R;
 import client.controller.ClientGameHandler;
 import client.controller.Connection;
 import shared.messages.CreatePartyMessage;
+import shared.messages.JoinPartyMessage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCreateParty(View v){
-        System.out.println("tset");
         ClientGameHandler.sendMessage(new CreatePartyMessage());
         Intent intCreateParty = new Intent(this,LobbyActivity.class);
         startActivity(intCreateParty);

@@ -4,7 +4,7 @@ public class JoinPartyMessage extends Message {
 
   private int partyId;
 
-  JoinPartyMessage(int partyId) {
+  public JoinPartyMessage(int partyId) {
     this.partyId = partyId;
   }
 

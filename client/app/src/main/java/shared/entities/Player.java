@@ -23,6 +23,10 @@ public class Player extends Entity{
         this.output = output;
     }
 
+    /**
+     * Send message to this player.
+     * @param m message
+     */
     public void sendMessage(Message m) {
         try {
             output.writeObject(m);
