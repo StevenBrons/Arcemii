@@ -1,16 +1,15 @@
-package shared.general;
+package server.general;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import shared.entities.Player;
+import shared.general.Level;
 import shared.messages.Message;
 import shared.messages.UpdatePartyMessage;
 
-public class Party implements Serializable {
+public class Party {
 
-	public static final long serialVersionUID = 1L;
-
+	private Level curLevel;
 	private int partyId = (int)Math.random()*99999;
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -24,6 +23,13 @@ public class Party implements Serializable {
 		messageAll(new UpdatePartyMessage(partyId, players));
 	}
 
+	public void removePlayer(Player player){
+		if(players.contains(player)){
+			players.remove(player);
+		}
+		messageAll(new UpdatePartyMessage(partyId, players));
+	}
+
 	public void messageAll(Message message) {
 		for (Player p : players) {
 			p.sendMessage(message);
@@ -33,4 +39,13 @@ public class Party implements Serializable {
 	public int getPartyId() {
 		return partyId;
 	}
+
+	public boolean containsPlayer(Player player){
+		return players.contains(player);
+	}
+
+	public void setCurrentLevel(Level level){
+		curLevel = level;
+	}
+
 }

@@ -3,8 +3,8 @@ package server.general;
 import java.util.ArrayList;
 
 import shared.entities.Player;
-import shared.general.Party;
 import shared.messages.JoinPartyMessage;
+import shared.messages.LeavePartyMessage;
 import shared.messages.Message;
 
 public class ServerGameHandler {
@@ -39,6 +39,16 @@ public class ServerGameHandler {
 			case "JoinPartyMessage":
 				joinPartyMessage((JoinPartyMessage)m, player);
 				break;
+			case "LeavePartyMessage":
+				leavePartyMessage((LeavePartyMessage)m, player);
+				break;
+		}
+	}
+
+	private void leavePartyMessage(LeavePartyMessage m, Player player){
+		for(Party party : parties) {
+			if (party.containsPlayer(player))
+				party.removePlayer(player);
 		}
 	}
 

@@ -10,7 +10,6 @@ import shared.messages.Message;
 
 public class Player extends Entity{
 
-    transient Level curLevel;
     transient ObjectInputStream input;
     transient ObjectOutputStream output;
 
