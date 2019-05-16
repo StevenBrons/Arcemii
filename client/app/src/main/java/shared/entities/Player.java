@@ -1,10 +1,12 @@
 package shared.entities;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLInput;
 
 import shared.general.Level;
+import shared.messages.Message;
 
 public class Player extends Entity{
 
@@ -21,6 +23,13 @@ public class Player extends Entity{
         this.output = output;
     }
 
+    public void sendMessage(Message m) {
+        try {
+            output.writeObject(m);
+            output.flush();
+        } catch (IOException e) {
+        }
+    }
     public ObjectInputStream getInputStream() {
         return input;
     }

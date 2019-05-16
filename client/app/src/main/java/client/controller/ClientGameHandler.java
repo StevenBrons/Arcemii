@@ -12,10 +12,6 @@ public class ClientGameHandler {
      start();
   }
 
-  public static void sendMessage(Message msg) {
-    handler.connection.sendMessage(msg);
-  }
-
   public static void init() {
     if (handler == null) {
         handler = new ClientGameHandler();
@@ -37,6 +33,10 @@ public class ClientGameHandler {
       }
     });
     thread.start();
+  }
+
+  public static void sendMessage(Message msg) {
+    handler.connection.sendMessage(msg);
   }
 
   public void handleInput(Message m) {

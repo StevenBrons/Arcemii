@@ -5,9 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import server.ArchemiiServer;
-import server.SinglePlayerServer;
-import shared.messages.CreatePartyMessage;
+import server.general.ArchemiiServer;
+import server.general.SinglePlayerServer;
 import shared.messages.Message;
 
 public class Connection {

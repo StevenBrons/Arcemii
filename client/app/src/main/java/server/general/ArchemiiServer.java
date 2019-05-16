@@ -1,4 +1,4 @@
-package server;
+package server.general;
 
 public abstract class ArchemiiServer {
 
