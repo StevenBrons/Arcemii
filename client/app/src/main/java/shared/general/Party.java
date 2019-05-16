@@ -9,24 +9,28 @@ import shared.messages.UpdatePartyMessage;
 
 public class Party implements Serializable {
 
-  public static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
-  private ArrayList<Player> players = new ArrayList<>();
+	private int partyId = (int)Math.random()*99999;
+	private ArrayList<Player> players = new ArrayList<>();
 
-  Party () {
-  }
+	public Party () {
+	}
 
-  void addPlayer(Player player) {
-    if (!players.contains(player)) {
-      players.add(player);
-    }
-    messageAll(new UpdatePartyMessage(-1,null)); //params todo
-  }
+	public void addPlayer(Player player) {
+		if (!players.contains(player)) {
+			players.add(player);
+		}
+		messageAll(new UpdatePartyMessage(partyId, players));
+	}
 
-  void messageAll(Message message) {
-    for (Player p : players) {
-      p.sendMessage(message);
-    }
-  }
+	public void messageAll(Message message) {
+		for (Player p : players) {
+			p.sendMessage(message);
+		}
+	}
 
+	public int getPartyId() {
+		return partyId;
+	}
 }

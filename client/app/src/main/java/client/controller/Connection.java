@@ -47,6 +47,10 @@ public class Connection {
     return output;
   }
 
+  /**
+   * Send a message to the server from the client.
+   * @param msg message
+   */
   public void sendMessage(Message msg) {
     System.out.println(msg);
     try {
