@@ -16,7 +16,7 @@ public class JoinPartyActivity extends AppCompatActivity {
     }
 
     public void onStartParty(View v){
-        Intent intStartParty = new Intent(this,LobbyActivity.class);
+        Intent intStartParty = new Intent(this, LobbyActivity.class);
         startActivity(intStartParty);
     }
 }
