@@ -23,6 +23,11 @@ public class Party {
 		messageAll(new UpdatePartyMessage(partyId, players));
 	}
 
+	/**
+	 * Remove the player from the party.
+	 * @param player
+	 * @author Bram Pulles
+	 */
 	public void removePlayer(Player player){
 		if(players.contains(player)){
 			players.remove(player);
