@@ -73,6 +73,11 @@ public class ClientGameHandler {
 		joinPartyActivity.openLobby();
 	}
 
+	/**
+	 * Send the new info to the lobby activity.
+	 * @param m update party message.
+	 * @author Bram Pulles
+	 */
 	private void updatePartyMessage(UpdatePartyMessage m){
 		lobbyActivity.updatePartyMessage(m);
 	}
