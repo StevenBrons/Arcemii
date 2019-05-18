@@ -12,6 +12,7 @@ public class ClientGameHandler {
 
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
+	private UpdatePartyMessage updatePartyMessage;
 
 	private ClientGameHandler() {
 		connection = new Connection(true);
@@ -79,6 +80,7 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void updatePartyMessage(UpdatePartyMessage m){
+		updatePartyMessage = m;
 		lobbyActivity.updatePartyMessage(m);
 	}
 
@@ -96,6 +98,13 @@ public class ClientGameHandler {
 	 */
 	public void setLobbyActivity(LobbyActivity lobbyActivity){
 		this.lobbyActivity = lobbyActivity;
+	}
+
+	/**
+	 * @return the latest update party message.
+	 */
+	public UpdatePartyMessage getUpdatePartyMessage(){
+		return updatePartyMessage;
 	}
 
 }

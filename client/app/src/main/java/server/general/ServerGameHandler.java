@@ -7,6 +7,7 @@ import shared.messages.JoinPartyMessage;
 import shared.messages.LeavePartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
+import shared.messages.UpdatePartyMessage;
 
 public class ServerGameHandler {
 
@@ -73,8 +74,8 @@ public class ServerGameHandler {
 	private void joinPartyMessage(JoinPartyMessage m, Player player){
 		for(Party party : parties){
 			if(party.getPartyId() == m.getPartyId()){
-				party.addPlayer(player);
 				player.sendMessage(new PartyJoinedMessage());
+				party.addPlayer(player);
 			}
 		}
 	}

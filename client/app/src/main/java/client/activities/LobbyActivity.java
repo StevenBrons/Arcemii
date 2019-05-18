@@ -28,6 +28,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 		gamePin = findViewById(R.id.lobbyGamePin);
 		ClientGameHandler.handler.setLobbyActivity(this);
+		updatePartyMessage(ClientGameHandler.handler.getUpdatePartyMessage());
 	}
 
 	public void onGameSelect(View v){

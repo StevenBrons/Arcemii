@@ -54,6 +54,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="52dp"
             android:layout_marginEnd="8dp"
+            android:text="@string/empty_game_pin"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
