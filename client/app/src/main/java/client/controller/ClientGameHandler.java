@@ -29,14 +29,14 @@ public class ClientGameHandler {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (true) {
-					try {
-						Message m = (Message) connection.getInputStream().readObject();
-						handleInput(m);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			while (true) {
+				try {
+					Message m = (Message) connection.getInputStream().readObject();
+					handleInput(m);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
+			}
 			}
 		});
 		thread.start();
