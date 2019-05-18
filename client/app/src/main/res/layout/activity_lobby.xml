@@ -49,10 +49,10 @@
 
         <TextView
             android:id="@+id/lobbyGamePin"
-            android:layout_width="194dp"
-            android:layout_height="65dp"
+            android:layout_width="349dp"
+            android:layout_height="89dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="52dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textSize="36sp"
@@ -61,5 +61,6 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

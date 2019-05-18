@@ -37,7 +37,7 @@ public class JoinPartyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void onStartParty(View v){
-		if(gamePin.getText().toString().length() == 5) {
+		if(gamePin.getText().length() > 0 && gamePin.getText().length() < 10) {
 			int partyId = Integer.parseInt(gamePin.getText().toString());
 			ClientGameHandler.sendMessage(new JoinPartyMessage(partyId));
 		}

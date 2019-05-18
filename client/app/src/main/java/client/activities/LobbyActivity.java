@@ -50,7 +50,7 @@ public class LobbyActivity extends AppCompatActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				gamePin.setText(Integer.toString(m.getPartyId()));
+				gamePin.setText("Game PIN: " + m.getPartyId());
 			}
 		});
 
