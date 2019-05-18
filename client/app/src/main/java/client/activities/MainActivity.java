@@ -18,12 +18,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ClientGameHandler.init();
     }
 
     public void onCreateParty(View v){
         ClientGameHandler.sendMessage(new CreatePartyMessage());
-        Intent intCreateParty = new Intent(this,LobbyActivity.class);
+
+        Intent intCreateParty = new Intent(this, LobbyActivity.class);
         startActivity(intCreateParty);
     }
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSettings(View v){
-        Intent intSettings = new Intent(this,SettingsActivity.class);
+        Intent intSettings = new Intent(this, SettingsActivity.class);
         startActivity(intSettings);
     }
 }

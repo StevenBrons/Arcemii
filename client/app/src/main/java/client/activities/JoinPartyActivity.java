@@ -16,25 +16,28 @@ public class JoinPartyActivity extends AppCompatActivity {
 
 	private EditText gamePin;
 
+	/**
+	 * This method also sets this activity available in the client game handler.
+	 * @param savedInstanceState
+	 * @author Jelmer Firet and Bram Pulles
+	 */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_party);
 
         gamePin = findViewById(R.id.gamePinField);
+		ClientGameHandler.handler.setJoinPartyActivity(this);
     }
 
 	/**
 	 * If the game pin length filled in is 5 then this function sends a message to the server with the game pin.
-	 * This method also sets this activity available in the client game handler.
 	 * So the client game handler can open the lobby when the party was joined successfully.
 	 * @param v
 	 * @author Bram Pulles
 	 */
 	public void onStartParty(View v){
 		if(gamePin.getText().toString().length() == 5) {
-			ClientGameHandler.handler.setJoinPartyActivity(this);
-
 			int partyId = Integer.parseInt(gamePin.getText().toString());
 			ClientGameHandler.sendMessage(new JoinPartyMessage(partyId));
 		}

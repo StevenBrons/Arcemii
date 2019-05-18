@@ -1,16 +1,19 @@
 package client.controller;
 
 import client.activities.JoinPartyActivity;
+import client.activities.LobbyActivity;
 import shared.messages.Message;
+import shared.messages.UpdatePartyMessage;
 
 public class ClientGameHandler {
 
 	public static ClientGameHandler handler;
-	public Connection connection;
+	private Connection connection;
 
 	private JoinPartyActivity joinPartyActivity;
+	private LobbyActivity lobbyActivity;
 
-	public ClientGameHandler() {
+	private ClientGameHandler() {
 		connection = new Connection(true);
 		start();
 	}
@@ -56,6 +59,9 @@ public class ClientGameHandler {
 			case "PartyJoinedMessage":
 				partyJoinedMessage();
 				break;
+			case "UpdatePartyMessage":
+				updatePartyMessage((UpdatePartyMessage)m);
+				break;
 		}
 	}
 
@@ -67,12 +73,24 @@ public class ClientGameHandler {
 		joinPartyActivity.openLobby();
 	}
 
+	private void updatePartyMessage(UpdatePartyMessage m){
+		lobbyActivity.updatePartyMessage(m);
+	}
+
 	/**
 	 * @param joinPartyActivity
 	 * @author Bram Pulles
 	 */
 	public void setJoinPartyActivity(JoinPartyActivity joinPartyActivity){
 		this.joinPartyActivity = joinPartyActivity;
+	}
+
+	/**
+	 * @param lobbyActivity
+	 * @author Bram Pulles
+	 */
+	public void setLobbyActivity(LobbyActivity lobbyActivity){
+		this.lobbyActivity = lobbyActivity;
 	}
 
 }

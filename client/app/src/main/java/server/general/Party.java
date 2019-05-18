@@ -10,7 +10,7 @@ import shared.messages.UpdatePartyMessage;
 public class Party {
 
 	private Level curLevel;
-	private int partyId = (int)Math.random()*99999;
+	private int partyId = (int)(Math.random()*99999);
 	private ArrayList<Player> players = new ArrayList<>();
 
 	public Party () {
@@ -33,6 +33,7 @@ public class Party {
 			players.remove(player);
 		}
 		messageAll(new UpdatePartyMessage(partyId, players));
+		//TODO: Whenever a party is empty it should be destroyed to make the partyId available again.
 	}
 
 	public void messageAll(Message message) {
