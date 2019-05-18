@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="pantone448C">#4A412A</color>
+    <color name="background">#49aa47</color>
+    <color name="button">#2d382d</color>
+    <color name="game_pin">#727272</color>
 </resources>
