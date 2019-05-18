@@ -77,8 +77,6 @@ public class ServerGameHandler {
 				player.sendMessage(new PartyJoinedMessage());
 			}
 		}
-		//TODO: remove this line underneath its for testing.
-		player.sendMessage(new PartyJoinedMessage());
 	}
 
 	/**

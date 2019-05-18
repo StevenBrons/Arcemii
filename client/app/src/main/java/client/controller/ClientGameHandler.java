@@ -46,6 +46,11 @@ public class ClientGameHandler {
 		handler.connection.sendMessage(msg);
 	}
 
+	/**
+	 * This method received the messages send by the server.
+	 * @param m
+	 * @author Steven Bronsveld and Bram Pulles
+	 */
 	public void handleInput(Message m) {
 		switch (m.getType()){
 			case "PartyJoinedMessage":
@@ -54,10 +59,18 @@ public class ClientGameHandler {
 		}
 	}
 
+	/**
+	 * Open the lobby activity.
+	 * @author Bram Pulles
+	 */
 	private void partyJoinedMessage(){
 		joinPartyActivity.openLobby();
 	}
 
+	/**
+	 * @param joinPartyActivity
+	 * @author Bram Pulles
+	 */
 	public void setJoinPartyActivity(JoinPartyActivity joinPartyActivity){
 		this.joinPartyActivity = joinPartyActivity;
 	}

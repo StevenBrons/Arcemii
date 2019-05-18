@@ -24,19 +24,27 @@ public class JoinPartyActivity extends AppCompatActivity {
         gamePin = findViewById(R.id.gamePinField);
     }
 
-    public void onStartParty(View v){
-
+	/**
+	 * If the game pin length filled in is 5 then this function sends a message to the server with the game pin.
+	 * This method also sets this activity available in the client game handler.
+	 * So the client game handler can open the lobby when the party was joined successfully.
+	 * @param v
+	 * @author Bram Pulles
+	 */
+	public void onStartParty(View v){
 		if(gamePin.getText().toString().length() == 5) {
 			ClientGameHandler.handler.setJoinPartyActivity(this);
 
 			int partyId = Integer.parseInt(gamePin.getText().toString());
 			ClientGameHandler.sendMessage(new JoinPartyMessage(partyId));
 		}
-
-        // if successful then lobby screen opens.
     }
 
-    public void openLobby(){
+	/**
+	 * Open the lobby activity.
+	 * @author Bram Pulles
+	 */
+	public void openLobby(){
 		Intent intStartParty = new Intent(this, LobbyActivity.class);
 		startActivity(intStartParty);
 	}
