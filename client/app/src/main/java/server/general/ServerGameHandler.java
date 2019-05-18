@@ -7,7 +7,6 @@ import shared.messages.JoinPartyMessage;
 import shared.messages.LeavePartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
-import shared.messages.UpdatePartyMessage;
 
 public class ServerGameHandler {
 

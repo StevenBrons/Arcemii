@@ -28,6 +28,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 		gamePin = findViewById(R.id.lobbyGamePin);
 		ClientGameHandler.handler.setLobbyActivity(this);
+		// Get the latest update party message send by the server.
 		updatePartyMessage(ClientGameHandler.handler.getUpdatePartyMessage());
 	}
 
