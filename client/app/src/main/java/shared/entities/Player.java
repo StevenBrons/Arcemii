@@ -14,7 +14,6 @@ public class Player extends Entity{
     transient ObjectOutputStream output;
 
     public Player () {
-
     }
 
     public Player (ObjectInputStream input, ObjectOutputStream output) {

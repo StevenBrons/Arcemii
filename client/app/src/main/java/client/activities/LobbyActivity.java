@@ -46,8 +46,6 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void updatePartyMessage(final UpdatePartyMessage m){
-		Log.d("UPDATE", "PARTY ID: " + m.getPartyId());
-
 		// This is necessary because we are not invoking this method from the main thread.
 		runOnUiThread(new Runnable() {
 			@Override
@@ -55,5 +53,7 @@ public class LobbyActivity extends AppCompatActivity {
 				gamePin.setText(Integer.toString(m.getPartyId()));
 			}
 		});
+
+		//TODO: Show the players in the party.
 	}
 }
