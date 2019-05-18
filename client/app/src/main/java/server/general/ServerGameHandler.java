@@ -6,13 +6,13 @@ import shared.entities.Player;
 import shared.messages.JoinPartyMessage;
 import shared.messages.LeavePartyMessage;
 import shared.messages.Message;
+import shared.messages.PartyJoinedMessage;
 
 public class ServerGameHandler {
 
 	private ArrayList<Party> parties = new ArrayList<>();
 
 	public ServerGameHandler() {
-
 	}
 
 	public void addPlayer(final Player player) {
@@ -72,9 +72,13 @@ public class ServerGameHandler {
 	 */
 	private void joinPartyMessage(JoinPartyMessage m, Player player){
 		for(Party party : parties){
-			if(party.getPartyId() == m.getPartyId())
+			if(party.getPartyId() == m.getPartyId()){
 				party.addPlayer(player);
+				player.sendMessage(new PartyJoinedMessage());
+			}
 		}
+		//TODO: remove this line underneath its for testing.
+		player.sendMessage(new PartyJoinedMessage());
 	}
 
 	/**
