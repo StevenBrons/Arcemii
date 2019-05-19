@@ -15,6 +15,7 @@ import shared.messages.UpdatePartyMessage;
 public class LobbyActivity extends AppCompatActivity {
 
 	private TextView gamePin;
+	private TextView txtPlayers;
 
 	/**
 	 * This method also sets this activity available in the client game handler.
@@ -27,9 +28,12 @@ public class LobbyActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_lobby);
 
 		gamePin = findViewById(R.id.lobbyGamePin);
+		txtPlayers = findViewById(R.id.playersTxtView);
 		ClientGameHandler.handler.setLobbyActivity(this);
-		// Get the latest update party message send by the server.
-		updatePartyMessage(ClientGameHandler.handler.getUpdatePartyMessage());
+
+		// Get the latest update party message send by the server, if available.
+		if(ClientGameHandler.handler.getUpdatePartyMessage() != null)
+			updatePartyMessage(ClientGameHandler.handler.getUpdatePartyMessage());
 	}
 
 	public void onGameSelect(View v){
@@ -52,10 +56,14 @@ public class LobbyActivity extends AppCompatActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				gamePin.setText("Game PIN: " + m.getPartyId());
+				String players = "MASTER: ";
+				for(int i = 0; i < m.getPlayers().size(); i++){
+					players += m.getPlayers().get(i).getName() + "\n";
+				}
+
+				txtPlayers.setText(players);
+				gamePin.setText("" + m.getPartyId());
 			}
 		});
-
-		//TODO: Show the players in the party.
 	}
 }

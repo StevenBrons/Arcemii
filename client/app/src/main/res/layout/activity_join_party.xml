@@ -50,7 +50,7 @@
             android:backgroundTint="#FAFAFA"
             android:backgroundTintMode="add"
             android:ems="10"
-            android:hint="@string/game_pin"
+            android:hint="@string/game_pin_hint"
             android:importantForAutofill="no"
             android:inputType="number"
             android:textAlignment="center"

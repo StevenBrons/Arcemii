@@ -1,5 +1,7 @@
 package server.general;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import shared.entities.Player;
@@ -33,7 +35,6 @@ public class Party {
 			players.remove(player);
 		}
 		messageAll(new UpdatePartyMessage(partyId, players));
-		//TODO: Whenever a party is empty it should be destroyed to make the partyId available again.
 	}
 
 	public void messageAll(Message message) {
@@ -52,6 +53,10 @@ public class Party {
 
 	public void setCurrentLevel(Level level){
 		curLevel = level;
+	}
+
+	public boolean isEmpty(){
+		return players.size() == 0;
 	}
 
 }

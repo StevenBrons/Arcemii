@@ -1,8 +1,12 @@
 package client.controller;
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
 import shared.messages.Message;
+import shared.messages.PlayerInfoMessage;
 import shared.messages.UpdatePartyMessage;
 
 public class ClientGameHandler {
@@ -10,18 +14,21 @@ public class ClientGameHandler {
 	public static ClientGameHandler handler;
 	private Connection connection;
 
+	private SharedPreferences sharedPreferences;
+
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
 	private UpdatePartyMessage updatePartyMessage;
 
-	private ClientGameHandler() {
+	private ClientGameHandler(SharedPreferences sharedPreferences) {
+		this.sharedPreferences = sharedPreferences;
 		connection = new Connection(true);
 		start();
 	}
 
-	public static void init() {
+	public static void init(SharedPreferences sharedPreferences) {
 		if (handler == null) {
-			handler = new ClientGameHandler();
+			handler = new ClientGameHandler(sharedPreferences);
 		}
 	}
 
@@ -29,14 +36,14 @@ public class ClientGameHandler {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (true) {
-					try {
-						Message m = (Message) connection.getInputStream().readObject();
-						handleInput(m);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			while (true) {
+				try {
+					Message m = (Message) connection.getInputStream().readObject();
+					handleInput(m);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
+			}
 			}
 		});
 		thread.start();
@@ -63,6 +70,9 @@ public class ClientGameHandler {
 			case "UpdatePartyMessage":
 				updatePartyMessage((UpdatePartyMessage)m);
 				break;
+			case "PlayerInfoMessage":
+				playerInfoMessage();
+				break;
 		}
 	}
 
@@ -82,6 +92,17 @@ public class ClientGameHandler {
 	private void updatePartyMessage(UpdatePartyMessage m){
 		updatePartyMessage = m;
 		lobbyActivity.updatePartyMessage(m);
+	}
+
+	/**
+	 * This function is called when the server and client established a connection
+	 * and the player is created on the server. The player can send his custom
+	 * name to the server. The settings screen can also call this function for a name update.
+	 * @author Bram Pulles
+	 */
+	public void playerInfoMessage(){
+		String username = sharedPreferences.getString("username", "-");
+		handler.connection.sendMessage(new PlayerInfoMessage(username));
 	}
 
 	/**
