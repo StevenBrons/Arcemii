@@ -18,8 +18,6 @@ public class ClientGameHandler extends AppCompatActivity {
 	public static ClientGameHandler handler;
 	private Connection connection;
 
-	private Context context;
-
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
 	private UpdatePartyMessage updatePartyMessage;
@@ -104,7 +102,7 @@ public class ClientGameHandler extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void playerInfoMessage(){
-		SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPref.getString(getString(R.string.sharedpref_username), "-");
 		handler.connection.sendMessage(new PlayerInfoMessage(username));
 	}
@@ -130,10 +128,6 @@ public class ClientGameHandler extends AppCompatActivity {
 	 */
 	public UpdatePartyMessage getUpdatePartyMessage(){
 		return updatePartyMessage;
-	}
-
-	public void setContext(Context context){
-		this.context = context;
 	}
 
 }
