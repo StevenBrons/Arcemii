@@ -10,7 +10,7 @@ import shared.messages.Message;
 
 public class Player extends Entity{
 
-	private String name = String.valueOf(Math.random()*99999);
+	private String name = "Player#" + (int)(Math.random()*99999);
 	transient ObjectInputStream input;
 	transient ObjectOutputStream output;
 

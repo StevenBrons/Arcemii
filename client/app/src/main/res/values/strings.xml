@@ -7,6 +7,6 @@
     <string name="select_game">Select Game</string>
     <string name="random_game">Random Game</string>
     <string name="play_game">Play Game</string>
-    <string name="game_pin">Game PIN</string>
-    <string name="empty_game_pin">Game PIN: -</string>
+    <string name="game_pin">Game PIN:</string>
+    <string name="empty_game_pin">-</string>
 </resources>

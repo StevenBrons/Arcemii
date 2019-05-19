@@ -33,7 +33,6 @@ public class Party {
 			players.remove(player);
 		}
 		messageAll(new UpdatePartyMessage(partyId, players));
-		//TODO: Whenever a party is empty it should be destroyed to make the partyId available again.
 	}
 
 	public void messageAll(Message message) {
