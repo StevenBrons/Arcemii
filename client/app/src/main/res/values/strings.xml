@@ -10,8 +10,8 @@
     <string name="game_pin">Game PIN:</string>
     <string name="empty_game_pin">-</string>
     <string name="set_username">Username: </string>
-    <string name="hint_username">username</string>
+    <string name="hint_username">new username</string>
     <string name="save">Save</string>
     <string name="sharedpref_username">username</string>
-    <string name="sharedpref_filename">debernardi.arcemii.playerinfo</string>
+    <string name="sharedpref_playerinfo">playerinfo</string>
 </resources>

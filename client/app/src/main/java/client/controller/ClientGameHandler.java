@@ -1,8 +1,11 @@
 package client.controller;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
+import com.debernardi.archemii.R;
 
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
@@ -14,6 +17,8 @@ public class ClientGameHandler extends AppCompatActivity {
 
 	public static ClientGameHandler handler;
 	private Connection connection;
+
+	private Context context;
 
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
@@ -99,10 +104,8 @@ public class ClientGameHandler extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void playerInfoMessage(){
-		Log.d("USERNAME", getString(R.string.sharedpref_filename));
-		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedpref_filename), MODE_PRIVATE);
-		String username = sharedPreferences.getString(getString(R.string.sharedpref_username), "-");
-		Log.d("USERNAME", username);
+		SharedPreferences sharedPref = context.getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
+		String username = sharedPref.getString(getString(R.string.sharedpref_username), "-");
 		handler.connection.sendMessage(new PlayerInfoMessage(username));
 	}
 
@@ -127,6 +130,10 @@ public class ClientGameHandler extends AppCompatActivity {
 	 */
 	public UpdatePartyMessage getUpdatePartyMessage(){
 		return updatePartyMessage;
+	}
+
+	public void setContext(Context context){
+		this.context = context;
 	}
 
 }

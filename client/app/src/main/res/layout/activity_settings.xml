@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/newUsername"
         android:layout_width="260dp"
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
@@ -50,6 +50,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="72dp"
         android:background="@color/button"
+        android:onClick="save"
         android:text="@string/save"
         android:textColor="@android:color/white"
         android:textSize="30sp"
