@@ -57,7 +57,7 @@ public class ServerGameHandler {
 				joinPartyMessage((JoinPartyMessage)m, player);
 				break;
 			case "LeavePartyMessage":
-				leavePartyMessage((LeavePartyMessage)m, player);
+				leavePartyMessage(player);
 				break;
 			case "PlayerInfoMessage":
 				playerInfoMessage((PlayerInfoMessage)m, player);
@@ -74,17 +74,15 @@ public class ServerGameHandler {
 	private void playerInfoMessage(PlayerInfoMessage m, Player player){
 		if(m.getName().length() > 0)
 			player.setName(m.getName());
-		Log.d("THE NEW NAME IS", player.getName());
 	}
 
 	/**
 	 * Remove the player from his party.
 	 * Also remove the party if the party is empty.
-	 * @param m leave party message.
 	 * @param player
 	 * @author Bram Pulles
 	 */
-	private void leavePartyMessage(LeavePartyMessage m, Player player){
+	private void leavePartyMessage(Player player){
 		for(Party party : parties) {
 			if (party.containsPlayer(player)) {
 				party.removePlayer(player);

@@ -32,10 +32,8 @@ public class LobbyActivity extends AppCompatActivity {
 		ClientGameHandler.handler.setLobbyActivity(this);
 
 		// Get the latest update party message send by the server, if available.
-		if(ClientGameHandler.handler.getUpdatePartyMessage() != null) {
+		if(ClientGameHandler.handler.getUpdatePartyMessage() != null)
 			updatePartyMessage(ClientGameHandler.handler.getUpdatePartyMessage());
-			Log.d("LAST ONE", ClientGameHandler.handler.getUpdatePartyMessage().getPlayers().get(0).getName());
-		}
 	}
 
 	public void onGameSelect(View v){

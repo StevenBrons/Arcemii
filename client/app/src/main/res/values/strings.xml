@@ -8,6 +8,7 @@
     <string name="random_game">Random Game</string>
     <string name="play_game">Play Game</string>
     <string name="game_pin">Game PIN:</string>
+    <string name="game_pin_hint">Game PIN</string>
     <string name="empty_game_pin">-</string>
     <string name="set_username">Username: </string>
     <string name="hint_username">new username</string>

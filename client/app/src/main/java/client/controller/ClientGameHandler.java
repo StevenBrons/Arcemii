@@ -90,7 +90,6 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void updatePartyMessage(UpdatePartyMessage m){
-		Log.d("NEW UPDATE", m.getPlayers().get(0).getName());
 		updatePartyMessage = m;
 		lobbyActivity.updatePartyMessage(m);
 	}
@@ -103,7 +102,6 @@ public class ClientGameHandler {
 	 */
 	public void playerInfoMessage(){
 		String username = sharedPreferences.getString("username", "-");
-		Log.d("SEND NEW NAME", username);
 		handler.connection.sendMessage(new PlayerInfoMessage(username));
 	}
 
