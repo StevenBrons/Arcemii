@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Archemii</string>
+    <string name="app_name">Arcemii</string>
     <string name="create_party">Create Party</string>
     <string name="join_party">Join Party</string>
     <string name="join_party2">Enter</string>
@@ -9,4 +9,9 @@
     <string name="play_game">Play Game</string>
     <string name="game_pin">Game PIN:</string>
     <string name="empty_game_pin">-</string>
+    <string name="set_username">Username: </string>
+    <string name="hint_username">username</string>
+    <string name="save">Save</string>
+    <string name="sharedpref_username">username</string>
+    <string name="sharedpref_filename">debernardi.arcemii.playerinfo</string>
 </resources>

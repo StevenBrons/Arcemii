@@ -1,12 +1,16 @@
 package client.controller;
 
+import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
 import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
 import shared.messages.UpdatePartyMessage;
 
-public class ClientGameHandler {
+public class ClientGameHandler extends AppCompatActivity {
 
 	public static ClientGameHandler handler;
 	private Connection connection;
@@ -95,8 +99,11 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 */
 	public void playerInfoMessage(){
-		// Send the player name if it is different.
-		handler.connection.sendMessage(new PlayerInfoMessage("Berry"));
+		Log.d("USERNAME", getString(R.string.sharedpref_filename));
+		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedpref_filename), MODE_PRIVATE);
+		String username = sharedPreferences.getString(getString(R.string.sharedpref_username), "-");
+		Log.d("USERNAME", username);
+		handler.connection.sendMessage(new PlayerInfoMessage(username));
 	}
 
 	/**
