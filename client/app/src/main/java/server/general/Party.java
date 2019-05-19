@@ -54,4 +54,8 @@ public class Party {
 		curLevel = level;
 	}
 
+	public boolean isEmpty(){
+		return players.size() == 0;
+	}
+
 }

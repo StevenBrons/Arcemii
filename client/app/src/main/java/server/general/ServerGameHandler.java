@@ -53,14 +53,18 @@ public class ServerGameHandler {
 
 	/**
 	 * Remove the player from his party.
+	 * Also remove the party if the party is empty.
 	 * @param m leave party message.
 	 * @param player
 	 * @author Bram Pulles
 	 */
 	private void leavePartyMessage(LeavePartyMessage m, Player player){
 		for(Party party : parties) {
-			if (party.containsPlayer(player))
+			if (party.containsPlayer(player)) {
 				party.removePlayer(player);
+				if(party.isEmpty())
+					parties.remove(party);
+			}
 		}
 	}
 
