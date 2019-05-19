@@ -3,13 +3,13 @@ package client.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.debernardi.archemii.R;
 
 import client.controller.ClientGameHandler;
+import shared.entities.Player;
 import shared.messages.UpdatePartyMessage;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -28,6 +28,7 @@ public class LobbyActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_lobby);
 
 		gamePin = findViewById(R.id.lobbyGamePin);
+		txtPlayers = findViewById(R.id.playersTxtView);
 		ClientGameHandler.handler.setLobbyActivity(this);
 
 		// Get the latest update party message send by the server, if available.
@@ -55,10 +56,14 @@ public class LobbyActivity extends AppCompatActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+				String players = "Players: " + m.getPlayers().size() + "\n";
+				for(Player player : m.getPlayers()){
+					players += player.getName() + "\n";
+				}
+
 				gamePin.setText("" + m.getPartyId());
+				txtPlayers.setText(players);
 			}
 		});
-
-		//TODO: Show the players in the party.
 	}
 }
