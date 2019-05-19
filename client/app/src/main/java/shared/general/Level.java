@@ -19,12 +19,28 @@ public class Level implements Serializable {
     this.entities = entities;
   }
 
+  public int getWidth(){
+    return tiles.length;
+  }
+
+  public int getHeight(){
+    return tiles[0].length;
+  }
+
   public Tile getTileAt(int x, int y) {
     if (x >= 0 && x < tiles.length && y >= 0 && y < tiles[0].length) {
       return tiles[x][y];
     } else {
       return tiles[x][y];
     }
+  }
+
+  public int getNumEntity(){
+    return entities.size();
+  }
+
+  public Entity getEntityAt(int idx){
+    return entities.get(idx);
   }
 
 }
