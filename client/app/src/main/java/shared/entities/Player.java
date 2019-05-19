@@ -1,15 +1,10 @@
 package shared.entities;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.SQLInput;
 
-import shared.general.Level;
 import shared.messages.Message;
-import shared.messages.UpdatePartyMessage;
 
 public class Player extends Entity{
 

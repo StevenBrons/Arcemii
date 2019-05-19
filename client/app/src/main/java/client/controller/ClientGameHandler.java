@@ -1,7 +1,6 @@
 package client.controller;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
