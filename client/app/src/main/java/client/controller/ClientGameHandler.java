@@ -3,6 +3,7 @@ package client.controller;
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
 import shared.messages.Message;
+import shared.messages.PlayerInfoMessage;
 import shared.messages.UpdatePartyMessage;
 
 public class ClientGameHandler {
@@ -63,6 +64,9 @@ public class ClientGameHandler {
 			case "UpdatePartyMessage":
 				updatePartyMessage((UpdatePartyMessage)m);
 				break;
+			case "PlayerInfoMessage":
+				playerInfoMessage();
+				break;
 		}
 	}
 
@@ -82,6 +86,17 @@ public class ClientGameHandler {
 	private void updatePartyMessage(UpdatePartyMessage m){
 		updatePartyMessage = m;
 		lobbyActivity.updatePartyMessage(m);
+	}
+
+	/**
+	 * This function is called when the server and client established a connection
+	 * and the player is created on the server. The player can send his custom
+	 * name to the server.
+	 * @author Bram Pulles
+	 */
+	public void playerInfoMessage(){
+		// Send the player name if it is different.
+		handler.connection.sendMessage(new PlayerInfoMessage("Berry"));
 	}
 
 	/**

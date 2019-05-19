@@ -80,29 +80,28 @@
 
         <TextView
             android:id="@+id/playersTxtView"
-            android:layout_width="312dp"
-            android:layout_height="273dp"
+            android:layout_width="304dp"
+            android:layout_height="234dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@android:color/darker_gray"
-            android:padding="30px"
-            android:paddingStart="30px"
-            android:paddingLeft="30px"
-            android:paddingTop="30px"
-            android:paddingEnd="30px"
-            android:paddingRight="30px"
-            android:paddingBottom="30px"
-            android:text="player43297432"
+            android:padding="10dp"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
             android:textAlignment="textStart"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnGameSelect"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.445"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.414" />
+            app:layout_constraintVertical_bias="0.655" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

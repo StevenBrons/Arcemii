@@ -7,6 +7,7 @@ import shared.messages.JoinPartyMessage;
 import shared.messages.LeavePartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
+import shared.messages.PlayerInfoMessage;
 
 public class ServerGameHandler {
 
@@ -15,6 +16,12 @@ public class ServerGameHandler {
 	public ServerGameHandler() {
 	}
 
+	/**
+	 * Make a new thread to receive messages from the new player.
+	 * Send a message to the client with the player information.
+	 * @param player
+	 * @author Steven Bronsveld and Bram Pulles
+	 */
 	public void addPlayer(final Player player) {
 		Thread thread = new Thread(new Runnable() {
 			@Override
@@ -29,6 +36,8 @@ public class ServerGameHandler {
 			}
 		});
 		thread.start();
+
+		player.sendMessage(new PlayerInfoMessage());
 	}
 
 	/**
@@ -48,7 +57,21 @@ public class ServerGameHandler {
 			case "LeavePartyMessage":
 				leavePartyMessage((LeavePartyMessage)m, player);
 				break;
+			case "PlayerInfoMessage":
+				playerInfoMessage((PlayerInfoMessage)m, player);
+				break;
 		}
+	}
+
+	/**
+	 * This method receives information about the player on the client side and sets a new name for the player.
+	 * @param m player info message.
+	 * @param player
+	 * @author Bram Pulles
+	 */
+	private void playerInfoMessage(PlayerInfoMessage m, Player player){
+		if(m.getName().length() > 0)
+			player.setName(m.getName());
 	}
 
 	/**

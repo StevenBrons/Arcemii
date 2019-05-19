@@ -56,9 +56,9 @@ public class LobbyActivity extends AppCompatActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				String players = "Players: " + m.getPlayers().size() + "\n";
-				for(Player player : m.getPlayers()){
-					players += player.getName() + "\n";
+				String players = "MASTER: ";
+				for(int i = 0; i < m.getPlayers().size(); i++){
+					players += m.getPlayers().get(i).getName() + "\n";
 				}
 
 				gamePin.setText("" + m.getPartyId());
