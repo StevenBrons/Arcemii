@@ -3,8 +3,6 @@ package client.controller;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.debernardi.archemii.R;
-
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
 import shared.messages.Message;
@@ -92,6 +90,7 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void updatePartyMessage(UpdatePartyMessage m){
+		Log.d("NEW UPDATE", m.getPlayers().get(0).getName());
 		updatePartyMessage = m;
 		lobbyActivity.updatePartyMessage(m);
 	}
@@ -99,12 +98,12 @@ public class ClientGameHandler {
 	/**
 	 * This function is called when the server and client established a connection
 	 * and the player is created on the server. The player can send his custom
-	 * name to the server.
+	 * name to the server. The settings screen can also call this function for a name update.
 	 * @author Bram Pulles
 	 */
 	public void playerInfoMessage(){
 		String username = sharedPreferences.getString("username", "-");
-		Log.d("USERNAME", username + "");
+		Log.d("SEND NEW NAME", username);
 		handler.connection.sendMessage(new PlayerInfoMessage(username));
 	}
 

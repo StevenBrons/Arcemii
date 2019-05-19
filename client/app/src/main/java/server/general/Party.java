@@ -1,5 +1,7 @@
 package server.general;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import shared.entities.Player;
@@ -20,6 +22,7 @@ public class Party {
 		if (!players.contains(player)) {
 			players.add(player);
 		}
+		Log.d("SEND TO CLIENT", players.get(0).getName());
 		messageAll(new UpdatePartyMessage(partyId, players));
 	}
 

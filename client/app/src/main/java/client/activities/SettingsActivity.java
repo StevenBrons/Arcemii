@@ -14,6 +14,11 @@ public class SettingsActivity extends AppCompatActivity {
 
 	private TextView newUsername, currentUsername;
 
+	/**
+	 * Set the current username on the screen.
+	 * @param savedInstanceState
+	 * @author Bram Pulles
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

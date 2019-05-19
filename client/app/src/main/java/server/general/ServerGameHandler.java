@@ -1,5 +1,7 @@
 package server.general;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import shared.entities.Player;
@@ -72,6 +74,7 @@ public class ServerGameHandler {
 	private void playerInfoMessage(PlayerInfoMessage m, Player player){
 		if(m.getName().length() > 0)
 			player.setName(m.getName());
+		Log.d("THE NEW NAME IS", player.getName());
 	}
 
 	/**

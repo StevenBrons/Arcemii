@@ -15,29 +15,34 @@ import shared.messages.JoinPartyMessage;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+	/**
+	 * Initialize the client game handler.
+	 * @param savedInstanceState
+	 * @author Bram Pulles and Steven Bronsveld
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
-        ClientGameHandler.init(sharedPrefs);
-    }
+		SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
+		ClientGameHandler.init(sharedPrefs);
+	}
 
-    public void onCreateParty(View v){
-        ClientGameHandler.sendMessage(new CreatePartyMessage());
+	public void onCreateParty(View v){
+		ClientGameHandler.sendMessage(new CreatePartyMessage());
 
-        Intent intCreateParty = new Intent(this, LobbyActivity.class);
-        startActivity(intCreateParty);
-    }
+		Intent intCreateParty = new Intent(this, LobbyActivity.class);
+		startActivity(intCreateParty);
+	}
 
-    public void onJoinParty(View v){
-        Intent intJoinParty = new Intent(this, JoinPartyActivity.class);
-        startActivity(intJoinParty);
-    }
+	public void onJoinParty(View v){
+		Intent intJoinParty = new Intent(this, JoinPartyActivity.class);
+		startActivity(intJoinParty);
+	}
 
-    public void onSettings(View v){
-        Intent intSettings = new Intent(this, SettingsActivity.class);
-        startActivity(intSettings);
-    }
+	public void onSettings(View v){
+		Intent intSettings = new Intent(this, SettingsActivity.class);
+		startActivity(intSettings);
+	}
 }
