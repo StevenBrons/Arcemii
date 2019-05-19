@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.debernardi.archemii.R;
 
 import client.controller.ClientGameHandler;
-import shared.entities.Player;
 import shared.messages.UpdatePartyMessage;
 
 public class LobbyActivity extends AppCompatActivity {

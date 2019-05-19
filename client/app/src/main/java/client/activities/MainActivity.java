@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ClientGameHandler.init();
+        SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
+        ClientGameHandler.init(sharedPrefs);
     }
 
     public void onCreateParty(View v){
