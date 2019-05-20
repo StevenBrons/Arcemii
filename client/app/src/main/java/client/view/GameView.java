@@ -8,12 +8,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import shared.entities.Entity;
+import shared.entities.Player;
+import shared.entities.Slime;
 import shared.general.Level;
+import shared.tiles.Empty;
 import shared.tiles.Tile;
 
 public class GameView extends View {
     public GameView(Context context) {
         super(context);
+        Tile grass = new Empty();
+        Entity player = new Player();
+        Entity slime = new Slime();
+        for (int x = 0;x<5;x++){
+            for (int y = 0;y<5;y++){
+                drawObjects.add(grass.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
+            }
+        }
+        drawObjects.add(player.getRenderItem());
+        drawObjects.add(slime.getRenderItem());
     }
 
     private List<RenderItem> drawObjects = new ArrayList<>();
