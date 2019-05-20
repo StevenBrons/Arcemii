@@ -26,6 +26,41 @@ Thursday we had our next meeting, which was attended by everyone. In the previou
 		\item It is tisky that our whole app relies on one connection. If something goes wrong in the connection part, the whole app will suffer from it.
 		\item Four weeks for an app is already a short timeframe. Will we be able to afford the time to spend on multiplayer functionality? This is something we'll have to decide upon once we have more concrete ideas about games we'd like to make.
 \end{itemize}
-Because of the above mentioned risks, we further discussed the possibilities of single-player games, as the idea of the app being a game remained unchanged. Thomas and Thijs were charged with the task to think about games in the rogue-like genre, in order to see if such a game would be a valuable app idea. Steven will make the structure of a client-server program. This way, we can have some extra days to decide on our idea, as we'd like the whole group to be fully behind it, hard as it is, while also getting started on some code. 
+Because of the above mentioned risks, we further discussed the possibilities of single-player games, as the idea of the app being a game remained unchanged. Thomas and Thijs were charged with the task to think about games in the rogue-like genre, in order to see if such a game would be a valuable app idea. Steven will make the structure of a client-server program. This way, we can have some extra days to decide on our idea, as we'd like the whole group to be fully behind it, hard as it is, while also getting started on some code.
+
+
+\subsection*{Week 20}
+We had our first meeting of the week on Monday morning, again. Over the weekend, more doubts about the party-game idea had arisen. Everyone was present, though Robert was there only the second half. First order of business was making the final decision for our idea. We all felt this was actually long due, and were all a bit frustrated because of this. So: today we were to make a definite decision and we would stick with it.
+
+Our main two problems with the party game were design-problems: we would have to make some smaller, individually not very impressive things, that would have a very simple structure. This did not feel like enough of a challenge, even the multiplayer aspect taken into account. The second problem was that it would be hard to make it one well-rounden app. Additionally, because it had pieces that were so disjunct from others, we would evade the whole project idea of this course. To conclude: we switched back to the idea of one game. till multiplayer. The remaining of the meeting, we discussed possibilities. Firstly, we looked at possibilities to expand on one of the discussed minigames:
+\begin{itemize}
+	\item Achtung the Curve
+	\item Bomberman
+	\item Spyfall
+\end{itemize}
+However, for the abovementioned reason of not being complex enough, we looked further. A game like hill-climb raceing was discussed, but we did not have conrete enough ideas for implementing multiplayer into that game. In the end, we landed on the idea of a multiplayer roguelike yet again. Here is a small rundown of how we envision it:
+
+You create a party with your friends. Every player is presented a random selection of `abilities', of which they can choose some. They enter a level of some kind and fight enemies. On the end of a level, there is a `boss fight', after which the players are rewarded and can go down to the next level. Some oppurtunities for player-versus-player were mentioned, like the strongest player being a final boss after all levels had been completed, but we decided to postpone these ideas.
+
+When Robert joined us for the meeting, he and Steven discussed the way we would tackle the multiplayer/server aspect code-wise. They proposed different approaches:
+\begin{itemize}
+	\item Steven suggested to start with a full-scale client-server connection, so that we would not have to spend much time later on in the project to change existing code to make it suitable for multiplayer and such.
+	\item Robert suggested to first make the game in single-player form and add multiplayer later, as this could prove tricky and time-consuming.
+\end{itemize} 
+It was agreed upon that Steven would work on his vision for the next meeting, where we would decide if we would stick with it or not.
+\bigbreak\noindent
+Thursday was our next meeting. Everyone but Steven was present, because he `is too cool to use the bus'. We started a Discord-call with him however, and he showed us his work from the past days. In the end, he used Roberts approach. Thijs made a little character animation to look at possible styles and possibility for animations. We'll definetely use pixel-art, as it is less time-consuming while still being charming.
+
+Main item on the agenda were dividing task:
+\begin{itemize}
+	\item Jelmer: Graphics rendering
+	\item Bram: Being able to create and join parties
+	\item Robert: Dungeon generation
+	\item Thijs: Sprites
+	\item Thomas: Looking at abilities
+\end{itemize}
+
+
+ 
 
 \end{document}
