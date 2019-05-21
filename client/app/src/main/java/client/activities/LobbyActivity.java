@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -60,8 +59,8 @@ public class LobbyActivity extends AppCompatActivity {
 			@Override
 			public void run() {
 				String players = "MASTER: ";
-				for(int i = 0; i < m.getPlayers().size(); i++){
-					players += m.getPlayers().get(i).getName() + "\n";
+				for(int i = 0; i < m.getClients().size(); i++){
+					players += m.getClients().get(i).getName() + "\n";
 				}
 
 				txtPlayers.setText(players);

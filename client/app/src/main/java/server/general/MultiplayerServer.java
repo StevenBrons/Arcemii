@@ -6,8 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import shared.entities.Player;
-
 public class MultiplayerServer extends ArcemiiServer {
 
 	public static final int PORT = 26194;
@@ -25,8 +23,8 @@ public class MultiplayerServer extends ArcemiiServer {
 					Socket socket = serverSocket.accept();
 					ObjectInputStream pInput = new ObjectInputStream(socket.getInputStream());
 					ObjectOutputStream pOutput = new ObjectOutputStream(socket.getOutputStream());
-					Player player = new Player(pInput, pOutput);
-					gameHandler.addPlayer(player);
+					Client client = new Client(pInput, pOutput);
+					gameHandler.addPlayer(client);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -2,7 +2,6 @@ package server.general;
 
 import java.util.ArrayList;
 
-import shared.entities.Player;
 import shared.general.Level;
 import shared.messages.Message;
 import shared.messages.UpdatePartyMessage;
@@ -11,32 +10,32 @@ public class Party {
 
 	private Level curLevel;
 	private int partyId = (int)(Math.random()*99999);
-	private ArrayList<Player> players = new ArrayList<>();
+	private ArrayList<Client> clients = new ArrayList<>();
 
 	public Party () {
 	}
 
-	public void addPlayer(Player player) {
-		if (!players.contains(player)) {
-			players.add(player);
+	public void addPlayer(Client client) {
+		if (!clients.contains(client)) {
+			clients.add(client);
 		}
-		messageAll(new UpdatePartyMessage(partyId, players));
+		messageAll(new UpdatePartyMessage(partyId, clients));
 	}
 
 	/**
-	 * Remove the player from the party.
-	 * @param player
+	 * Remove the client from the party.
+	 * @param client
 	 * @author Bram Pulles
 	 */
-	public void removePlayer(Player player){
-		if(players.contains(player)){
-			players.remove(player);
+	public void removePlayer(Client client){
+		if(clients.contains(client)){
+			clients.remove(client);
 		}
-		messageAll(new UpdatePartyMessage(partyId, players));
+		messageAll(new UpdatePartyMessage(partyId, clients));
 	}
 
 	public void messageAll(Message message) {
-		for (Player p : players) {
+		for (Client p : clients) {
 			p.sendMessage(message);
 		}
 	}
@@ -45,8 +44,8 @@ public class Party {
 		return partyId;
 	}
 
-	public boolean containsPlayer(Player player){
-		return players.contains(player);
+	public boolean containsPlayer(Client client){
+		return clients.contains(client);
 	}
 
 	public void setCurrentLevel(Level level){
@@ -54,7 +53,7 @@ public class Party {
 	}
 
 	public boolean isEmpty(){
-		return players.size() == 0;
+		return clients.size() == 0;
 	}
 
 }

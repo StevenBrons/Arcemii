@@ -36,10 +36,10 @@ public class GameView extends View {
     public GameView(Context context) {
         super(context);
         Tile grass = new Empty();
-        Entity player = new Player();
+        Entity player = new Player(24,36);
         Entity slime = new Slime();
-        for (int x = 0;x<5;x++){
-            for (int y = 0;y<5;y++){
+        for (int x = 0;x<12;x++){
+            for (int y = 0;y<18;y++){
                 drawObjects.add(grass.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
             }
         }

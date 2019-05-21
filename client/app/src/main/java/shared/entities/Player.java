@@ -9,55 +9,19 @@ import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
 
+/**
+ * The class that handles rendering and actions of Player, the player character
+ */
 public class Player extends Entity{
+	private int xPos, yPos;
 
-	private String name = "Player#" + (int)(Math.random()*99999);
-	private transient ObjectInputStream input;
-	private transient ObjectOutputStream output;
-
-	public Player () {
-	}
-
-	public Player (ObjectInputStream input, ObjectOutputStream output) {
-		this.input = input;
-		this.output = output;
-	}
-
-	/**
-	 * Send message to this player.
-	 * @param m message
-	 */
-	public void sendMessage(Message m) {
-		try {
-			output.writeObject(m);
-			output.reset();
-			output.flush();
-		} catch (IOException e) {
-		}
-	}
-	public ObjectInputStream getInputStream() {
-		return input;
-	}
-
-	/**
-	 * Set the name of the player.
-	 * @param name
-	 * @author Bram Pulles
-	 */
-	public void setName(String name){
-		this.name = name;
-	}
-
-	/**
-	 * @return name of the player.
-	 * @author Bram Pulles
-	 */
-	public String getName(){
-		return name;
+	public Player(int x, int y){
+		this.xPos = x;
+		this.yPos = y;
 	}
 
 	@Override
 	public RenderItem getRenderItem(){
-		return new RenderItem("playerBlueIdle",0, Tile.HEIGHT,0.0,1.0);
+		return new RenderItem("playerBlueIdle",xPos+Tile.WIDTH/2, yPos+Tile.HEIGHT,0.5,1.0);
 	}
 }
