@@ -16,6 +16,9 @@ public class Console {
 					case "help":
 						help();
 						break;
+					case "stop":
+						stop();
+						break;
 					default:
 						help();
 				}
@@ -26,9 +29,14 @@ public class Console {
 		thread.start();
 	}
 
+	private void stop(){
+		System.exit(0);
+	}
+
 	private void help(){
 		System.out.println("------ Available commands: ------");
 		System.out.println("help");
+		System.out.println("stop");
 		System.out.println("parties");
 	}
 
