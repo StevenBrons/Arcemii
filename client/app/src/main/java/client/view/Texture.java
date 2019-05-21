@@ -3,6 +3,9 @@ package client.view;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
+
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,11 +18,11 @@ import java.util.HashMap;
 public class Texture {
 
     static HashMap<String, Bitmap> textures = new HashMap<>();
-    public static final int WIDTH = 192;
-    public static final int HEIGHT = 192;
     private static AssetManager manager;
 
     private String name;
+    private boolean animated = false;
+    private int frames = 0;
 
     /**
      * Initializes the texture class, needs to be called before the game needs to display textures
@@ -58,13 +61,28 @@ public class Texture {
      */
     public Texture(String name) {
         this.name = name;
-        if (!textures.containsKey(name)) {
-            try {
-                Bitmap b = BitmapFactory.decodeStream(manager.open("sprites/" + name + ".png"));
-                textures.put(name,b);
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            for (String spriteFile: manager.list("sprites")){
+                String spriteName = FilenameUtils.removeExtension(spriteFile);
+                if (spriteName.matches(name)){
+                    Log.i("Texture",spriteName);
+                    if (!textures.containsKey(spriteName)) {
+                        Bitmap b = BitmapFactory.decodeStream(manager.open("sprites/" + spriteFile));
+                        textures.put(spriteName, b);
+                    }
+                }
+                if (spriteName.matches(name+"_\\d+")){
+                    Log.i("Texture",spriteName);
+                    this.animated = true;
+                    if (!textures.containsKey(spriteName)) {
+                        Bitmap b = BitmapFactory.decodeStream(manager.open("sprites/" + spriteFile));
+                        textures.put(spriteName, b);
+                    }
+                    frames++;
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -95,6 +113,10 @@ public class Texture {
      * be returned.
      */
     public Bitmap getBitmap() {
+        if (animated){
+            long time = System.currentTimeMillis()/200;
+            return textures.get(this.name+"_"+ time % frames);
+        }
         return textures.get(this.name);
     }
 }

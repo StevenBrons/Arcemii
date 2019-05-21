@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import client.view.RenderItem;
+import shared.general.Level;
 import shared.messages.Message;
+import shared.tiles.Tile;
 
 public class Player extends Entity{
 
@@ -51,5 +54,10 @@ public class Player extends Entity{
 	 */
 	public String getName(){
 		return name;
+	}
+
+	@Override
+	public RenderItem getRenderItem(){
+		return new RenderItem("playerBlueIdle",0, Tile.HEIGHT,0.0,1.0);
 	}
 }
