@@ -55,6 +55,7 @@ public class LobbyActivity extends AppCompatActivity {
 	/**
 	 * If the client is the master show the buttons and make them clickable.
 	 * If not fade the buttons and make them not clickable.
+	 * @author Bram Pulles
 	 */
 	private void toggleButtons(){
 		if(btnGameSelect != null && btnRandomGame != null) {
@@ -62,7 +63,7 @@ public class LobbyActivity extends AppCompatActivity {
 				btnGameSelect.setAlpha(1);
 				btnRandomGame.setAlpha(1);
 				btnGameSelect.setClickable(true);
-				btnGameSelect.setClickable(true);
+				btnRandomGame.setClickable(true);
 			} else {
 				btnGameSelect.setAlpha(0.5f);
 				btnRandomGame.setAlpha(0.5f);
