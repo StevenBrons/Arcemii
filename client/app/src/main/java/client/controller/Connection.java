@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import server.general.ArchemiiServer;
+import server.general.ArcemiiServer;
 import server.general.SinglePlayerServer;
 import shared.messages.Message;
 
@@ -23,12 +23,12 @@ public class Connection {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("Connecting to server");
+				System.out.println("Connecting to server...");
 				if (singlePlayer) {
-					ArchemiiServer.main(new String[]{"singleplayer"});
-					input = ((SinglePlayerServer) ArchemiiServer.server).getInputStream();
-					output = ((SinglePlayerServer) ArchemiiServer.server).getOutputStream();
-					System.out.println("Connected to singleplayer server");
+					ArcemiiServer.main(new String[]{"singleplayer"});
+					input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
+					output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
+					System.out.println("Connected to singleplayer server.");
 					isConnected = true;
 				} else {
 					try {
@@ -36,7 +36,7 @@ public class Connection {
 						output = new ObjectOutputStream(clientSocket.getOutputStream());
 						input = new ObjectInputStream(clientSocket.getInputStream());
 						System.out.println(output);
-						System.out.println("Connected to multiplayer server");
+						System.out.println("Connected to multiplayer server.");
 						isConnected = true;
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -51,7 +51,7 @@ public class Connection {
 		return input;
 	}
 
-	private ObjectOutputStream getOuputStream() {
+	private ObjectOutputStream getOutputStream() {
 		System.out.println(output);
 		return output;
 	}
@@ -65,7 +65,7 @@ public class Connection {
 			@Override
 			public void run() {
 				try {
-					getOuputStream().writeObject(msg);
+					getOutputStream().writeObject(msg);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

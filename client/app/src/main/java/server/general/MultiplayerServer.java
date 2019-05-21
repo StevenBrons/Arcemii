@@ -8,19 +8,19 @@ import java.net.Socket;
 
 import shared.entities.Player;
 
-public class MultiplayerServer extends ArchemiiServer {
+public class MultiplayerServer extends ArcemiiServer {
 
 	public static final int PORT = 26194;
 
 	public MultiplayerServer() {
-		System.out.println("Starting multiplayer server");
+		System.out.println("Starting multiplayer server...");
 		Thread serverThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 			ServerSocket serverSocket;
 			try {
 				serverSocket = new ServerSocket(PORT);
-				System.out.println("Server is running at port " + PORT);
+				System.out.println("Server is running at port " + PORT + ".");
 				while (true) {
 					Socket socket = serverSocket.accept();
 					ObjectInputStream pInput = new ObjectInputStream(socket.getInputStream());

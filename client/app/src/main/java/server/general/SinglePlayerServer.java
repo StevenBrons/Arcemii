@@ -8,7 +8,7 @@ import java.io.PipedOutputStream;
 
 import shared.entities.Player;
 
-public class SinglePlayerServer extends ArchemiiServer {
+public class SinglePlayerServer extends ArcemiiServer {
 
     private ObjectOutputStream oOut2;
     private ObjectInputStream oIn1;
