@@ -92,7 +92,8 @@ public class ClientGameHandler {
 	 */
 	private void updatePartyMessage(UpdatePartyMessage m){
 		updatePartyMessage = m;
-		lobbyActivity.updatePartyMessage(m);
+		if(lobbyActivity != null)
+			lobbyActivity.updatePartyMessage(m);
 	}
 
 	/**
