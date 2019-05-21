@@ -60,16 +60,18 @@ public class Connection {
 	 * @param msg message
 	 */
 	public void sendMessage(final Message msg) {
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					getOutputStream().writeObject(msg);
-				} catch (IOException e) {
-					e.printStackTrace();
+		if (isConnected){
+			Thread t = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						getOutputStream().writeObject(msg);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		});
-		t.start();
+			});
+			t.start();
+		}
 	}
 }
