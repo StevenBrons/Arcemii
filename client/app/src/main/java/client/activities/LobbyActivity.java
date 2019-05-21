@@ -2,16 +2,17 @@ package client.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.debernardi.archemii.R;
 
 import client.controller.ClientGameHandler;
+import shared.entities.Player;
 import shared.messages.LeavePartyMessage;
 import shared.messages.UpdatePartyMessage;
 
@@ -19,6 +20,8 @@ public class LobbyActivity extends AppCompatActivity {
 
 	private TextView gamePin;
 	private TextView txtPlayers;
+
+	private Player[] players;
 
 	/**
 	 * This method also sets this activity available in the client game handler.
@@ -40,6 +43,9 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 	public void onGameSelect(View v){
+		SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
+		String username = sharedPrefs.getString(getString(R.string.sharedpref_username), "-");
+
 		Intent intGameSelect = new Intent(this, GameSelectActivity.class);
 		startActivity(intGameSelect);
 	}
@@ -55,6 +61,8 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void updatePartyMessage(final UpdatePartyMessage m){
+		players = (Player[])m.getPlayers().toArray();
+
 		// This is necessary because we are not invoking this method from the main thread.
 		runOnUiThread(new Runnable() {
 			@Override

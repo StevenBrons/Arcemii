@@ -104,7 +104,8 @@ public class ClientGameHandler {
 	 */
 	public void playerInfoMessage(){
 		String username = sharedPreferences.getString("username", "-");
-		handler.connection.sendMessage(new PlayerInfoMessage(username));
+		if(!username.equals("-"))
+			handler.connection.sendMessage(new PlayerInfoMessage(username));
 	}
 
 	/**
