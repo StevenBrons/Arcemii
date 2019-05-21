@@ -21,7 +21,7 @@ public class ClientGameHandler {
 
 	private ClientGameHandler(SharedPreferences sharedPreferences) {
 		this.sharedPreferences = sharedPreferences;
-		connection = new Connection(true);
+		connection = new Connection(false);
 		start();
 	}
 
@@ -37,8 +37,10 @@ public class ClientGameHandler {
 			public void run() {
 			while (true) {
 				try {
-					Message m = (Message) connection.getInputStream().readObject();
-					handleInput(m);
+					if (connection.isConnected) {
+						Message m = (Message) connection.getInputStream().readObject();
+						handleInput(m);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -11,32 +11,40 @@ import shared.messages.Message;
 
 public class Connection {
 
-	private static final String hostName = "192.168.0.19";
+	private static final String hostName = "10.0.2.2";
 	private static final int PORT = 26194;
-	private static boolean isConnected = false;
+	public static boolean isConnected = false;
 
-	private ObjectInputStream input;
-	private ObjectOutputStream output;
+	private static ObjectInputStream input;
+	private static ObjectOutputStream output;
 
-	public Connection(boolean singlePlayer) {
+	public Connection(final boolean singlePlayer) {
 		if (isConnected) return;
-		System.out.println("Connecting to server");
-		if (singlePlayer) {
-			ArchemiiServer.main(new String[]{"singleplayer"});
-			input = ((SinglePlayerServer) ArchemiiServer.server).getInputStream();
-			output = ((SinglePlayerServer) ArchemiiServer.server).getOutputStream();
-			System.out.println("Connected to singleplayer server");
-		} else {
-			try {
-				Socket clientSocket = new Socket(hostName, PORT);
-				output = new ObjectOutputStream(clientSocket.getOutputStream());
-				input = new ObjectInputStream(clientSocket.getInputStream());
-				System.out.println("Connected to multiplayer server");
-			} catch (IOException e) {
-				e.printStackTrace();
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("Connecting to server");
+				if (singlePlayer) {
+					ArchemiiServer.main(new String[]{"singleplayer"});
+					input = ((SinglePlayerServer) ArchemiiServer.server).getInputStream();
+					output = ((SinglePlayerServer) ArchemiiServer.server).getOutputStream();
+					System.out.println("Connected to singleplayer server");
+					isConnected = true;
+				} else {
+					try {
+						Socket clientSocket = new Socket(hostName, PORT);
+						output = new ObjectOutputStream(clientSocket.getOutputStream());
+						input = new ObjectInputStream(clientSocket.getInputStream());
+						System.out.println(output);
+						System.out.println("Connected to multiplayer server");
+						isConnected = true;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
-		}
-		isConnected = true;
+		});
+		thread.start();
 	}
 
 	public ObjectInputStream getInputStream() {
@@ -44,6 +52,7 @@ public class Connection {
 	}
 
 	private ObjectOutputStream getOuputStream() {
+		System.out.println(output);
 		return output;
 	}
 
@@ -51,12 +60,17 @@ public class Connection {
 	 * Send a message to the server from the client.
 	 * @param msg message
 	 */
-	public void sendMessage(Message msg) {
-		System.out.println(msg);
-		try {
-			getOuputStream().writeObject(msg);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void sendMessage(final Message msg) {
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					getOuputStream().writeObject(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		t.start();
 	}
 }

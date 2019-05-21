@@ -27,7 +27,6 @@ public class MultiplayerServer extends ArchemiiServer {
 					ObjectOutputStream pOutput = new ObjectOutputStream(socket.getOutputStream());
 					Player player = new Player(pInput, pOutput);
 					gameHandler.addPlayer(player);
-					System.out.println("A new player has joined");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

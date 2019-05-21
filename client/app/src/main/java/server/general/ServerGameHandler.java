@@ -25,6 +25,7 @@ public class ServerGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	public void addPlayer(final Player player) {
+		System.out.println("A new player has joined: " + player);
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
