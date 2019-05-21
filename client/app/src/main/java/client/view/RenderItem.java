@@ -36,10 +36,10 @@ public class RenderItem implements Comparable<RenderItem>{
         return this.y-other.y;
     }
 
-    public void renderTo(Canvas c){
+    public void renderTo(Canvas c,int offsetX, int offsetY){
         Bitmap bitmap = texture.getBitmap();
         c.drawBitmap(bitmap,
-                x-(int)(bitmap.getWidth() *refX),
-                y-(int)(bitmap.getHeight()*refY),new Paint());
+                x+offsetX-(int)(bitmap.getWidth() *refX),
+                y+offsetY-(int)(bitmap.getHeight()*refY),new Paint());
     }
 }
