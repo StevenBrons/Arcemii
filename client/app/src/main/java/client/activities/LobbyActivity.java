@@ -1,6 +1,8 @@
 package client.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.debernardi.archemii.R;
 
 import client.controller.ClientGameHandler;
+import shared.messages.LeavePartyMessage;
 import shared.messages.UpdatePartyMessage;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -65,5 +68,20 @@ public class LobbyActivity extends AppCompatActivity {
 				gamePin.setText("" + m.getPartyId());
 			}
 		});
+	}
+
+	@Override
+	public void onBackPressed() {
+		new AlertDialog.Builder(this)
+			.setTitle("Really Exit?")
+			.setMessage("Are you sure you want to exit the party?")
+			.setNegativeButton(android.R.string.no, null)
+			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) {
+					LobbyActivity.super.onBackPressed();
+					ClientGameHandler.handler.sendMessage(new LeavePartyMessage());
+				}
+			}).create().show();
 	}
 }

@@ -35,7 +35,6 @@ public class Connection {
 						Socket clientSocket = new Socket(hostName, PORT);
 						output = new ObjectOutputStream(clientSocket.getOutputStream());
 						input = new ObjectInputStream(clientSocket.getInputStream());
-						System.out.println(output);
 						System.out.println("Connected to multiplayer server.");
 						isConnected = true;
 					} catch (IOException e) {
@@ -52,7 +51,7 @@ public class Connection {
 	}
 
 	private ObjectOutputStream getOutputStream() {
-		System.out.println(output);
+		System.out.println("Output stream: " + output);
 		return output;
 	}
 

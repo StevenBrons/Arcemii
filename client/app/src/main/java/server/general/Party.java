@@ -1,7 +1,5 @@
 package server.general;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import shared.entities.Player;
