@@ -60,7 +60,7 @@ public class LobbyActivity extends AppCompatActivity {
 			public void run() {
 				String players = "MASTER: ";
 				for(int i = 0; i < m.getClients().size(); i++){
-					players += m.getClients().get(i).getName() + "\n";
+					players += m.getClients().get(i).getPlayer().getName() + "\n";
 				}
 
 				txtPlayers.setText(players);

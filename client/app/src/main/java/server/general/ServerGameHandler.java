@@ -70,7 +70,7 @@ public class ServerGameHandler {
 	 */
 	private void playerInfoMessage(PlayerInfoMessage m, Client client){
 		if(m.getName().length() > 0)
-			client.setName(m.getName());
+			client.getPlayer().setName(m.getName());
 	}
 
 	/**

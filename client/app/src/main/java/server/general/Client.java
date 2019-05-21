@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import shared.entities.Player;
 import shared.messages.Message;
 
 public class Client {
 
-	private String name = "Player#" + (int)(Math.random()*99999);
+	private Player player;
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
 
@@ -36,20 +37,9 @@ public class Client {
 		return input;
 	}
 
-	/**
-	 * Set the name of the player.
-	 * @param name
-	 * @author Bram Pulles
-	 */
-	public void setName(String name){
-		this.name = name;
+	public Player getPlayer() {
+		return player;
 	}
 
-	/**
-	 * @return name of the player.
-	 * @author Bram Pulles
-	 */
-	public String getName(){
-		return name;
-	}
+
 }

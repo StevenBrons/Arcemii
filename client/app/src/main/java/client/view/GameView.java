@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import client.controller.ClientGameHandler;
 import shared.entities.Entity;
 import shared.entities.Player;
 import shared.entities.Slime;
@@ -36,14 +37,13 @@ public class GameView extends View {
     public GameView(Context context) {
         super(context);
         Tile grass = new Empty();
-        Entity player = new Player(24,36);
         Entity slime = new Slime();
         for (int x = 0;x<12;x++){
             for (int y = 0;y<18;y++){
                 drawObjects.add(grass.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
             }
         }
-        drawObjects.add(player.getRenderItem());
+        drawObjects.add(ClientGameHandler.handler.getPlayer().getRenderItem());
         drawObjects.add(slime.getRenderItem());
     }
 
@@ -56,8 +56,11 @@ public class GameView extends View {
         }
         Collections.sort(drawObjects);
         canvas.drawColor(Color.BLACK);
+        Player player = ClientGameHandler.handler.getPlayer();
+        int offsetX = getWidth()/8-player.getxPos();
+        int offsetY = getHeight()/8-player.getyPos();
         for (RenderItem object: drawObjects){
-            object.renderTo(temporary,0,0);
+            object.renderTo(temporary,offsetX,offsetY);
         }
         canvas.drawBitmap(screen,src, des,new Paint());
     }

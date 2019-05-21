@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
+import shared.entities.Player;
 import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
 import shared.messages.UpdatePartyMessage;
@@ -12,6 +13,7 @@ public class ClientGameHandler {
 
 	public static ClientGameHandler handler;
 	private Connection connection;
+	private Player player = new Player(144,48);
 
 	private SharedPreferences sharedPreferences;
 
@@ -128,6 +130,10 @@ public class ClientGameHandler {
 	 */
 	public UpdatePartyMessage getUpdatePartyMessage(){
 		return updatePartyMessage;
+	}
+
+	public Player getPlayer(){
+		return player;
 	}
 
 }
