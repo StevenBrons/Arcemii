@@ -7,6 +7,6 @@ import shared.tiles.Tile;
 public class Slime extends Entity {
 	@Override
 	public RenderItem getRenderItem(){
-		return new RenderItem("testSlime",0, Tile.HEIGHT,0.0,1.0);
+		return new RenderItem("slime/testSlime",0, Tile.HEIGHT,0.0,1.0);
 	}
 }

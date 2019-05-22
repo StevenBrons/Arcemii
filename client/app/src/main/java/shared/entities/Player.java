@@ -24,7 +24,7 @@ public class Player extends Entity{
 
 	@Override
 	public RenderItem getRenderItem(){
-		return new RenderItem("playerBlueIdle",xPos, yPos,0.5,1.0);
+		return new RenderItem("player/playerBlueIdle",xPos, yPos,0.5,1.0);
 	}
 
 	/**
