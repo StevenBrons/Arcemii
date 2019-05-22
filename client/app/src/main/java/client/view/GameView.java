@@ -13,8 +13,11 @@ import java.util.Collections;
 import java.util.List;
 
 import client.controller.ClientGameHandler;
+import shared.entities.Arrow;
+import shared.entities.Boss;
 import shared.entities.Entity;
 import shared.entities.Player;
+import shared.entities.Skeleton;
 import shared.entities.Slime;
 import shared.general.Level;
 import shared.tiles.Empty;
@@ -37,14 +40,48 @@ public class GameView extends View {
     public GameView(Context context) {
         super(context);
         Tile grass = new Empty();
-        Entity slime = new Slime();
+        Boss boss = new Boss(36,96);
+        Slime slime = new Slime(84,72);
+        Slime slime2 = new Slime(108,72);
+        slime2.setVelocity(2,2);
+        Skeleton skeleton = new Skeleton(60,72);
+        Skeleton skeleton2 = new Skeleton(60,96);
+        skeleton2.setVelocity(2,2);
+        Skeleton skeleton3 = new Skeleton(84,96);
+        skeleton3.setShooting(true);
+        Player player2 = new Player(60,48,1);
+        Player player3 = new Player(84,48,2);
+        Player player4 = new Player(108,48,3);
+        Player player5 = new Player(36,24,0);
+        Player player6 = new Player(60,24,1);
+        Player player7 = new Player(84,24,2);
+        Player player8 = new Player(108,24,3);
+        player5.setVelocity(2,2);
+        player6.setVelocity(2,2);
+        player7.setVelocity(2,2);
+        player8.setVelocity(2,2);
+        Arrow arrow = new Arrow(108,84,2,2);
         for (int x = 0;x<12;x++){
             for (int y = 0;y<18;y++){
                 drawObjects.add(grass.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
             }
         }
         drawObjects.add(ClientGameHandler.handler.getPlayer().getRenderItem());
+        drawObjects.add(boss.getRenderItem());
         drawObjects.add(slime.getRenderItem());
+        drawObjects.add(slime2.getRenderItem());
+        drawObjects.add(skeleton.getRenderItem());
+        drawObjects.add(skeleton2.getRenderItem());
+        drawObjects.add(skeleton3.getRenderItem());
+        drawObjects.add(player2.getRenderItem());
+        drawObjects.add(player3.getRenderItem());
+        drawObjects.add(player4.getRenderItem());
+        drawObjects.add(player5.getRenderItem());
+        drawObjects.add(player6.getRenderItem());
+        drawObjects.add(player7.getRenderItem());
+        drawObjects.add(player8.getRenderItem());
+        drawObjects.add(arrow.getRenderItem());
+
     }
 
     private List<RenderItem> drawObjects = new ArrayList<>();

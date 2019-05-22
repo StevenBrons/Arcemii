@@ -13,7 +13,7 @@ public class ClientGameHandler {
 
 	public static ClientGameHandler handler;
 	private Connection connection;
-	private Player player = new Player(144,48);
+	private Player player = new Player(36,48,0);
 
 	private SharedPreferences sharedPreferences;
 
