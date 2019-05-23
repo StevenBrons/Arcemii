@@ -67,20 +67,17 @@ public class Texture {
             path.append('/');
             path.append(namepart[i]);
         }
-        Log.i("path",path.toString());
         name = namepart[namepart.length-1];
         try {
             for (String spriteFile: manager.list(path.toString())){
                 String spriteName = FilenameUtils.removeExtension(spriteFile);
                 if (spriteName.matches(name)){
-                    Log.i("Texture",path.toString()+"/"+spriteName);
                     if (!textures.containsKey(spriteName)) {
                         Bitmap b = BitmapFactory.decodeStream(manager.open(path.toString()+ "/" + spriteFile));
                         textures.put(path.toString()+"/"+spriteName, b);
                     }
                 }
                 if (spriteName.matches(name+"_\\d+")){
-                    Log.i("Texture",spriteName);
                     this.animated = true;
                     if (!textures.containsKey(spriteName)) {
                         Bitmap b = BitmapFactory.decodeStream(manager.open(path.toString() + "/" + spriteFile));
