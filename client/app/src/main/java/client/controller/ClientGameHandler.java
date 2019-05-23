@@ -1,6 +1,9 @@
 package client.controller;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.debernardi.archemii.R;
 
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
@@ -9,27 +12,29 @@ import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
 import shared.messages.UpdatePartyMessage;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ClientGameHandler {
 
 	public static ClientGameHandler handler;
 	private Connection connection;
 	private Player player = new Player(36,48,0);
 
-	private SharedPreferences sharedPreferences;
+	private Context context;
 
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
 	private UpdatePartyMessage updatePartyMessage;
 
-	private ClientGameHandler(SharedPreferences sharedPreferences) {
-		this.sharedPreferences = sharedPreferences;
+	private ClientGameHandler(Context context) {
+		this.context = context;
 		connection = new Connection(false);
 		start();
 	}
 
-	public static void init(SharedPreferences sharedPreferences) {
+	public static void init(Context context) {
 		if (handler == null) {
-			handler = new ClientGameHandler(sharedPreferences);
+			handler = new ClientGameHandler(context);
 		}
 	}
 
@@ -105,7 +110,8 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 */
 	public void playerInfoMessage(){
-		String username = sharedPreferences.getString("username", "-");
+		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
+		String username = sharedPrefs.getString("username", "-");
 		if(!username.equals("-"))
 			handler.connection.sendMessage(new PlayerInfoMessage(username));
 	}
