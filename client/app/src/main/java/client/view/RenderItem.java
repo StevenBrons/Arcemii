@@ -2,12 +2,15 @@ package client.view;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 
 public class RenderItem implements Comparable<RenderItem>{
     private Texture texture;
     private int x,y;
     double refX,refY;
+    float rotation;
+    boolean flip;
 
     /**
      * Creates a new RenderItem
@@ -26,6 +29,14 @@ public class RenderItem implements Comparable<RenderItem>{
         this.refY = refY;
     }
 
+    public void setRotation(float rotation){
+    	this.rotation = rotation;
+	}
+
+	public void setFlip(boolean flip){
+    	this.flip = flip;
+	}
+
     /**
      * Sort method to ensure correct drawing order
      * @param other
@@ -36,10 +47,17 @@ public class RenderItem implements Comparable<RenderItem>{
         return this.y-other.y;
     }
 
-    public void renderTo(Canvas c,int offsetX, int offsetY){
-        Bitmap bitmap = texture.getBitmap();
-        c.drawBitmap(bitmap,
-                x+offsetX-(int)(bitmap.getWidth() *refX),
-                y+offsetY-(int)(bitmap.getHeight()*refY),new Paint());
-    }
+    public void renderTo(Canvas c, int offsetX, int offsetY){
+		Bitmap bitmap = texture.getBitmap();
+		Matrix matrix = new Matrix();
+		if (flip){
+			matrix.postScale(-1.0f,1.0f,(int)refX*bitmap.getWidth(),(int)refY*bitmap.getHeight());
+		}
+		matrix.postRotate(rotation,(int)refX*bitmap.getWidth(),(int)refY*bitmap.getHeight());
+		Bitmap transformed = Bitmap.createBitmap(bitmap,0,0,
+				bitmap.getWidth(),bitmap.getHeight(),matrix,false);
+		c.drawBitmap(transformed,
+				x+offsetX-(int)(bitmap.getWidth() *refX),
+				y+offsetY-(int)(bitmap.getHeight()*refY),new Paint());
+	}
 }

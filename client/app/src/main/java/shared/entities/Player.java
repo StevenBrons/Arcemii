@@ -32,34 +32,39 @@ public class Player extends Entity{
 
 	@Override
 	public RenderItem getRenderItem(){
+		RenderItem renderItem;
 		if (xVel*xVel+yVel*yVel>5){
 			switch (color) {
-				case 0: return new RenderItem(
-						"player/playerBlueWalking", xPos, yPos, 0.5, 1.0);
-				case 1: return new RenderItem(
-						"player/playerGreenWalking", xPos, yPos, 0.5, 1.0);
-				case 2: return new RenderItem(
-						"player/playerGreyWalking", xPos, yPos, 0.5, 1.0);
-				case 3: return new RenderItem(
-						"player/playerRedWalking", xPos, yPos, 0.5, 1.0);
-				default: return new RenderItem(
-						"player/playerBlueWalking", xPos, yPos, 0.5, 1.0);
+				case 0: renderItem = new RenderItem(
+						"player/playerBlueWalking", xPos, yPos, 0.5, 1.0);break;
+				case 1: renderItem = new RenderItem(
+						"player/playerGreenWalking", xPos, yPos, 0.5, 1.0);break;
+				case 2: renderItem = new RenderItem(
+						"player/playerGreyWalking", xPos, yPos, 0.5, 1.0);break;
+				case 3: renderItem = new RenderItem(
+						"player/playerRedWalking", xPos, yPos, 0.5, 1.0);break;
+				default: renderItem = new RenderItem(
+						"player/playerBlueWalking", xPos, yPos, 0.5, 1.0);break;
 			}
 		}
 		else{
 			switch (color) {
-				case 0: return new RenderItem(
-						"player/playerBlueIdle", xPos, yPos, 0.5, 1.0);
-				case 1: return new RenderItem(
-						"player/playerGreenIdle", xPos, yPos, 0.5, 1.0);
-				case 2: return new RenderItem(
-						"player/playerGreyIdle", xPos, yPos, 0.5, 1.0);
-				case 3: return new RenderItem(
-						"player/playerRedIdle", xPos, yPos, 0.5, 1.0);
-				default: return new RenderItem(
-						"player/playerBlueIdle", xPos, yPos, 0.5, 1.0);
+				case 0: renderItem = new RenderItem(
+						"player/playerBlueIdle", xPos, yPos, 0.5, 1.0);break;
+				case 1: renderItem = new RenderItem(
+						"player/playerGreenIdle", xPos, yPos, 0.5, 1.0);break;
+				case 2: renderItem = new RenderItem(
+						"player/playerGreyIdle", xPos, yPos, 0.5, 1.0);break;
+				case 3: renderItem = new RenderItem(
+						"player/playerRedIdle", xPos, yPos, 0.5, 1.0);break;
+				default: renderItem = new RenderItem(
+						"player/playerBlueIdle", xPos, yPos, 0.5, 1.0);break;
 			}
 		}
+		if (xVel < 0){
+			renderItem.setFlip(true);
+		}
+		return renderItem;
 	}
 
 	/**

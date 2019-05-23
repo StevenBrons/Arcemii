@@ -43,12 +43,13 @@ public class GameView extends View {
         Boss boss = new Boss(36,96);
         Slime slime = new Slime(84,72);
         Slime slime2 = new Slime(108,72);
-        slime2.setVelocity(2,2);
+        slime2.setVelocity(-2,2);
         Skeleton skeleton = new Skeleton(60,72);
         Skeleton skeleton2 = new Skeleton(60,96);
         skeleton2.setVelocity(2,2);
         Skeleton skeleton3 = new Skeleton(84,96);
         skeleton3.setShooting(true);
+        skeleton3.setVelocity(-2,0);
         Player player2 = new Player(60,48,1);
         Player player3 = new Player(84,48,2);
         Player player4 = new Player(108,48,3);
@@ -57,9 +58,9 @@ public class GameView extends View {
         Player player7 = new Player(84,24,2);
         Player player8 = new Player(108,24,3);
         player5.setVelocity(2,2);
-        player6.setVelocity(2,2);
+        player6.setVelocity(-2,2);
         player7.setVelocity(2,2);
-        player8.setVelocity(2,2);
+        player8.setVelocity(-2,2);
         Arrow arrow = new Arrow(108,84,2,2);
         for (int x = 0;x<12;x++){
             for (int y = 0;y<18;y++){

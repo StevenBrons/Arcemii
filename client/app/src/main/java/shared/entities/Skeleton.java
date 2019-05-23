@@ -24,14 +24,19 @@ public class Skeleton extends Entity {
 
 	@Override
 	public RenderItem getRenderItem(){
+		RenderItem renderItem;
 		if (shooting){
-			return new RenderItem("skeleton/skeletonShooting",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("skeleton/skeletonShooting",xPos, yPos,0.5,1.0);
 		}
 		else if (xVel*xVel+yVel*yVel>5){
-			return new RenderItem("skeleton/skeletonWalking",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("skeleton/skeletonWalking",xPos, yPos,0.5,1.0);
 		}
 		else{
-			return new RenderItem("skeleton/skeletonIdle",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("skeleton/skeletonIdle",xPos, yPos,0.5,1.0);
 		}
+		if (xVel < 0){
+			renderItem.setFlip(true);
+		}
+		return renderItem;
 	}
 }

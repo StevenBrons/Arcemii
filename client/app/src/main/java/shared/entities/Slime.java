@@ -20,11 +20,16 @@ public class Slime extends Entity {
 
 	@Override
 	public RenderItem getRenderItem(){
+		RenderItem renderItem;
 		if (xVel*xVel+yVel*yVel > 5){
-			return new RenderItem("slime/redSlimeJump",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("slime/redSlimeJump",xPos, yPos,0.5,1.0);
 		}
 		else{
-			return new RenderItem("slime/testSlime",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("slime/testSlime",xPos, yPos,0.5,1.0);
 		}
+		if (xVel < 0){
+			renderItem.setFlip(true);
+		}
+		return renderItem;
 	}
 }
