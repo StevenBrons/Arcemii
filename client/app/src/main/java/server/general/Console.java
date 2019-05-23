@@ -37,7 +37,7 @@ public class Console {
 		System.out.println("------ Available commands: ------");
 		System.out.println("help");
 		System.out.println("stop");
-		System.out.println("parties");
+		//System.out.println("parties");
 	}
 
 }
