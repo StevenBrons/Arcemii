@@ -2,6 +2,7 @@ package client.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.debernardi.archemii.R;
 
@@ -29,7 +30,7 @@ public class ClientGameHandler {
 	private ClientGameHandler(Context context) {
 		this.context = context;
 		connection = new Connection(false, context);
-		start();
+		startListening();
 	}
 
 	public static void init(Context context) {
@@ -38,7 +39,7 @@ public class ClientGameHandler {
 		}
 	}
 
-	public void start() {
+	public void startListening() {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
