@@ -12,6 +12,13 @@ public abstract class Tile {
     boolean isSolid() {
         return true;
     }
+
+    /**
+     * @param x x position of the topleft of a Tile (game pixels)
+     * @param y y position of the topleft of a Tile (game pixels)
+     * @return a fallback RenderItem for subclasses that haven't implemented this method
+     * @author Jelmer Firet
+     */
     public List<RenderItem> getRenderItem(int x, int y){
         List<RenderItem> result = new ArrayList<>();
         result.add(new RenderItem("fallback",x,y,0.0,1.0));
