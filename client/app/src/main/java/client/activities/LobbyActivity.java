@@ -123,8 +123,8 @@ public class LobbyActivity extends AppCompatActivity {
 			@Override
 			public void run() {
 				String players = "MASTER: ";
-				for(int i = 0; i < m.getPlayers().size(); i++){
-					players += m.getPlayers().get(i).getName() + "\n";
+				for(int i = 0; i < m.getClients().size(); i++){
+					players += m.getClients().get(i).getPlayer().getName() + "\n";
 				}
 
 				txtPlayers.setText(players);

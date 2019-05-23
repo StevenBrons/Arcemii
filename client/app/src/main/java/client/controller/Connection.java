@@ -11,7 +11,7 @@ import shared.messages.Message;
 
 public class Connection {
 
-	private static final String hostName = "10.0.2.2";
+	private static final String hostName = "192.168.178.23";
 	private static final int PORT = 26194;
 	public static boolean isConnected = false;
 
@@ -60,16 +60,18 @@ public class Connection {
 	 * @param msg message
 	 */
 	public void sendMessage(final Message msg) {
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					getOutputStream().writeObject(msg);
-				} catch (IOException e) {
-					e.printStackTrace();
+		if (isConnected){
+			Thread t = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						getOutputStream().writeObject(msg);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		});
-		t.start();
+			});
+			t.start();
+		}
 	}
 }

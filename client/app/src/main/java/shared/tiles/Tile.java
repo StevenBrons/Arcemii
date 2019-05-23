@@ -1,5 +1,8 @@
 package shared.tiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.view.RenderItem;
 
 public abstract class Tile {
@@ -9,7 +12,9 @@ public abstract class Tile {
     boolean isSolid() {
         return true;
     }
-    public RenderItem getRenderItem(int x, int y){
-        return new RenderItem("fallback",x,y,0.0,1.0);
+    public List<RenderItem> getRenderItem(int x, int y){
+        List<RenderItem> result = new ArrayList<>();
+        result.add(new RenderItem("fallback",x,y,0.0,1.0));
+        return result;
     }
 }

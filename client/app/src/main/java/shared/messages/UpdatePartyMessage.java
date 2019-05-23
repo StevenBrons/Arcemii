@@ -2,23 +2,23 @@ package shared.messages;
 
 import java.util.ArrayList;
 
-import shared.entities.Player;
+import server.general.Client;
 
 public class UpdatePartyMessage extends Message{
 
 	private int partyId;
-	private ArrayList<Player> players;
+	private ArrayList<Client> clients;
 
-	public UpdatePartyMessage(int partyId, ArrayList<Player> players) {
+	public UpdatePartyMessage(int partyId, ArrayList<Client> clients) {
 		this.partyId = partyId;
-		this.players = players;
+		this.clients = clients;
 	}
 
 	public int getPartyId() {
 		return partyId;
 	}
 
-	public ArrayList<Player> getPlayers() {
-		return players;
+	public ArrayList<Client> getClients() {
+		return clients;
 	}
 }

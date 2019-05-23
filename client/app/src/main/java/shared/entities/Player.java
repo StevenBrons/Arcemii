@@ -3,40 +3,72 @@ package shared.entities;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import client.view.RenderItem;
 import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
 
+/**
+ * The class that handles rendering and actions of Sako, the player character
+ */
 public class Player extends Entity{
 
 	private String name = "Player#" + (int)(Math.random()*99999);
-	private transient ObjectInputStream input;
-	private transient ObjectOutputStream output;
+	private int xPos, yPos;
+	private int xVel, yVel;
+	private int color;
 
-	public Player () {
+	public Player(int x, int y, int color){
+		this.xPos = x;
+		this.yPos = y;
+		this.color = color;
 	}
 
-	public Player (ObjectInputStream input, ObjectOutputStream output) {
-		this.input = input;
-		this.output = output;
+	public void setVelocity(int dx, int dy){
+		this.xVel = dx;
+		this.yVel = dy;
 	}
 
-	/**
-	 * Send message to this player.
-	 * @param m message
-	 */
-	public void sendMessage(Message m) {
-		try {
-			output.writeObject(m);
-			output.reset();
-			output.flush();
-		} catch (IOException e) {
+	@Override
+	public List<RenderItem> getRenderItem(){
+		List<RenderItem> result = new ArrayList<>();
+		RenderItem renderItem;
+		if (xVel*xVel+yVel*yVel>5){
+			switch (color) {
+				case 0: renderItem = new RenderItem(
+						"player/playerBlueWalking", xPos, yPos, 0.5, 1.0);break;
+				case 1: renderItem = new RenderItem(
+						"player/playerGreenWalking", xPos, yPos, 0.5, 1.0);break;
+				case 2: renderItem = new RenderItem(
+						"player/playerGreyWalking", xPos, yPos, 0.5, 1.0);break;
+				case 3: renderItem = new RenderItem(
+						"player/playerRedWalking", xPos, yPos, 0.5, 1.0);break;
+				default: renderItem = new RenderItem(
+						"player/playerBlueWalking", xPos, yPos, 0.5, 1.0);break;
+			}
 		}
-	}
-	public ObjectInputStream getInputStream() {
-		return input;
+		else{
+			switch (color) {
+				case 0: renderItem = new RenderItem(
+						"player/playerBlueIdle", xPos, yPos, 0.5, 1.0);break;
+				case 1: renderItem = new RenderItem(
+						"player/playerGreenIdle", xPos, yPos, 0.5, 1.0);break;
+				case 2: renderItem = new RenderItem(
+						"player/playerGreyIdle", xPos, yPos, 0.5, 1.0);break;
+				case 3: renderItem = new RenderItem(
+						"player/playerRedIdle", xPos, yPos, 0.5, 1.0);break;
+				default: renderItem = new RenderItem(
+						"player/playerBlueIdle", xPos, yPos, 0.5, 1.0);break;
+			}
+		}
+		if (xVel < 0){
+			renderItem.setFlip(true);
+		}
+		result.add(renderItem);
+		return result;
 	}
 
 	/**
@@ -56,8 +88,11 @@ public class Player extends Entity{
 		return name;
 	}
 
-	@Override
-	public RenderItem getRenderItem(){
-		return new RenderItem("playerBlueIdle",0, Tile.HEIGHT,0.0,1.0);
+	public int getxPos() {
+		return xPos;
+	}
+
+	public int getyPos() {
+		return yPos;
 	}
 }

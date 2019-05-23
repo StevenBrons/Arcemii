@@ -1,12 +1,8 @@
 package server.general;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
-import shared.entities.Player;
 import shared.messages.JoinPartyMessage;
-import shared.messages.LeavePartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
 import shared.messages.PlayerInfoMessage;
@@ -19,20 +15,20 @@ public class ServerGameHandler {
 	}
 
 	/**
-	 * Make a new thread to receive messages from the new player.
-	 * Send a message to the client with the player information.
-	 * @param player
+	 * Make a new thread to receive messages from the new client.
+	 * Send a message to the client with the client information.
+	 * @param client
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
-	public void addPlayer(final Player player) {
-		System.out.println("A new player has joined: " + player);
+	public void addPlayer(final Client client) {
+		System.out.println("A new client has joined: " + client);
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 			while (true) {
 				try {
-					Message m = (Message) player.getInputStream().readObject();
-					handlePlayerInput(m, player);
+					Message m = (Message) client.getInputStream().readObject();
+					handlePlayerInput(m, client);
 				} catch (Exception e) {
 				}
 			}
@@ -40,53 +36,53 @@ public class ServerGameHandler {
 		});
 		thread.start();
 
-		player.sendMessage(new PlayerInfoMessage());
+		client.sendMessage(new PlayerInfoMessage());
 	}
 
 	/**
-	 * Handles the message send by a certain player.
+	 * Handles the message send by a certain client.
 	 * @param m message.
-	 * @param player
+	 * @param client
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
-	private void handlePlayerInput(Message m, Player player) {
+	private void handlePlayerInput(Message m, Client client) {
 		switch (m.getType()) {
 			case "CreatePartyMessage":
-				createPartyMessage(player);
+				createPartyMessage(client);
 				break;
 			case "JoinPartyMessage":
-				joinPartyMessage((JoinPartyMessage)m, player);
+				joinPartyMessage((JoinPartyMessage)m, client);
 				break;
 			case "LeavePartyMessage":
-				leavePartyMessage(player);
+				leavePartyMessage(client);
 				break;
 			case "PlayerInfoMessage":
-				playerInfoMessage((PlayerInfoMessage)m, player);
+				playerInfoMessage((PlayerInfoMessage)m, client);
 				break;
 		}
 	}
 
 	/**
-	 * This method receives information about the player on the client side and sets a new name for the player.
-	 * @param m player info message.
-	 * @param player
+	 * This method receives information about the client on the client side and sets a new name for the client.
+	 * @param m client info message.
+	 * @param client
 	 * @author Bram Pulles
 	 */
-	private void playerInfoMessage(PlayerInfoMessage m, Player player){
+	private void playerInfoMessage(PlayerInfoMessage m, Client client){
 		if(m.getName().length() > 0)
-			player.setName(m.getName());
+			client.getPlayer().setName(m.getName());
 	}
 
 	/**
-	 * Remove the player from his party.
+	 * Remove the client from his party.
 	 * Also remove the party if the party is empty.
-	 * @param player
+	 * @param client
 	 * @author Bram Pulles
 	 */
-	private void leavePartyMessage(Player player){
+	private void leavePartyMessage(Client client){
 		for(Party party : parties) {
-			if (party.containsPlayer(player)) {
-				party.removePlayer(player);
+			if (party.containsPlayer(client)) {
+				party.removePlayer(client);
 				if(party.isEmpty())
 					parties.remove(party);
 			}
@@ -94,28 +90,28 @@ public class ServerGameHandler {
 	}
 
 	/**
-	 * Join the player to the given party.
+	 * Join the client to the given party.
 	 * @param m join party message.
-	 * @param player
+	 * @param client
 	 * @author Bram Pulles
 	 */
-	private void joinPartyMessage(JoinPartyMessage m, Player player){
+	private void joinPartyMessage(JoinPartyMessage m, Client client){
 		for(Party party : parties){
 			if(party.getPartyId() == m.getPartyId()){
-				player.sendMessage(new PartyJoinedMessage());
-				party.addPlayer(player);
+				client.sendMessage(new PartyJoinedMessage());
+				party.addPlayer(client);
 			}
 		}
 	}
 
 	/**
 	 * Create a new party.
-	 * @param player
+	 * @param client
 	 * @author Bram Pulles
 	 */
-	private void createPartyMessage(Player player){
+	private void createPartyMessage(Client client){
 		Party party = new Party();
-		party.addPlayer(player);
+		party.addPlayer(client);
 		parties.add(party);
 	}
 }
