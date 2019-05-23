@@ -60,7 +60,44 @@ Main item on the agenda were dividing task:
 	\item Thomas: Looking at abilities
 \end{itemize}
 
+\subsection*{Week 21}
+As usual, we had our first meeting on Monday morning. Everyone was present, though Robert only attended the second half. We started with discussing what everyone had achieved over the weekend. Actually, the divided tasks were pretty big, so everyone was still busy with them. Because of Jelmer's rendering, we could see the first animations on screen. 
 
- 
+We then discussed the game envisioned in more detail:
+\begin{itemize}
+	\item We want players to be able to play the game in short bursts (like in the breaks in the middle of lectures), so we're aiming at 15-20 minutes per total game. That means that we'll probably have 3 levels per game. In the furure, we can expand this with an option to choose between a short, medium and long game.
+	\item We'll start with making just 3 abilities, of which the player can choose 2 or 3 at the beginning of the game. The idea is that this will be easy to expand on later.
+	\item For enemies, we'll strt with 3 basic ones:
+	\begin{itemize}
+		\item An enemy that does damage on touch: a slime. A slime will be able to make a jump attack.
+		\item An enemy that attcks with range: a skeleton that will shoot at players.
+		\item A boss that is bigger and does more damage.
+	\end{itemize}
+	\item We discussed abilities being on cooldown versus using mana to use them. The majority is pro cooldown, but we'll come back to this later when the implementation becomes relevant.
+\end{itemize}
+We set our next meeting for Thursday and gave everyone new tasks (well, most of them are continuations of the last ones). New ones are:
+\begin{itemize}
+	\item Steven: make it able to test multiplayer.
+	\item Thomas: work on ability selection
+	\item Bram: finalize the lobby activity.
+\end{itemize}
+\bigbreak\noindent
+Thursday was our second meeting. Everyone but Thomas was present. This is very inconvenient, as he did not finish his task.\\
+Jelmer had continued with his rendering and the only thing left is rendering outside of a level. Thijs made the following animations:
+\begin{itemize}
+	\item Idle and walking animations for 4 player characters
+	\item Idle and jumping animations for a slime
+	\item Idle, walking and shooting animations for a skeleton
+	\item A floating animations for a boss
+	\item A tree
+\end{itemize}
+Robert is almost done with the dungeon generator, and he'll finish this for next Monday. We made some more dungeon specifications for him to generate: enemy locations and start en goal positions.
+
+Thijs and Bram discussed the layout and style for the different activities. Mainly, the lobby activity, where the party waits for the game to start and players choose their abilities, has to change so that abilities will actually be able to be chosen. This is a task given to Bram for next Monday. 
+
+Steven aims to make all game-logic that is not directly dependent on tasks given to others. 
+
+Thomas is given the task to start on the in-game UI. 
+
 
 \end{document}
