@@ -3,6 +3,8 @@ package shared.entities;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import client.view.RenderItem;
 import shared.general.Level;
@@ -31,7 +33,8 @@ public class Player extends Entity{
 	}
 
 	@Override
-	public RenderItem getRenderItem(){
+	public List<RenderItem> getRenderItem(){
+		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem;
 		if (xVel*xVel+yVel*yVel>5){
 			switch (color) {
@@ -64,7 +67,8 @@ public class Player extends Entity{
 		if (xVel < 0){
 			renderItem.setFlip(true);
 		}
-		return renderItem;
+		result.add(renderItem);
+		return result;
 	}
 
 	/**

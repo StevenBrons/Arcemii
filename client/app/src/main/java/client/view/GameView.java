@@ -22,6 +22,7 @@ import shared.entities.Slime;
 import shared.general.Level;
 import shared.tiles.Empty;
 import shared.tiles.Tile;
+import shared.tiles.Wall;
 
 public class GameView extends View {
     Bitmap screen;
@@ -39,7 +40,6 @@ public class GameView extends View {
 
     public GameView(Context context) {
         super(context);
-        Tile grass = new Empty();
         Boss boss = new Boss(36,96);
         Slime slime = new Slime(84,72);
         Slime slime2 = new Slime(108,72);
@@ -64,24 +64,31 @@ public class GameView extends View {
         Arrow arrow = new Arrow(108,84,2,2);
         for (int x = 0;x<12;x++){
             for (int y = 0;y<18;y++){
-                drawObjects.add(grass.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
+                if (x == 0 || x > 4 || y == 0 || y > 4){
+                    Wall tree = new Wall();
+                    drawObjects.addAll(tree.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
+                }
+                else{
+                    Empty grass = new Empty();
+                    drawObjects.addAll(grass.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
+                }
             }
         }
-        drawObjects.add(ClientGameHandler.handler.getPlayer().getRenderItem());
-        drawObjects.add(boss.getRenderItem());
-        drawObjects.add(slime.getRenderItem());
-        drawObjects.add(slime2.getRenderItem());
-        drawObjects.add(skeleton.getRenderItem());
-        drawObjects.add(skeleton2.getRenderItem());
-        drawObjects.add(skeleton3.getRenderItem());
-        drawObjects.add(player2.getRenderItem());
-        drawObjects.add(player3.getRenderItem());
-        drawObjects.add(player4.getRenderItem());
-        drawObjects.add(player5.getRenderItem());
-        drawObjects.add(player6.getRenderItem());
-        drawObjects.add(player7.getRenderItem());
-        drawObjects.add(player8.getRenderItem());
-        drawObjects.add(arrow.getRenderItem());
+        drawObjects.addAll(ClientGameHandler.handler.getPlayer().getRenderItem());
+        drawObjects.addAll(boss.getRenderItem());
+        drawObjects.addAll(slime.getRenderItem());
+        drawObjects.addAll(slime2.getRenderItem());
+        drawObjects.addAll(skeleton.getRenderItem());
+        drawObjects.addAll(skeleton2.getRenderItem());
+        drawObjects.addAll(skeleton3.getRenderItem());
+        drawObjects.addAll(player2.getRenderItem());
+        drawObjects.addAll(player3.getRenderItem());
+        drawObjects.addAll(player4.getRenderItem());
+        drawObjects.addAll(player5.getRenderItem());
+        drawObjects.addAll(player6.getRenderItem());
+        drawObjects.addAll(player7.getRenderItem());
+        drawObjects.addAll(player8.getRenderItem());
+        drawObjects.addAll(arrow.getRenderItem());
 
     }
 
@@ -107,12 +114,12 @@ public class GameView extends View {
         drawObjects.clear();
         for (int x = 0;x<level.getWidth();x++){
             for (int y = 0;y<level.getHeight();y++){
-                drawObjects.add(level.getTileAt(x,y).getRenderItem(24* Tile.WIDTH,
+                drawObjects.addAll(level.getTileAt(x,y).getRenderItem(24* Tile.WIDTH,
                         24*Tile.HEIGHT+Tile.TOPOFFSET));
             }
         }
         for (int idx = 0;idx<level.getNumEntity();idx++){
-            drawObjects.add(level.getEntityAt(idx).getRenderItem());
+            drawObjects.addAll(level.getEntityAt(idx).getRenderItem());
         }
     }
 }

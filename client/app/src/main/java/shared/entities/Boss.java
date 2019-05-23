@@ -1,5 +1,8 @@
 package shared.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.view.RenderItem;
 
 public class Boss extends Entity {
@@ -11,7 +14,9 @@ public class Boss extends Entity {
 	}
 
 	@Override
-	public RenderItem getRenderItem(){
-		return new RenderItem("boss/bossFloating",xPos, yPos,0.5,1.0);
+	public List<RenderItem> getRenderItem(){
+		List<RenderItem> result = new ArrayList<>();
+		result.add(new RenderItem("boss/bossFloating",xPos, yPos,0.5,1.0));
+		return result;
 	}
 }

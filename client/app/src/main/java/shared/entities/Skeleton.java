@@ -1,5 +1,8 @@
 package shared.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.view.RenderItem;
 import shared.tiles.Tile;
 
@@ -23,7 +26,8 @@ public class Skeleton extends Entity {
 	}
 
 	@Override
-	public RenderItem getRenderItem(){
+	public List<RenderItem> getRenderItem(){
+		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem;
 		if (shooting){
 			renderItem = new RenderItem("skeleton/skeletonShooting",xPos, yPos,0.5,1.0);
@@ -37,6 +41,7 @@ public class Skeleton extends Entity {
 		if (xVel < 0){
 			renderItem.setFlip(true);
 		}
-		return renderItem;
+		result.add(renderItem);
+		return result;
 	}
 }

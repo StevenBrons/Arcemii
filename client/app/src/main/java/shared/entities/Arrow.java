@@ -1,5 +1,8 @@
 package shared.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import client.view.RenderItem;
 
 public class Arrow extends Entity{
@@ -14,9 +17,11 @@ public class Arrow extends Entity{
 	}
 
 	@Override
-	public RenderItem getRenderItem(){
+	public List<RenderItem> getRenderItem(){
+		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem = new RenderItem("arrowHorizontal",xPos,yPos,0.5,0.5);
 		renderItem.setRotation(180.0f/(float)Math.PI*(float)Math.atan2((float)yVel,(float) xVel));
-		return renderItem;
+		result.add(renderItem);
+		return result;
 	}
 }

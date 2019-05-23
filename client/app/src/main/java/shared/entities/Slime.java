@@ -1,5 +1,8 @@
 package shared.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import shared.entities.Entity;
 import client.view.RenderItem;
 import shared.tiles.Tile;
@@ -19,7 +22,8 @@ public class Slime extends Entity {
 	}
 
 	@Override
-	public RenderItem getRenderItem(){
+	public List<RenderItem> getRenderItem(){
+		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem;
 		if (xVel*xVel+yVel*yVel > 5){
 			renderItem = new RenderItem("slime/redSlimeJump",xPos, yPos,0.5,1.0);
@@ -30,6 +34,7 @@ public class Slime extends Entity {
 		if (xVel < 0){
 			renderItem.setFlip(true);
 		}
-		return renderItem;
+		result.add(renderItem);
+		return result;
 	}
 }
