@@ -28,7 +28,7 @@ public class ClientGameHandler {
 
 	private ClientGameHandler(Context context) {
 		this.context = context;
-		connection = new Connection(false);
+		connection = new Connection(false, context);
 		start();
 	}
 

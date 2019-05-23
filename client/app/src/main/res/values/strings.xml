@@ -15,4 +15,8 @@
     <string name="save">Save</string>
     <string name="sharedpref_username">username</string>
     <string name="sharedpref_playerinfo">playerinfo</string>
+    <string name="sharedpref_connectioninfo">connectioninfo</string>
+    <string name="sharedpref_connection">connection</string>
+    <string name="connected">connected</string>
+    <string name="disconnected">disconnected</string>
 </resources>
