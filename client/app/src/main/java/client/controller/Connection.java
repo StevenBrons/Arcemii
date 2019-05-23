@@ -19,6 +19,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Connection {
 
+	private static final String tag = "CONNECTION";
+
 	// Jelmers server ip: 213.124.165.68
 	private static final String hostName = "10.0.2.2";
 	private static final int PORT = 26194;
@@ -38,23 +40,27 @@ public class Connection {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Log.d("CONNECTION", "Connecting to server...");
+				Log.d(tag, "Connecting to server...");
+
 				if (singlePlayer) {
 					ArcemiiServer.main(new String[]{"singleplayer"});
 					input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
 					output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
-					Log.d("CONNECTION", "Connected to singleplayer server.");
+
+					Log.d(tag, "Connected to singleplayer server.");
 					setIsConnected(true);
 				} else {
-					try {
-						Socket clientSocket = new Socket(hostName, PORT);
-						output = new ObjectOutputStream(clientSocket.getOutputStream());
-						input = new ObjectInputStream(clientSocket.getInputStream());
-						Log.d("CONNECTION", "Connected to multiplayer server.");
-						setIsConnected(true);
-					} catch (IOException e) {
-						Log.d("CONNECTION", "Could not connect to the server.");
-						e.printStackTrace();
+					while(!isConnected) {
+						try {
+							Socket clientSocket = new Socket(hostName, PORT);
+							output = new ObjectOutputStream(clientSocket.getOutputStream());
+							input = new ObjectInputStream(clientSocket.getInputStream());
+
+							Log.d(tag, "Connected to multiplayer server.");
+							setIsConnected(true);
+						} catch (IOException e) {
+							Log.d(tag, "Could not connect to the server.");
+						}
 					}
 				}
 			}
@@ -62,7 +68,13 @@ public class Connection {
 		thread.start();
 	}
 
+	/**
+	 * Set the sharedpref and the normal variable to if the client is connected to the server yes or no.
+	 * @param connected
+	 * @author Bram Pulles
+	 */
 	private void setIsConnected(Boolean connected){
+		Log.d("CONNECTION VAR", "" + connected);
 		isConnected = connected;
 
 		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_connectioninfo), MODE_PRIVATE);
