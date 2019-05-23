@@ -58,19 +58,31 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	private void toggleButtons(){
-		if(btnGameSelect != null && btnRandomGame != null) {
-			if (isMaster()) {
-				btnGameSelect.setAlpha(1);
-				btnRandomGame.setAlpha(1);
-				btnGameSelect.setClickable(true);
-				btnRandomGame.setClickable(true);
-			} else {
-				btnGameSelect.setAlpha(0.5f);
-				btnRandomGame.setAlpha(0.5f);
-				btnGameSelect.setClickable(false);
-				btnRandomGame.setClickable(false);
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if(btnGameSelect != null && btnRandomGame != null) {
+					if (isMaster()) {
+						setButtons(1, true);
+					} else {
+						setButtons(0.5f, false);
+					}
+				}
 			}
-		}
+		});
+	}
+
+	/**
+	 * Set the buttons to the specified values.
+	 * @param alpha the transparency between 0 and 1 where 0 is fully transparent.
+	 * @param clickable if the buttons are clickable.
+	 * @author Bram Pulles
+	 */
+	private void setButtons(float alpha, boolean clickable){
+		btnGameSelect.setAlpha(alpha);
+		btnRandomGame.setAlpha(alpha);
+		btnGameSelect.setClickable(clickable);
+		btnRandomGame.setClickable(clickable);
 	}
 
 	/**
