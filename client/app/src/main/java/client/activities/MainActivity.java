@@ -18,6 +18,11 @@ public class MainActivity extends AppCompatActivity {
 	private SharedPreferences.OnSharedPreferenceChangeListener listener;
 	private TextView connectionInfo;
 
+	private boolean isConnected(){
+		SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedpref_connectioninfo), MODE_PRIVATE);
+		return prefs.getBoolean(getString(R.string.sharedpref_connection), false);
+	}
+
 	/**
 	 * When the connection changes the listener will be called and change the status text on screen.
 	 * @author Bram Pulles
@@ -63,15 +68,19 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void onCreateParty(View v){
-		ClientGameHandler.sendMessage(new CreatePartyMessage());
+		if(isConnected()) {
+			ClientGameHandler.sendMessage(new CreatePartyMessage());
 
-		Intent intCreateParty = new Intent(this, LobbyActivity.class);
-		startActivity(intCreateParty);
+			Intent intCreateParty = new Intent(this, LobbyActivity.class);
+			startActivity(intCreateParty);
+		}
 	}
 
 	public void onJoinParty(View v){
-		Intent intJoinParty = new Intent(this, JoinPartyActivity.class);
-		startActivity(intJoinParty);
+		if(isConnected()){
+			Intent intJoinParty = new Intent(this, JoinPartyActivity.class);
+			startActivity(intJoinParty);
+		}
 	}
 
 	public void onSettings(View v){
