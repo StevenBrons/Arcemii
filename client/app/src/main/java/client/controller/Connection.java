@@ -1,6 +1,10 @@
 package client.controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.debernardi.archemii.R;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,6 +15,8 @@ import server.general.ArcemiiServer;
 import server.general.SinglePlayerServer;
 import shared.messages.Message;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Connection {
 
 	private static final String hostName = "10.0.2.2";
@@ -20,8 +26,14 @@ public class Connection {
 	private static ObjectInputStream input;
 	private static ObjectOutputStream output;
 
-	public Connection(final boolean singlePlayer) {
-		if (isConnected) return;
+	private Context context;
+
+	public Connection(final boolean singlePlayer, Context context) {
+		this.context = context;
+
+		if (isConnected)
+			return;
+
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -31,14 +43,14 @@ public class Connection {
 					input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
 					output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
 					Log.d("CONNECTION", "Connected to singleplayer server.");
-					isConnected = true;
+					setIsConnected(true);
 				} else {
 					try {
 						Socket clientSocket = new Socket(hostName, PORT);
 						output = new ObjectOutputStream(clientSocket.getOutputStream());
 						input = new ObjectInputStream(clientSocket.getInputStream());
 						Log.d("CONNECTION", "Connected to multiplayer server.");
-						isConnected = true;
+						setIsConnected(true);
 					} catch (IOException e) {
 						Log.d("CONNECTION", "Could not connect to the server.");
 						e.printStackTrace();
@@ -47,6 +59,15 @@ public class Connection {
 			}
 		});
 		thread.start();
+	}
+
+	private void setIsConnected(Boolean connected){
+		isConnected = connected;
+
+		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_connectioninfo), MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putBoolean(context.getString(R.string.sharedpref_connection), connected);
+		editor.apply();
 	}
 
 	public ObjectInputStream getInputStream() {
