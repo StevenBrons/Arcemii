@@ -15,7 +15,7 @@ import com.debernardi.archemii.R;
 import java.util.ArrayList;
 
 import client.controller.ClientGameHandler;
-import shared.entities.Player;
+import server.general.Client;
 import shared.messages.LeavePartyMessage;
 import shared.messages.UpdatePartyMessage;
 
@@ -26,7 +26,7 @@ public class LobbyActivity extends AppCompatActivity {
 	private TextView gamePin;
 	private TextView txtPlayers;
 
-	private ArrayList<Player> players;
+	private ArrayList<Client> clients;
 
 	/**
 	 * This method also sets this activity available in the client game handler.
@@ -81,7 +81,7 @@ public class LobbyActivity extends AppCompatActivity {
 		SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPrefs.getString(getString(R.string.sharedpref_username), "-");
 
-		return players != null && players.get(0) != null && username.equals(players.get(0).getName());
+		return clients != null && clients.get(0) != null && username.equals(clients.get(0).getPlayer().getName());
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void updatePartyMessage(final UpdatePartyMessage m){
-		players = m.getPlayers();
+		clients = m.getClients();
 		toggleButtons();
 
 		// This is necessary because we are not invoking this method from the main thread.

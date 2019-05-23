@@ -18,7 +18,7 @@ public class SinglePlayerServer extends ArcemiiServer {
         2       out2    <----        in2
      */
 
-    SinglePlayerServer() {
+    public SinglePlayerServer() {
         try {
             PipedInputStream in1 = new PipedInputStream();
             PipedOutputStream out1 = new PipedOutputStream(in1);
