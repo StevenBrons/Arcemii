@@ -50,14 +50,12 @@ public class RenderItem implements Comparable<RenderItem>{
     public void renderTo(Canvas c, int offsetX, int offsetY){
 		Bitmap bitmap = texture.getBitmap();
 		Matrix matrix = new Matrix();
+		matrix.preTranslate((int)(-bitmap.getWidth()*refX),(int)(-bitmap.getHeight()*refY));
 		if (flip){
-			matrix.postScale(-1.0f,1.0f,(int)refX*bitmap.getWidth(),(int)refY*bitmap.getHeight());
+			matrix.postScale(-1.0f,1.0f);
 		}
-		matrix.postRotate(rotation,(int)refX*bitmap.getWidth(),(int)refY*bitmap.getHeight());
-		Bitmap transformed = Bitmap.createBitmap(bitmap,0,0,
-				bitmap.getWidth(),bitmap.getHeight(),matrix,false);
-		c.drawBitmap(transformed,
-				x+offsetX-(int)(bitmap.getWidth() *refX),
-				y+offsetY-(int)(bitmap.getHeight()*refY),new Paint());
+		matrix.postRotate(rotation);
+		matrix.postTranslate(x+offsetX,y+offsetY);
+		c.drawBitmap(bitmap,matrix,new Paint());
 	}
 }
