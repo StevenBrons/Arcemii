@@ -1,5 +1,7 @@
 package client.controller;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,21 +25,22 @@ public class Connection {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("Connecting to server...");
+				Log.d("CONNECTION", "Connecting to server...");
 				if (singlePlayer) {
 					ArcemiiServer.main(new String[]{"singleplayer"});
 					input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
 					output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
-					System.out.println("Connected to singleplayer server.");
+					Log.d("CONNECTION", "Connected to singleplayer server.");
 					isConnected = true;
 				} else {
 					try {
 						Socket clientSocket = new Socket(hostName, PORT);
 						output = new ObjectOutputStream(clientSocket.getOutputStream());
 						input = new ObjectInputStream(clientSocket.getInputStream());
-						System.out.println("Connected to multiplayer server.");
+						Log.d("CONNECTION", "Connected to multiplayer server.");
 						isConnected = true;
 					} catch (IOException e) {
+						Log.d("CONNECTION", "Could not connect to the server.");
 						e.printStackTrace();
 					}
 				}
