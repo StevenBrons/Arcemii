@@ -24,12 +24,22 @@ import shared.tiles.Empty;
 import shared.tiles.Tile;
 import shared.tiles.Wall;
 
+/**
+ * View that draws the game
+ * @author Jelmer Firet
+ */
+
 public class GameView extends View {
     Bitmap screen;
     Canvas temporary;
     Rect src;
     Rect des;
+    private List<RenderItem> drawObjects = new ArrayList<>();
 
+    /**
+     * Constructs objects used for drawing to prevent them from being constructed every tick
+     * @author Jelmer Firet
+     */
     public void init(){
         screen = Bitmap.createBitmap(getWidth()/4,getHeight()/4,
                 Bitmap.Config.ARGB_8888);
@@ -38,6 +48,12 @@ public class GameView extends View {
         des = new Rect(0,0,getWidth(),getHeight());
     }
 
+    /**
+     * Construct a new GameView
+     * TODO: Remove test drawing
+     * @param context context to pass to View constructor
+     * @author Jelmer Firet
+     */
     public GameView(Context context) {
         super(context);
         Boss boss = new Boss(36,96);
@@ -92,8 +108,10 @@ public class GameView extends View {
 
     }
 
-    private List<RenderItem> drawObjects = new ArrayList<>();
-
+    /**
+     * Draws the level and all entities to the screen
+     * @param canvas The Canvas to draw the level and entities on.
+     */
     @Override
     public void onDraw(Canvas canvas){
         if (screen == null){
@@ -110,6 +128,10 @@ public class GameView extends View {
         canvas.drawBitmap(screen,src, des,new Paint());
     }
 
+    /**
+     * Update the RenderItems to draw the new Level instead of an older one
+     * @param level The level to draw
+     */
     public void updateLevel(Level level){
         drawObjects.clear();
         for (int x = 0;x<level.getWidth();x++){

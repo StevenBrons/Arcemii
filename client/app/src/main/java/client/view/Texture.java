@@ -56,8 +56,10 @@ public class Texture {
 
     /**
      * Initializes a texture, if the texture has never been loaded, it is loaded.
+     * It checks whether a texture is animated, and loads all frames if applicable.
      * @param name The name (path) of the texture
      * @author Steven Bronsveld
+     * @author Jelmer Firet
      */
     public Texture(String name) {
         this.name = name;
@@ -114,8 +116,12 @@ public class Texture {
     public String getName() { return name; }
 
     /**
+     * returns the bitmap of this texture. If the current texture is an animation it chooses the
+     *  correct frame based on the system time.
      * @return The bitmap of the texture. If the texture is used at more places the same bitmap will
      * be returned.
+     * @author Steven Bronsveld
+     * @author Jelmer Firet
      */
     public Bitmap getBitmap() {
         if (animated){
