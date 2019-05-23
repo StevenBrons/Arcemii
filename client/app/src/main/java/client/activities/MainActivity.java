@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
 		ClientGameHandler.init(this);
 	}
 
+	/**
+	 * If the device is connected to the server then create a new party.
+	 * @param v
+	 * @author Bram Pulles and Jelmer Firet
+	 */
 	public void onCreateParty(View v){
 		if(isConnected()) {
 			ClientGameHandler.sendMessage(new CreatePartyMessage());
@@ -76,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * If the device is connected to the server then go to the join party screen.
+	 * @param v
+	 * @author Bram Pulles and Jelmer Firet
+	 */
 	public void onJoinParty(View v){
 		if(isConnected()){
 			Intent intJoinParty = new Intent(this, JoinPartyActivity.class);
