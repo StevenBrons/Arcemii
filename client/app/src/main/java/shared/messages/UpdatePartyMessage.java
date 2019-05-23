@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import server.general.Client;
 
-public class UpdatePartyMessage extends Message{
+public class UpdatePartyMessage extends Message {
 
 	private int partyId;
 	private ArrayList<Client> clients;

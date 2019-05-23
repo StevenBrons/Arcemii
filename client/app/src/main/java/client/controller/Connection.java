@@ -11,7 +11,7 @@ import shared.messages.Message;
 
 public class Connection {
 
-	private static final String hostName = "10.0.0.2";
+	private static final String hostName = "10.0.2.2";
 	private static final int PORT = 26194;
 	public static boolean isConnected = false;
 

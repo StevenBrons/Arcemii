@@ -1,25 +1,22 @@
 package shared.entities;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
-import shared.general.Level;
-import shared.messages.Message;
-import shared.tiles.Tile;
 
 /**
  * The class that handles rendering and actions of Sako, the player character
  */
-public class Player extends Entity{
+public class Player extends Entity {
 
 	private String name = "Player#" + (int)(Math.random()*99999);
 	private int xPos, yPos;
 	private int xVel, yVel;
 	private int color;
+
+	public Player(){
+	}
 
 	public Player(int x, int y, int color){
 		this.xPos = x;

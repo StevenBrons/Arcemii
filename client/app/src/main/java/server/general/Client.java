@@ -1,15 +1,20 @@
 package server.general;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import shared.entities.Player;
 import shared.messages.Message;
 
-public class Client {
+public class Client implements Serializable {
 
-	private Player player;
+	public static final long serialVersionUID = 1L;
+
+	private Player player = new Player();
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
 
@@ -28,8 +33,8 @@ public class Client {
 	public void sendMessage(Message m) {
 		try {
 			output.writeObject(m);
-			output.reset();
 			output.flush();
+			output.reset();
 		} catch (IOException e) {
 		}
 	}
