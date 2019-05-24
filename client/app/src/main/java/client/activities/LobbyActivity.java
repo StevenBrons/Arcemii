@@ -21,7 +21,7 @@ import shared.messages.UpdatePartyMessage;
 
 public class LobbyActivity extends AppCompatActivity {
 
-	private Button btnGameSelect, btnRandomGame;
+	private Button btnStartGame;
 
 	private TextView gamePin;
 	private TextView txtPlayers;
@@ -47,9 +47,8 @@ public class LobbyActivity extends AppCompatActivity {
 		if(ClientGameHandler.handler.getUpdatePartyMessage() != null)
 			updatePartyMessage(ClientGameHandler.handler.getUpdatePartyMessage());
 
-		btnGameSelect = findViewById(R.id.btnGameSelect);
-		btnRandomGame = findViewById(R.id.btnRandomGame);
-		toggleButtons();
+		btnStartGame = findViewById(R.id.btnStartGame);
+		toggleButton();
 	}
 
 	/**
@@ -57,15 +56,15 @@ public class LobbyActivity extends AppCompatActivity {
 	 * If not fade the buttons and make them not clickable.
 	 * @author Bram Pulles
 	 */
-	private void toggleButtons(){
+	private void toggleButton(){
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(btnGameSelect != null && btnRandomGame != null) {
+				if(btnStartGame != null) {
 					if (isMaster()) {
-						setButtons(1, true);
+						setButton(1, true);
 					} else {
-						setButtons(0.5f, false);
+						setButton(0.5f, false);
 					}
 				}
 			}
@@ -78,11 +77,9 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @param clickable if the buttons are clickable.
 	 * @author Bram Pulles
 	 */
-	private void setButtons(float alpha, boolean clickable){
-		btnGameSelect.setAlpha(alpha);
-		btnRandomGame.setAlpha(alpha);
-		btnGameSelect.setClickable(clickable);
-		btnRandomGame.setClickable(clickable);
+	private void setButton(float alpha, boolean clickable){
+		btnStartGame.setAlpha(alpha);
+		btnStartGame.setClickable(clickable);
 	}
 
 	/**
@@ -128,7 +125,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 */
 	public void updatePartyMessage(final UpdatePartyMessage m){
 		clients = m.getClients();
-		toggleButtons();
+		toggleButton();
 
 		// This is necessary because we are not invoking this method from the main thread.
 		runOnUiThread(new Runnable() {
