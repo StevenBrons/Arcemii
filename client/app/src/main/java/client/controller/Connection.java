@@ -26,12 +26,17 @@ public class Connection {
 	private static final int PORT = 26194;
 	public static boolean isConnected = false;
 
+	private Socket clientSocket;
+
 	private static ObjectInputStream input;
 	private static ObjectOutputStream output;
 
 	private Context context;
 
-	public Connection(final boolean singlePlayer, Context context) {
+	private boolean singleplayer;
+
+	public Connection(final boolean singleplayer, Context context) {
+		this.singleplayer = singleplayer;
 		this.context = context;
 
 		if (isConnected)
@@ -42,7 +47,7 @@ public class Connection {
 			public void run() {
 				Log.d(tag, "Connecting to server...");
 
-				if (singlePlayer) {
+				if (singleplayer) {
 					ArcemiiServer.main(new String[]{"singleplayer"});
 					input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
 					output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
@@ -52,7 +57,7 @@ public class Connection {
 				} else {
 					while(!isConnected) {
 						try {
-							Socket clientSocket = new Socket(hostName, PORT);
+							clientSocket = new Socket(hostName, PORT);
 							output = new ObjectOutputStream(clientSocket.getOutputStream());
 							input = new ObjectInputStream(clientSocket.getInputStream());
 
@@ -74,7 +79,6 @@ public class Connection {
 	 * @author Bram Pulles
 	 */
 	private void setIsConnected(Boolean connected){
-		Log.d("CONNECTION VAR", "" + connected);
 		isConnected = connected;
 
 		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_connectioninfo), MODE_PRIVATE);
@@ -88,7 +92,6 @@ public class Connection {
 	}
 
 	private ObjectOutputStream getOutputStream() {
-		System.out.println("Output stream: " + output);
 		return output;
 	}
 
@@ -109,6 +112,28 @@ public class Connection {
 				}
 			});
 			t.start();
+		}
+	}
+
+	/**
+	 * Stop this connection.
+	 * @author Bram Pulles
+	 */
+	public void stopConnection(){
+		setIsConnected(false);
+
+		try{
+			input.close();
+			output.close();
+			if(clientSocket != null)
+				clientSocket.close();
+
+			if(singleplayer)
+				((SinglePlayerServer)ArcemiiServer.server).stopServer();
+
+			Log.d(tag, "Succesfully closed the connection.");
+		}catch(Exception e){
+			Log.d(tag, "Could not properly close the connection.");
 		}
 	}
 }

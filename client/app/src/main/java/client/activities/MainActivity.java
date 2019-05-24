@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 		// Set up a listener for connection information.
 		listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-				Log.d("PREFS", "In listener.");
 				boolean connected = prefs.getBoolean(getString(R.string.sharedpref_connection), false);
 
 				if(connected)
