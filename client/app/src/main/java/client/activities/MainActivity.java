@@ -18,6 +18,11 @@ public class MainActivity extends AppCompatActivity {
 	private SharedPreferences.OnSharedPreferenceChangeListener listener;
 	private TextView connectionInfo;
 
+	/**
+	 * Uses the shared preferences to determine if the client is connected to the server.
+	 * @return if the client is connected to the server.
+	 * @author Bram Pulles
+	 */
 	private boolean isConnected(){
 		SharedPreferences prefs = getSharedPreferences(getString(R.string.sharedpref_connectioninfo), MODE_PRIVATE);
 		return prefs.getBoolean(getString(R.string.sharedpref_connection), false);
