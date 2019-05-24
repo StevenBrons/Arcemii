@@ -8,48 +8,62 @@ import java.io.PipedOutputStream;
 
 public class SinglePlayerServer extends ArcemiiServer {
 
-    private ObjectOutputStream oOut2;
-    private ObjectInputStream oIn1;
-    private ObjectOutputStream oOut1;
-    private ObjectInputStream oIn2;
+	private ObjectOutputStream oOut2;
+	private ObjectInputStream oIn1;
+	private ObjectOutputStream oOut1;
+	private ObjectInputStream oIn2;
 
     /*          client              server
         1       in1     ---->        out1
         2       out2    <----        in2
      */
 
-    public SinglePlayerServer() {
-        try {
-            PipedInputStream in1 = new PipedInputStream();
-            PipedOutputStream out1 = new PipedOutputStream(in1);
+	public SinglePlayerServer() {
+		try {
+			PipedInputStream in1 = new PipedInputStream();
+			PipedOutputStream out1 = new PipedOutputStream(in1);
 
-            PipedInputStream in2 = new PipedInputStream();
-            PipedOutputStream out2 = new PipedOutputStream(in2);
+			PipedInputStream in2 = new PipedInputStream();
+			PipedOutputStream out2 = new PipedOutputStream(in2);
 
-            //client
-            oOut1 = new ObjectOutputStream(out1);
-            oIn1 = new ObjectInputStream(in1);
+			//client
+			oOut1 = new ObjectOutputStream(out1);
+			oIn1 = new ObjectInputStream(in1);
 
-            //server
-            oOut2 = new ObjectOutputStream(out2);
-            oIn2 = new ObjectInputStream(in2);
+			//server
+			oOut2 = new ObjectOutputStream(out2);
+			oIn2 = new ObjectInputStream(in2);
 
-            Client p = new Client(oIn2,oOut1);
-            gameHandler.addPlayer(p);
+			Client p = new Client(oIn2,oOut1);
+			gameHandler.addPlayer(p);
 
-            System.out.println("Singleplayer server started");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			System.out.println("Singleplayer server started");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    //relative to client
-    public ObjectOutputStream getOutputStream() {
-        return oOut2;
-    }
+	//relative to client
+	public ObjectOutputStream getOutputStream() {
+		return oOut2;
+	}
 
-    public ObjectInputStream getInputStream() {
-        return oIn1;
-    }
+	public ObjectInputStream getInputStream() {
+		return oIn1;
+	}
 
+	/**
+	 * Stop the singleplayer server a.k.a. close all the streams.
+	 * @author Bram Pulles
+	 */
+	public void stopServer(){
+		try{
+			oIn1.close();
+			oOut1.close();
+			oIn2.close();
+			oOut2.close();
+		}catch(Exception e){
+			System.out.println("Could not stop the singleplayer server appropriately.");
+		}
+	}
 }

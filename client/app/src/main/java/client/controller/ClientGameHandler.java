@@ -2,6 +2,7 @@ package client.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.debernardi.archemii.R;
 
@@ -22,14 +23,18 @@ public class ClientGameHandler {
 
 	private Context context;
 
+	private SharedPreferences.OnSharedPreferenceChangeListener listener;
+	private Boolean listeningForMessages;
+
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
 	private UpdatePartyMessage updatePartyMessage;
 
 	private ClientGameHandler(Context context) {
 		this.context = context;
-		connection = new Connection(false, context);
-		startListening();
+		connection = new Connection(isSingleplayer(), context);
+		startListeningForServermode();
+		startListeningForMessages();
 	}
 
 	public static void init(Context context) {
@@ -38,11 +43,13 @@ public class ClientGameHandler {
 		}
 	}
 
-	public void startListening() {
+	public void startListeningForMessages() {
+		listeningForMessages = true;
+
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-			while (true) {
+			while (listeningForMessages) {
 				try {
 					if (connection.isConnected) {
 						Message m = (Message) connection.getInputStream().readObject();
@@ -55,6 +62,37 @@ public class ClientGameHandler {
 			}
 		});
 		thread.start();
+	}
+
+	/**
+	 * Listen to the shared preferences if the servermode changes.
+	 * If the servermode changes create a new connection.
+	 */
+	private void startListeningForServermode(){
+		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_servermodeinfo), MODE_PRIVATE);
+
+		// Set up a listener for connection information.
+		listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+				Log.d("CONNECTION", "Changing connection to: singleplayer=" + isSingleplayer());
+				listeningForMessages = false;
+				connection.stopConnection();
+				connection = new Connection(isSingleplayer(), context);
+				startListeningForMessages();
+			}
+		};
+
+		prefs.registerOnSharedPreferenceChangeListener(listener);
+	}
+
+	/**
+	 * Use the shared preferences to determine if the servermode is singleplayer.
+	 * @return if the servermode is singleplayer.
+	 */
+	private boolean isSingleplayer(){
+		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_servermodeinfo), MODE_PRIVATE);
+		String currentmode = prefs.getString(context.getString(R.string.sharedpref_servermode), context.getString(R.string.online));
+		return currentmode.equals(context.getString(R.string.offline));
 	}
 
 	/**
@@ -134,6 +172,7 @@ public class ClientGameHandler {
 
 	/**
 	 * @return the latest update party message.
+	 * @author Bram Pulles
 	 */
 	public UpdatePartyMessage getUpdatePartyMessage(){
 		return updatePartyMessage;

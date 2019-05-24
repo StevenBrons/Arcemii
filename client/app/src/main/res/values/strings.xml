@@ -11,11 +11,16 @@
     <string name="empty_game_pin">-</string>
     <string name="set_username">Username: </string>
     <string name="hint_username">new username</string>
-    <string name="save">Save</string>
+    <string name="save">Save username</string>
     <string name="sharedpref_username">username</string>
     <string name="sharedpref_playerinfo">playerinfo</string>
     <string name="sharedpref_connectioninfo">connectioninfo</string>
     <string name="sharedpref_connection">connection</string>
+    <string name="sharedpref_servermode">servermode</string>
+    <string name="sharedpref_servermodeinfo">servermodeinfo</string>
     <string name="connected">connected</string>
     <string name="disconnected">disconnected</string>
+    <string name="offline">Offline</string>
+    <string name="online">Online</string>
+    <string name="set_servermode">Servermode:</string>
 </resources>

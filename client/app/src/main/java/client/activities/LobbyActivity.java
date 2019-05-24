@@ -94,23 +94,11 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Start the game selection activity if the client is the master.
-	 * @param v
-	 * @author Bram Pulles and Jelmer Firet
-	 */
-	public void onGameSelect(View v){
-		if(isMaster()){
-			Intent intGameSelect = new Intent(this, GameSelectActivity.class);
-			startActivity(intGameSelect);
-		}
-	}
-
-	/**
 	 * Start a random game if the client is the master.
 	 * @param v
 	 * @author Bram Pulles and Jelmer Firet
 	 */
-	public void onRandomGame(View v){
+	public void onStartGame(View v){
 		if(isMaster()){
 			Intent intGame = new Intent(this, GameActivity.class);
 			startActivity(intGame);

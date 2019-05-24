@@ -19,7 +19,7 @@
             android:layout_height="64dp"
             android:layout_marginBottom="84dp"
             android:backgroundTint="@color/button"
-            android:onClick="onRandomGame"
+            android:onClick="onStartGame"
             android:text="@string/start_game"
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
