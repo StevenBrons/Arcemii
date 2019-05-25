@@ -56,6 +56,7 @@ public class ClientGameHandler {
 						handleInput(m);
 					}
 				} catch (Exception e) {
+					Log.d("CONNECTION", "Could not get the message from the server.");
 					e.printStackTrace();
 				}
 			}
@@ -119,7 +120,19 @@ public class ClientGameHandler {
 			case "PlayerInfoMessage":
 				playerInfoMessage();
 				break;
+			case "HeartbeatMessage":
+				heartbeatMessage();
+				break;
 		}
+	}
+
+	/**
+	 *
+	 * @author Bram Pulles
+	 */
+	private void heartbeatMessage(){
+		Log.d("CONNECTION", "Heartbeat: " + System.currentTimeMillis());
+		connection.setLastHeartbeat(System.currentTimeMillis());
 	}
 
 	/**

@@ -2,6 +2,7 @@ package server.general;
 
 import java.util.ArrayList;
 
+import shared.messages.HeartbeatMessage;
 import shared.messages.JoinPartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
@@ -59,7 +60,19 @@ public class ServerGameHandler {
 			case "PlayerInfoMessage":
 				playerInfoMessage((PlayerInfoMessage)m, client);
 				break;
+			case "HeartbeatMessage":
+				heartbeatMessage(client);
+				break;
 		}
+	}
+
+	/**
+	 * Send a heartbeat to the client.
+	 * @param client
+	 * @author Bram Pulles
+	 */
+	private void heartbeatMessage(Client client){
+		client.sendMessage(new HeartbeatMessage());
 	}
 
 	/**

@@ -13,6 +13,7 @@ import java.net.Socket;
 
 import server.general.ArcemiiServer;
 import server.general.SinglePlayerServer;
+import shared.messages.HeartbeatMessage;
 import shared.messages.Message;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -25,6 +26,9 @@ public class Connection {
 	private static final String hostName = "10.0.2.2";
 	private static final int PORT = 26194;
 	public static boolean isConnected = false;
+
+	private static final int TIMEOUT = 3000;
+	private long lastHeartbeat;
 
 	private Socket clientSocket;
 
@@ -55,22 +59,32 @@ public class Connection {
 					Log.d(tag, "Connected to singleplayer server.");
 					setIsConnected(true);
 				} else {
-					while(!isConnected) {
-						try {
-							clientSocket = new Socket(hostName, PORT);
-							output = new ObjectOutputStream(clientSocket.getOutputStream());
-							input = new ObjectInputStream(clientSocket.getInputStream());
-
-							Log.d(tag, "Connected to multiplayer server.");
-							setIsConnected(true);
-						} catch (IOException e) {
-							Log.d(tag, "Could not connect to the server.");
-						}
-					}
+					connectToMultiplayerServer();
 				}
 			}
 		});
 		thread.start();
+	}
+
+	/**
+	 * Establish a connection with the mutliplayer server.
+	 * @author Bram Pulles and Steven Bronsveld.
+	 */
+	private void connectToMultiplayerServer(){
+		while(!isConnected) {
+			try {
+				clientSocket = new Socket(hostName, PORT);
+				output = new ObjectOutputStream(clientSocket.getOutputStream());
+				input = new ObjectInputStream(clientSocket.getInputStream());
+
+				Log.d(tag, "Connected to multiplayer server.");
+				setLastHeartbeat(System.currentTimeMillis());
+				setIsConnected(true);
+				startHeartbeat();
+			} catch (IOException e) {
+				Log.d(tag, "Could not connect to the server.");
+			}
+		}
 	}
 
 	/**
@@ -116,6 +130,46 @@ public class Connection {
 	}
 
 	/**
+	 * Check if the connection is lost using the heartbeat and
+	 * update the isconnected variable accordingly.
+	 * @return if the connection is lost.
+	 * @author Bram Pulles
+	 */
+	private boolean isConnectionLost(){
+		long currentTime = System.currentTimeMillis();
+		if(currentTime - lastHeartbeat > TIMEOUT){
+			setIsConnected(false);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Start a loop which sends heartbeats to the server while there is a connection.
+	 * When the connection a lost a new connection will be tried to make.
+	 * @author Bram Pulles
+	 */
+	private void startHeartbeat(){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// Send heartbeats while there is a connection.
+				while(isConnectionLost()) {
+					sendMessage(new HeartbeatMessage());
+					try{
+						Thread.sleep(1000);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+
+				// Reestablish a connection.
+				connectToMultiplayerServer();
+			}
+		}).start();
+	}
+
+	/**
 	 * Stop this connection.
 	 * @author Bram Pulles
 	 */
@@ -135,5 +189,14 @@ public class Connection {
 		}catch(Exception e){
 			Log.d(tag, "Could not properly close the connection.");
 		}
+	}
+
+	/**
+	 * Set the last heart beat to the send system time in millies.
+	 * @param millis
+	 * @author Bram Pulles
+	 */
+	public void setLastHeartbeat(long millis){
+		this.lastHeartbeat = millis;
 	}
 }
