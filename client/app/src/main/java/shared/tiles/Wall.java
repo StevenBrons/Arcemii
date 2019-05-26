@@ -18,7 +18,7 @@ public class Wall extends Tile {
 	@Override
 	public List<RenderItem> getRenderItem(int x, int y){
 		List<RenderItem> result = new ArrayList<>();
-		result.add(new RenderItem("treeBordered",x+randomX,y+randomY,0.5,40.0/48.0));
+		result.add(new RenderItem("tree/treeBordered",x+randomX,y+randomY,0.5,40.0/48.0));
 		result.add(new RenderItem("grassPlaceholder",x,y,0.0,0.0));
 		return result;
 	}
