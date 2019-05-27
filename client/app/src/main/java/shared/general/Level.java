@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import shared.entities.Entity;
 import shared.tiles.Tile;
+import shared.tiles.Void;
 
 public class Level implements Serializable {
   public static final long serialVersionUID = 1L;
@@ -14,7 +15,7 @@ public class Level implements Serializable {
   private ArrayList<Entity> entities;
   private transient ArrayList<Object> updates = new ArrayList<>();
 
-  Level (Tile[][] tiles, ArrayList<Entity> entities) {
+  public Level (Tile[][] tiles, ArrayList<Entity> entities) {
     this.tiles = tiles;
     this.entities = entities;
   }
@@ -31,7 +32,7 @@ public class Level implements Serializable {
     if (x >= 0 && x < tiles.length && y >= 0 && y < tiles[0].length) {
       return tiles[x][y];
     } else {
-      return tiles[x][y];
+      return new Void();
     }
   }
 
