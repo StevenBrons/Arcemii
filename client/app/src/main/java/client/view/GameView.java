@@ -24,12 +24,23 @@ import shared.tiles.Empty;
 import shared.tiles.Tile;
 import shared.tiles.Wall;
 
+/**
+ * View that draws the game
+ * @author Jelmer Firet
+ */
+
 public class GameView extends View {
     Bitmap screen;
     Canvas temporary;
     Rect src;
     Rect des;
+    private List<RenderItem> renderItems = new ArrayList<>();
+    private Level level;
 
+    /**
+     * Constructs objects used for drawing to prevent them from being constructed every tick
+     * @author Jelmer Firet
+     */
     public void init(){
         screen = Bitmap.createBitmap(getWidth()/4,getHeight()/4,
                 Bitmap.Config.ARGB_8888);
@@ -38,88 +49,95 @@ public class GameView extends View {
         des = new Rect(0,0,getWidth(),getHeight());
     }
 
+    /**
+     * Construct a new GameView
+     * TODO: Remove test drawing
+     * @param context context to pass to View constructor
+     * @author Jelmer Firet
+     */
     public GameView(Context context) {
         super(context);
-        Boss boss = new Boss(36,96);
-        Slime slime = new Slime(84,72);
-        Slime slime2 = new Slime(108,72);
-        slime2.setVelocity(-2,2);
-        Skeleton skeleton = new Skeleton(60,72);
-        Skeleton skeleton2 = new Skeleton(60,96);
-        skeleton2.setVelocity(2,2);
-        Skeleton skeleton3 = new Skeleton(84,96);
-        skeleton3.setShooting(true);
-        skeleton3.setVelocity(-2,0);
-        Player player2 = new Player(60,48,1);
-        Player player3 = new Player(84,48,2);
-        Player player4 = new Player(108,48,3);
-        Player player5 = new Player(36,24,0);
-        Player player6 = new Player(60,24,1);
-        Player player7 = new Player(84,24,2);
-        Player player8 = new Player(108,24,3);
-        player5.setVelocity(2,2);
-        player6.setVelocity(-2,2);
-        player7.setVelocity(2,2);
-        player8.setVelocity(-2,2);
-        Arrow arrow = new Arrow(108,84,2,2);
+        ArrayList<Entity> entities = new ArrayList<>();
+        entities.add(new Boss(36,96));
+        entities.add(new Slime(84,72));
+        entities.add(new Slime(108,72));
+        ((Slime)entities.get(2)).setVelocity(-2,2);
+        entities.add(new Skeleton(60,72));
+        entities.add(new Skeleton(60,96));
+        ((Skeleton)entities.get(4)).setVelocity(2,2);
+        entities.add(new Skeleton(84,96));
+        ((Skeleton)entities.get(5)).setShooting(true);
+        ((Skeleton)entities.get(5)).setVelocity(-2,0);
+        entities.add(new Player(60,48,1));
+        entities.add(new Player(84,48,2));
+        entities.add(new Player(108,48,3));
+        entities.add(new Player(36,24,0));
+        entities.add(new Player(60,24,1));
+        entities.add(new Player(84,24,2));
+        entities.add(new Player(108,24,3));
+        ((Player)entities.get(9)).setVelocity(2,2);
+        ((Player)entities.get(9)).setVelocity(-2,2);
+        ((Player)entities.get(9)).setVelocity(2,2);
+        ((Player)entities.get(9)).setVelocity(-2,2);
+        entities.add(new Arrow(108,84,2,2));
+        Tile[][] terrain = new Tile[12][18];
         for (int x = 0;x<12;x++){
             for (int y = 0;y<18;y++){
                 if (x == 0 || x > 4 || y == 0 || y > 4){
-                    Wall tree = new Wall();
-                    drawObjects.addAll(tree.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
+                    terrain[x][y] = new Wall();
                 }
                 else{
-                    Empty grass = new Empty();
-                    drawObjects.addAll(grass.getRenderItem(Tile.WIDTH*x,Tile.HEIGHT*y));
+                    terrain[x][y] = new Empty();
                 }
             }
         }
-        drawObjects.addAll(ClientGameHandler.handler.getPlayer().getRenderItem());
-        drawObjects.addAll(boss.getRenderItem());
-        drawObjects.addAll(slime.getRenderItem());
-        drawObjects.addAll(slime2.getRenderItem());
-        drawObjects.addAll(skeleton.getRenderItem());
-        drawObjects.addAll(skeleton2.getRenderItem());
-        drawObjects.addAll(skeleton3.getRenderItem());
-        drawObjects.addAll(player2.getRenderItem());
-        drawObjects.addAll(player3.getRenderItem());
-        drawObjects.addAll(player4.getRenderItem());
-        drawObjects.addAll(player5.getRenderItem());
-        drawObjects.addAll(player6.getRenderItem());
-        drawObjects.addAll(player7.getRenderItem());
-        drawObjects.addAll(player8.getRenderItem());
-        drawObjects.addAll(arrow.getRenderItem());
-
+        Level testLevel = new Level(terrain,entities);
+        this.level = testLevel;
     }
 
-    private List<RenderItem> drawObjects = new ArrayList<>();
-
+    /**
+     * Draws the level and all entities to the screen
+     * @param canvas The Canvas to draw the level and entities on.
+     */
     @Override
     public void onDraw(Canvas canvas){
         if (screen == null){
             this.init();
+            updateLevel(level);
         }
-        Collections.sort(drawObjects);
         canvas.drawColor(Color.BLACK);
         Player player = ClientGameHandler.handler.getPlayer();
         int offsetX = getWidth()/8-player.getxPos();
         int offsetY = getHeight()/8-player.getyPos();
-        for (RenderItem object: drawObjects){
+        for (RenderItem object : renderItems){
             object.renderTo(temporary,offsetX,offsetY);
         }
         canvas.drawBitmap(screen,src, des,new Paint());
     }
 
+    /**
+     * Update the RenderItems to draw the new Level instead of an older one
+     * @param level The level to draw
+     */
     public void updateLevel(Level level){
-        drawObjects.clear();
-        for (int x = 0;x<level.getWidth();x++){
-            for (int y = 0;y<level.getHeight();y++){
-                drawObjects.addAll(level.getTileAt(x,y).getRenderItem(24* Tile.WIDTH,
-                        24*Tile.HEIGHT+Tile.TOPOFFSET));
+        this.level = level;
+        renderItems.clear();
+        Player player = ClientGameHandler.handler.getPlayer();
+        renderItems.addAll(player.getRenderItem());
+        for (int idx = 0;idx<level.getNumEntity();idx++){
+            renderItems.addAll(level.getEntityAt(idx).getRenderItem());
+        }
+
+        int minX = -1+(player.getxPos()-screen.getWidth()/2)/Tile.WIDTH;
+        int maxX =  1+(player.getxPos()+screen.getWidth()/2)/Tile.WIDTH;
+        int minY = -1+(player.getyPos()-screen.getHeight()/2)/Tile.HEIGHT;
+        int maxY =  1+(player.getyPos()+screen.getHeight()/2)/Tile.HEIGHT;
+        for (int tileX = minX;tileX<=maxX;tileX++){
+            for (int tileY = minY;tileY<=maxY;tileY++){
+                renderItems.addAll(level.getTileAt(tileX,tileY)
+                        .getRenderItem(Tile.WIDTH*tileX,Tile.HEIGHT*tileY));
             }
         }
-        for (int idx = 0;idx<level.getNumEntity();idx++){
-            drawObjects.addAll(level.getEntityAt(idx).getRenderItem());
-        }
+        Collections.sort(renderItems);
     }
 }

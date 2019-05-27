@@ -5,12 +5,17 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 
+/**
+ * RenderItem is a class that represents a sprite to be rendered and handles all positioning
+ * @author Jelmer Firet
+ */
 public class RenderItem implements Comparable<RenderItem>{
     private Texture texture;
     private int x,y;
-    double refX,refY;
-    float rotation;
-    boolean flip;
+    private int animationOffset = 0;
+    private double refX,refY;
+    private float rotation;
+    private boolean flip;
 
     /**
      * Creates a new RenderItem
@@ -29,26 +34,59 @@ public class RenderItem implements Comparable<RenderItem>{
         this.refY = refY;
     }
 
-    public void setRotation(float rotation){
+	/**
+	 * Same as RenderItem without animationOffset, except this sets an animation offset.
+	 * @param animationOffset The number of frames this item is out of sync.
+	 * @see RenderItem
+	 * @autor Jelmer Firet
+	 */
+    public RenderItem(String textureName, int x, int y, double refX, double refY, int animationOffset){
+		this.texture = new Texture(textureName);
+		this.x = x;
+		this.y = y;
+		this.refX = refX;
+		this.refY = refY;
+    	this.animationOffset = animationOffset;
+	}
+
+	/**
+	 * Sets the rotation of the sprite
+	 * @param rotation degrees to rotate the object clockwise
+	 * @author Jelmer Firet
+	 */
+	public void setRotation(float rotation){
     	this.rotation = rotation;
 	}
 
+	/**
+	 * Sets whether the sprite is flipped horizontally; flipping occurs before any rotation
+	 * @param flip sets the flip flag of this RenderItem
+	 * @author Jelmer Firet
+	 */
 	public void setFlip(boolean flip){
     	this.flip = flip;
 	}
 
     /**
      * Sort method to ensure correct drawing order
-     * @param other
-     * @return
+     * @param other object to compare to
+     * @return a value that indicates which one should be drawn first
+	 * @author Jelmer Firet
      */
     @Override
     public int compareTo(RenderItem other) {
         return this.y-other.y;
     }
 
+	/**
+	 * Draws this RenderItem to a Canvas. It places the refX and refY of the image at the correct
+	 * 	place and applies any flips, rotations and/or offsets (in that order)
+	 * @param c Canvas to draw onto
+	 * @param offsetX the x-offset to where the RenderItem would have been drawn
+	 * @param offsetY the y-offset to where the RenderItem would have been drawn
+	 */
     public void renderTo(Canvas c, int offsetX, int offsetY){
-		Bitmap bitmap = texture.getBitmap();
+		Bitmap bitmap = texture.getBitmap(animationOffset);
 		Matrix matrix = new Matrix();
 		matrix.preTranslate((int)(-bitmap.getWidth()*refX),(int)(-bitmap.getHeight()*refY));
 		if (flip){

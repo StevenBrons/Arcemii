@@ -12,6 +12,11 @@ import client.view.Texture;
 public class GameActivity extends AppCompatActivity {
     private boolean running = false;
 
+    /**
+     * Makes a new GameView view in the activity and starts the refresh loop
+     * @param savedInstanceState
+     * @author Jelmer Firet
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
