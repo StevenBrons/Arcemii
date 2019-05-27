@@ -12,9 +12,10 @@ import android.graphics.Paint;
 public class RenderItem implements Comparable<RenderItem>{
     private Texture texture;
     private int x,y;
-    double refX,refY;
-    float rotation;
-    boolean flip;
+    private int animationOffset = 0;
+    private double refX,refY;
+    private float rotation;
+    private boolean flip;
 
     /**
      * Creates a new RenderItem
@@ -32,6 +33,21 @@ public class RenderItem implements Comparable<RenderItem>{
         this.refX = refX;
         this.refY = refY;
     }
+
+	/**
+	 * Same as RenderItem without animationOffset, except this sets an animation offset.
+	 * @param animationOffset The number of frames this item is out of sync.
+	 * @see RenderItem
+	 * @autor Jelmer Firet
+	 */
+    public RenderItem(String textureName, int x, int y, double refX, double refY, int animationOffset){
+		this.texture = new Texture(textureName);
+		this.x = x;
+		this.y = y;
+		this.refX = refX;
+		this.refY = refY;
+    	this.animationOffset = animationOffset;
+	}
 
 	/**
 	 * Sets the rotation of the sprite
@@ -70,7 +86,7 @@ public class RenderItem implements Comparable<RenderItem>{
 	 * @param offsetY the y-offset to where the RenderItem would have been drawn
 	 */
     public void renderTo(Canvas c, int offsetX, int offsetY){
-		Bitmap bitmap = texture.getBitmap();
+		Bitmap bitmap = texture.getBitmap(animationOffset);
 		Matrix matrix = new Matrix();
 		matrix.preTranslate((int)(-bitmap.getWidth()*refX),(int)(-bitmap.getHeight()*refY));
 		if (flip){
