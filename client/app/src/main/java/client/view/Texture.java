@@ -124,9 +124,19 @@ public class Texture {
      * @author Jelmer Firet
      */
     public Bitmap getBitmap() {
+        return getBitmap(0);
+    }
+
+    /**
+     * Returns the bitmap of this texture with any animation offset applied to it.
+     * @param offset The number of frames the returned bitmap is.
+     * @return The bitmap of the texture.
+     * @see Bitmap getBitmap()
+     */
+    public Bitmap getBitmap(int offset) {
         if (animated){
             long time = System.currentTimeMillis()/200;
-            return textures.get("sprites/"+this.name+"_"+ time % frames);
+            return textures.get("sprites/"+this.name+"_"+ (time+offset) % frames);
         }
         return textures.get("sprites/"+this.name);
     }
