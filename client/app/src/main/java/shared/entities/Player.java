@@ -7,6 +7,7 @@ import client.view.RenderItem;
 
 /**
  * The class that handles rendering and actions of Sako, the player character
+ * @author Jelmer Firet
  */
 public class Player extends Entity {
 
@@ -18,17 +19,34 @@ public class Player extends Entity {
 	public Player(){
 	}
 
+	/**
+	 * Initialises the Player class
+	 * @param x the x position of the feet of the player (game pixels)
+	 * @param y the y position of the feet of the player (game pixels)
+	 * @param color the color of the player's hat: 0=blue,1=green,2=grey,3=red
+	 * @author Jelmer Firet
+	 */
 	public Player(int x, int y, int color){
 		this.xPos = x;
 		this.yPos = y;
 		this.color = color;
 	}
 
+	/**
+	 * Sets the velocity of the player
+	 * @param dx the x velocity of the player (game pixels)
+	 * @param dy the y velocity of the player (game pixels)
+	 * @author Jelmer Firet
+	 */
 	public void setVelocity(int dx, int dy){
 		this.xVel = dx;
 		this.yVel = dy;
 	}
 
+	/**
+	 * @return the render item associated with this player
+	 * @author Jelmer Firet
+	 */
 	@Override
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
@@ -85,10 +103,18 @@ public class Player extends Entity {
 		return name;
 	}
 
+	/**
+	 * @return x position of this player (game pixels)
+	 * @author Jelmer Firet
+	 */
 	public int getxPos() {
 		return xPos;
 	}
 
+	/**
+	 * @return y position of this player (game pixels)
+	 * @author Jelmer Firet
+	 */
 	public int getyPos() {
 		return yPos;
 	}
