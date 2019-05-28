@@ -15,7 +15,6 @@ import java.util.List;
 import client.controller.ClientGameHandler;
 import shared.entities.Arrow;
 import shared.entities.Boss;
-import shared.entities.Entity;
 import shared.entities.Player;
 import shared.entities.Skeleton;
 import shared.entities.Slime;
@@ -102,8 +101,8 @@ public class GameView extends View {
         Collections.sort(drawObjects);
         canvas.drawColor(Color.BLACK);
         Player player = ClientGameHandler.handler.getPlayer();
-        int offsetX = getWidth()/8-player.getxPos();
-        int offsetY = getHeight()/8-player.getyPos();
+        int offsetX = getWidth()/8-player.getXPos();
+        int offsetY = getHeight()/8-player.getYPos();
         for (RenderItem object: drawObjects){
             object.renderTo(temporary,offsetX,offsetY);
         }

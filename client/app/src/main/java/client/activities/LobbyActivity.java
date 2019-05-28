@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,9 +16,9 @@ import com.debernardi.archemii.R;
 import java.util.ArrayList;
 
 import client.controller.ClientGameHandler;
-import server.general.Client;
+import shared.entities.Player;
+import shared.general.Party;
 import shared.messages.LeavePartyMessage;
-import shared.messages.UpdatePartyMessage;
 
 public class LobbyActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class LobbyActivity extends AppCompatActivity {
 	private TextView gamePin;
 	private TextView txtPlayers;
 
-	private ArrayList<Client> clients;
+	private ArrayList<Player> players = new ArrayList<>();
 
 	/**
 	 * This method also sets this activity available in the client game handler.
@@ -44,8 +45,8 @@ public class LobbyActivity extends AppCompatActivity {
 		ClientGameHandler.handler.setLobbyActivity(this);
 
 		// Get the latest update party message send by the server, if available.
-		if(ClientGameHandler.handler.getUpdatePartyMessage() != null)
-			updatePartyMessage(ClientGameHandler.handler.getUpdatePartyMessage());
+		if(ClientGameHandler.handler.getParty() != null)
+			updateParty(ClientGameHandler.handler.getParty());
 
 		btnStartGame = findViewById(R.id.btnStartGame);
 		toggleButton();
@@ -90,7 +91,7 @@ public class LobbyActivity extends AppCompatActivity {
 		SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPrefs.getString(getString(R.string.sharedpref_username), "-");
 
-		return clients != null && clients.get(0) != null && username.equals(clients.get(0).getPlayer().getName());
+		return players != null && players.size() > 0 && players.get(0) != null && username.equals(players.get(0).getName());
 	}
 
 	/**
@@ -108,11 +109,11 @@ public class LobbyActivity extends AppCompatActivity {
 	/**
 	 * Set the game pin and the players accordingly on the screen.
 	 * Also change the view of the buttons if needed.
-	 * @param m
+	 * @param party
 	 * @author Bram Pulles
 	 */
-	public void updatePartyMessage(final UpdatePartyMessage m){
-		clients = m.getClients();
+	public void updateParty(final Party party){
+		players = party.getPlayers();
 		toggleButton();
 
 		// This is necessary because we are not invoking this method from the main thread.
@@ -120,12 +121,12 @@ public class LobbyActivity extends AppCompatActivity {
 			@Override
 			public void run() {
 				String players = "MASTER: ";
-				for(int i = 0; i < m.getClients().size(); i++){
-					players += m.getClients().get(i).getPlayer().getName() + "\n";
+				for(int i = 0; i < party.getPlayers().size(); i++){
+					players += party.getPlayers().get(i).getName() + "\n";
 				}
 
 				txtPlayers.setText(players);
-				gamePin.setText("" + m.getPartyId());
+				gamePin.setText("" + party.getPartyId());
 			}
 		});
 	}

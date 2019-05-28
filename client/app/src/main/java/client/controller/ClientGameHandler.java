@@ -9,9 +9,9 @@ import com.debernardi.archemii.R;
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
 import shared.entities.Player;
+import shared.general.Party;
 import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
-import shared.messages.UpdatePartyMessage;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -28,7 +28,7 @@ public class ClientGameHandler {
 
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
-	private UpdatePartyMessage updatePartyMessage;
+	private Party party;
 
 	private ClientGameHandler(Context context) {
 		this.context = context;
@@ -114,8 +114,8 @@ public class ClientGameHandler {
 			case "PartyJoinedMessage":
 				partyJoinedMessage();
 				break;
-			case "UpdatePartyMessage":
-				updatePartyMessage((UpdatePartyMessage)m);
+			case "Party":
+				updatePartyMessage((Party)m);
 				break;
 			case "PlayerInfoMessage":
 				playerInfoMessage();
@@ -131,7 +131,6 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void heartbeatMessage(){
-		Log.d("CONNECTION", "Heartbeat: " + System.currentTimeMillis());
 		connection.setLastHeartbeat(System.currentTimeMillis());
 	}
 
@@ -145,13 +144,13 @@ public class ClientGameHandler {
 
 	/**
 	 * Send the new info to the lobby activity.
-	 * @param m update party message.
-	 * @author Bram Pulles
+	 * @param party update party.
+	 * @author Steven Bronsveld
 	 */
-	private void updatePartyMessage(UpdatePartyMessage m){
-		updatePartyMessage = m;
+	private void updatePartyMessage(Party party){
+		this.party = party;
 		if(lobbyActivity != null)
-			lobbyActivity.updatePartyMessage(m);
+			lobbyActivity.updateParty(party);
 	}
 
 	/**
@@ -183,16 +182,11 @@ public class ClientGameHandler {
 		this.lobbyActivity = lobbyActivity;
 	}
 
-	/**
-	 * @return the latest update party message.
-	 * @author Bram Pulles
-	 */
-	public UpdatePartyMessage getUpdatePartyMessage(){
-		return updatePartyMessage;
-	}
-
 	public Player getPlayer(){
 		return player;
 	}
 
+  public Party getParty() {
+		return party;
+  }
 }

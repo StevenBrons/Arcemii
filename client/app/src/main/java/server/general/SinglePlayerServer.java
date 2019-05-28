@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import shared.entities.Player;
+
 public class SinglePlayerServer extends ArcemiiServer {
 
 	private ObjectOutputStream oOut2;
@@ -34,7 +36,7 @@ public class SinglePlayerServer extends ArcemiiServer {
 			oOut2 = new ObjectOutputStream(out2);
 			oIn2 = new ObjectInputStream(in2);
 
-			Client p = new Client(oIn2,oOut1);
+			Player p = new Player(oIn2,oOut1);
 			gameHandler.addPlayer(p);
 
 			System.out.println("Singleplayer server started");
