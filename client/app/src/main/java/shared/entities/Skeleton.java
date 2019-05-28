@@ -11,8 +11,8 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Skeleton extends Entity {
-	private int xPos,yPos;
-	private int xVel,yVel;
+	private double xPos,yPos;
+	private double xVel,yVel;
 	private boolean shooting;
 
 	/**
@@ -21,7 +21,7 @@ public class Skeleton extends Entity {
 	 * @param y the y position of the feet of the skeleton (game pixels)
 	 * @author Jelmer Firet
 	 */
-	public Skeleton(int x,int y){
+	public Skeleton(double x,double y){
 		this.xPos = x;
 		this.yPos = y;
 	}
@@ -32,7 +32,7 @@ public class Skeleton extends Entity {
 	 * @param dy the y velocity of the skeleton (game pixels)
 	 * @author Jelmer Firet
 	 */
-	public void setVelocity(int dx, int dy){
+	public void setVelocity(double dx, double dy){
 		this.xVel = dx;
 		this.yVel = dy;
 	}
@@ -55,13 +55,16 @@ public class Skeleton extends Entity {
 		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem;
 		if (shooting){
-			renderItem = new RenderItem("skeleton/skeletonShooting",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("skeleton/skeletonShooting",
+					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0);
 		}
 		else if (xVel*xVel+yVel*yVel>5){
-			renderItem = new RenderItem("skeleton/skeletonWalking",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("skeleton/skeletonWalking",
+					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0);
 		}
 		else{
-			renderItem = new RenderItem("skeleton/skeletonIdle",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("skeleton/skeletonIdle",
+					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0);
 		}
 		if (xVel < 0){
 			renderItem.setFlip(true);
