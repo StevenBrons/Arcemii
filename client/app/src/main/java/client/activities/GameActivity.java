@@ -4,8 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
-import com.debernardi.archemii.R;
-
 import client.view.GameView;
 import client.view.Texture;
 

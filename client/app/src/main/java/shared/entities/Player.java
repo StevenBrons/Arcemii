@@ -1,9 +1,14 @@
 package shared.entities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
+import shared.general.Party;
+import shared.messages.Message;
 
 /**
  * The class that handles rendering and actions of Sako, the player character
@@ -14,8 +19,29 @@ public class Player extends Entity {
 	private int xPos, yPos;
 	private int xVel, yVel;
 	private int color;
+	private transient Party curParty;
+	private transient ObjectInputStream input;
+	private transient ObjectOutputStream output;
 
-	public Player(){
+	public Player(ObjectInputStream input, ObjectOutputStream output) {
+		this.input = input;
+		this.output = output;
+	}
+
+	/**
+	 * Send message to this client.
+	 * @param m message
+	 */
+	public void sendMessage(Message m) {
+		try {
+			output.writeObject(m);
+			output.flush();
+			output.reset();
+		} catch (IOException e) {
+		}
+	}
+	public ObjectInputStream getInputStream() {
+		return input;
 	}
 
 	public Player(int x, int y, int color){
@@ -85,11 +111,12 @@ public class Player extends Entity {
 		return name;
 	}
 
-	public int getxPos() {
+	public int getXPos() {
 		return xPos;
 	}
 
-	public int getyPos() {
+	public int getYPos() {
 		return yPos;
 	}
+
 }
