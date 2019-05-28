@@ -21,7 +21,8 @@ public abstract class Tile {
      */
     public List<RenderItem> getRenderItem(int x, int y){
         List<RenderItem> result = new ArrayList<>();
-        result.add(new RenderItem("fallback",x,y,0.0,1.0));
+        result.add(new RenderItem("fallback",
+                Tile.WIDTH*x,Tile.HEIGHT*y,0.0,1.0));
         return result;
     }
 }
