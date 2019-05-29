@@ -6,12 +6,31 @@ import java.util.List;
 import client.view.RenderItem;
 import shared.general.Level;
 
+/**
+ * An arrow projectile shot by e.g. a Skeleton
+ * @author Jelmer Firet
+ */
 public class Arrow extends Entity{
 
-	Arrow(double x, double y) {
-		super(x, y);
+	/**
+	 * Initialises an arrow
+	 * @param x the x position of the center of the arrow (game pixels)
+	 * @param y the y position of the center of the arrow (game pixels)
+	 * @param dx the velocity in the x direction (game pixels)
+	 * @param dy the velocity in the y direction (game pixels)
+	 * @author Jelmer Firet
+	 */
+	public Arrow(int x,int y, int dx, int dy){
+		this.xPos = x;
+		this.yPos = y;
+		this.xVel = dx;
+		this.yVel = dy;
 	}
 
+	/**
+	 * @return the RenderItem for this arrow, pointed in the direction of the arrow
+	 * @author Jelmer Firet
+	 */
 	@Override
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();

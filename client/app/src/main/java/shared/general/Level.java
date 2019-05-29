@@ -8,6 +8,7 @@ import shared.entities.Entity;
 import shared.entities.Player;
 import shared.messages.Message;
 import shared.tiles.Tile;
+import shared.tiles.Void;
 
 public class Level extends Message {
 
@@ -15,7 +16,7 @@ public class Level extends Message {
   private ArrayList<Entity> entities;
   private transient ArrayList<Object> updates = new ArrayList<>();
 
-  Level (Tile[][] tiles, ArrayList<Entity> entities) {
+  public Level (Tile[][] tiles, ArrayList<Entity> entities) {
     this.tiles = tiles;
     this.entities = entities;
   }
@@ -32,7 +33,7 @@ public class Level extends Message {
     if (x >= 0 && x < tiles.length && y >= 0 && y < tiles[0].length) {
       return tiles[x][y];
     } else {
-      return tiles[x][y];
+      return new Void();
     }
   }
 

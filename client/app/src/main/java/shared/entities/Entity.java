@@ -31,6 +31,10 @@ public abstract class Entity implements Serializable {
         abilities.add(move);
     }
 
+    /**
+     * @return a fallback RenderItem for Entities that haven't defined this function themselves
+     * @author Jelmer Firet
+     */
     public List<RenderItem> getRenderItem(){
         List<RenderItem> result = new ArrayList<>();
         result.add(new RenderItem("fallback",0,0,0.0,0.0));
