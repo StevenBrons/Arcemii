@@ -6,32 +6,23 @@ import android.widget.FrameLayout;
 
 import client.view.GameView;
 import client.view.Texture;
+import shared.general.Level;
 
 public class GameActivity extends AppCompatActivity {
-    private boolean running = false;
+
+    private final GameView view = new GameView(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Texture.init(getAssets());
         FrameLayout frame = new FrameLayout(this);
-        final GameView view = new GameView(this);
         frame.addView(view);
         setContentView(frame);
-        this.running = true;
-        Thread gameLoop = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (running) {
-                    view.postInvalidate();
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        gameLoop.start();
+    }
+
+    public void draw(Level level) {
+        view.updateLevel(level);
+        view.postInvalidate();
     }
 }

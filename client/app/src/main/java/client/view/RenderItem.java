@@ -7,7 +7,7 @@ import android.graphics.Paint;
 
 public class RenderItem implements Comparable<RenderItem>{
     private Texture texture;
-    private int x,y;
+    private double x,y;
     double refX,refY;
     float rotation;
     boolean flip;
@@ -21,7 +21,7 @@ public class RenderItem implements Comparable<RenderItem>{
      * @param refY The y position of the reference point within the image: 0.0 = top, 1.0 = bottom
      * @author Jelmer Firet
      */
-    public RenderItem(String textureName, int x, int y,double refX, double refY){
+    public RenderItem(String textureName, double x, double y,double refX, double refY){
         this.texture = new Texture(textureName);
         this.x = x;
         this.y = y;
@@ -33,7 +33,7 @@ public class RenderItem implements Comparable<RenderItem>{
     	this.rotation = rotation;
 	}
 
-	public void setFlip(boolean flip){
+	  public void setFlip(boolean flip){
     	this.flip = flip;
 	}
 
@@ -44,7 +44,7 @@ public class RenderItem implements Comparable<RenderItem>{
      */
     @Override
     public int compareTo(RenderItem other) {
-        return this.y-other.y;
+        return (int) ((this.y * 1000) - (other.y * 1000));
     }
 
     public void renderTo(Canvas c, int offsetX, int offsetY){
@@ -55,7 +55,7 @@ public class RenderItem implements Comparable<RenderItem>{
 			matrix.postScale(-1.0f,1.0f);
 		}
 		matrix.postRotate(rotation);
-		matrix.postTranslate(x+offsetX,y+offsetY);
+		matrix.postTranslate((float) x+offsetX,(float)y+offsetY);
 		c.drawBitmap(bitmap,matrix,new Paint());
 	}
 }

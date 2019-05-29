@@ -19,6 +19,7 @@ import client.controller.ClientGameHandler;
 import shared.entities.Player;
 import shared.general.Party;
 import shared.messages.LeavePartyMessage;
+import shared.messages.StartGameMessage;
 
 public class LobbyActivity extends AppCompatActivity {
 
@@ -103,6 +104,7 @@ public class LobbyActivity extends AppCompatActivity {
 		if(isMaster()){
 			Intent intGame = new Intent(this, GameActivity.class);
 			startActivity(intGame);
+			ClientGameHandler.sendMessage(new StartGameMessage());
 		}
 	}
 

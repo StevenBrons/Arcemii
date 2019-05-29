@@ -4,19 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
+import shared.general.Level;
 
 public class Boss extends Entity {
-	private int xPos,yPos;
 
-	public Boss(int x, int y){
-		this.xPos = x;
-		this.yPos = y;
-	}
+  Boss(double x, double y) {
+    super(x, y);
+  }
 
-	@Override
+  @Override
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
 		result.add(new RenderItem("boss/bossFloating",xPos, yPos,0.5,1.0));
 		return result;
+	}
+
+	@Override
+	public void invokeAll(Level level) {
+	}
+
+	@Override
+	public boolean update(Level level) {
+		return false;
 	}
 }

@@ -13,8 +13,31 @@ import shared.messages.PlayerInfoMessage;
 public class ServerGameHandler {
 
 	private ArrayList<Party> parties = new ArrayList<>();
+	public static final int TICKSPEED = 100;
 
 	public ServerGameHandler() {
+		Thread gameLoop = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					long start = System.currentTimeMillis();
+					for (Party p : parties) {
+						p.update();
+					}
+
+					long timeTook = System.currentTimeMillis() - start;
+					try {
+						if (timeTook > TICKSPEED) {
+							timeTook = TICKSPEED;
+						}
+						Thread.sleep(TICKSPEED - timeTook);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		gameLoop.start();
 	}
 
 	/**
@@ -65,6 +88,9 @@ public class ServerGameHandler {
 			case "HeartbeatMessage":
 				heartbeatMessage(player);
 				break;
+			case "StartGameMessage":
+				startGameMessage(player);
+				break;
 		}
 	}
 
@@ -95,7 +121,8 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void leavePartyMessage(Player client){
-		for(Party party : parties) {
+		for(int i = parties.size() -1; i >= 0; i--) {
+			Party party = parties.get(i);
 			if (party.containsPlayer(client)) {
 				party.removePlayer(client);
 				if(party.isEmpty())
@@ -119,6 +146,15 @@ public class ServerGameHandler {
 		}
 	}
 
+	private void startGameMessage(Player player) {
+		for (Party party : parties) {
+			if (party.containsPlayer(player)) {
+				party.startGame();
+				return;
+			}
+		}
+	}
+
 	/**
 	 * Create a new party.
 	 * @param player
@@ -129,4 +165,5 @@ public class ServerGameHandler {
 		party.addPlayer(player);
 		parties.add(party);
 	}
+
 }
