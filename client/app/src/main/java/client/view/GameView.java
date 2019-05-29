@@ -57,28 +57,28 @@ public class GameView extends View {
     public GameView(Context context) {
         super(context);
         ArrayList<Entity> entities = new ArrayList<>();
-        entities.add(new Boss(36,96));
-        entities.add(new Slime(84,72));
-        entities.add(new Slime(108,72));
+        entities.add(new Boss(1.5,4));
+        entities.add(new Slime(3.5,3));
+        entities.add(new Slime(4.5,3));
         ((Slime)entities.get(2)).setVelocity(-2,2);
-        entities.add(new Skeleton(60,72));
-        entities.add(new Skeleton(60,96));
+        entities.add(new Skeleton(2.5,3));
+        entities.add(new Skeleton(2.5,4));
         ((Skeleton)entities.get(4)).setVelocity(2,2);
-        entities.add(new Skeleton(84,96));
+        entities.add(new Skeleton(3.5,4));
         ((Skeleton)entities.get(5)).setShooting(true);
         ((Skeleton)entities.get(5)).setVelocity(-2,0);
-        entities.add(new Player(60,48,1));
-        entities.add(new Player(84,48,2));
-        entities.add(new Player(108,48,3));
-        entities.add(new Player(36,24,0));
-        entities.add(new Player(60,24,1));
-        entities.add(new Player(84,24,2));
-        entities.add(new Player(108,24,3));
+        entities.add(new Player(2.5,2,1));
+        entities.add(new Player(3.5,2,2));
+        entities.add(new Player(4.5,2,3));
+        entities.add(new Player(1.5,1,0));
+        entities.add(new Player(2.5,1,1));
+        entities.add(new Player(3.5,1,2));
+        entities.add(new Player(4.5,1,3));
         ((Player)entities.get(9)).setVelocity(2,2);
-        ((Player)entities.get(9)).setVelocity(-2,2);
-        ((Player)entities.get(9)).setVelocity(2,2);
-        ((Player)entities.get(9)).setVelocity(-2,2);
-        entities.add(new Arrow(108,84,2,2));
+        ((Player)entities.get(10)).setVelocity(-2,2);
+        ((Player)entities.get(11)).setVelocity(2,2);
+        ((Player)entities.get(12)).setVelocity(-2,2);
+        entities.add(new Arrow(4.5,3.5,2,2));
         Tile[][] terrain = new Tile[12][18];
         for (int x = 0;x<12;x++){
             for (int y = 0;y<18;y++){
@@ -106,8 +106,8 @@ public class GameView extends View {
         }
         canvas.drawColor(Color.BLACK);
         Player player = ClientGameHandler.handler.getPlayer();
-        int offsetX = getWidth()/8-player.getxPos();
-        int offsetY = getHeight()/8-player.getyPos();
+        int offsetX = (getWidth()/8-(int)(Tile.WIDTH*player.getxPos()));
+        int offsetY = (getHeight()/8-(int)(Tile.HEIGHT*player.getyPos()));
         for (RenderItem object : renderItems){
             object.renderTo(temporary,offsetX,offsetY);
         }
@@ -127,14 +127,14 @@ public class GameView extends View {
             renderItems.addAll(level.getEntityAt(idx).getRenderItem());
         }
 
-        int minX = -1+(player.getxPos()-screen.getWidth()/2)/Tile.WIDTH;
-        int maxX =  1+(player.getxPos()+screen.getWidth()/2)/Tile.WIDTH;
-        int minY = -1+(player.getyPos()-screen.getHeight()/2)/Tile.HEIGHT;
-        int maxY =  1+(player.getyPos()+screen.getHeight()/2)/Tile.HEIGHT;
+        int minX = -1+((int)(Tile.WIDTH*player.getxPos())-screen.getWidth()/2)/Tile.WIDTH;
+        int maxX =  1+((int)(Tile.WIDTH*player.getxPos())+screen.getWidth()/2)/Tile.WIDTH;
+        int minY = -1+((int)(Tile.HEIGHT*player.getyPos())-screen.getHeight()/2)/Tile.HEIGHT;
+        int maxY =  1+((int)(Tile.HEIGHT*player.getyPos())+screen.getHeight()/2)/Tile.HEIGHT;
         for (int tileX = minX;tileX<=maxX;tileX++){
             for (int tileY = minY;tileY<=maxY;tileY++){
                 renderItems.addAll(level.getTileAt(tileX,tileY)
-                        .getRenderItem(Tile.WIDTH*tileX,Tile.HEIGHT*tileY));
+                        .getRenderItem(tileX,tileY));
             }
         }
         Collections.sort(renderItems);

@@ -13,8 +13,8 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Slime extends Entity {
-	private int xPos,yPos;
-	private int xVel,yVel;
+	private double xPos,yPos;
+	private double xVel,yVel;
 
 	/**
 	 * Constructs a new slime
@@ -22,7 +22,7 @@ public class Slime extends Entity {
 	 * @param y y position of the bottom of the slime (game pixels)
 	 * @author Jelmer Firet
 	 */
-	public Slime(int x,int y){
+	public Slime(double x,double y){
 		this.xPos = x;
 		this.yPos = y;
 	}
@@ -33,7 +33,7 @@ public class Slime extends Entity {
 	 * @param dy y velocity of the slime (game pixels)
 	 * @author Jelmer Firet
 	 */
-	public void setVelocity(int dx, int dy){
+	public void setVelocity(double dx, double dy){
 		this.xVel = dx;
 		this.yVel = dy;
 	}
@@ -47,10 +47,12 @@ public class Slime extends Entity {
 		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem;
 		if (xVel*xVel+yVel*yVel > 5){
-			renderItem = new RenderItem("slime/redSlimeJump",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("slime/redSlimeJump",
+					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0);
 		}
 		else{
-			renderItem = new RenderItem("slime/testSlime",xPos, yPos,0.5,1.0);
+			renderItem = new RenderItem("slime/testSlime",
+					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0);
 		}
 		if (xVel < 0){
 			renderItem.setFlip(true);

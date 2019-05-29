@@ -34,8 +34,9 @@ public class Wall extends Tile {
 	public List<RenderItem> getRenderItem(int x, int y){
 		List<RenderItem> result = new ArrayList<>();
 		result.add(new RenderItem("tree/treeBordered",
-				x+randomX,y+randomY,0.5,40.0/48.0,animationOffset));
-		result.add(new RenderItem("grassPlaceholder",x,y,0.0,0.0));
+				Tile.WIDTH*x+randomX,Tile.HEIGHT*y+randomY,0.5,40.0/48.0,animationOffset));
+		result.add(new RenderItem("grassPlaceholder",
+				Tile.WIDTH*x,Tile.HEIGHT*y,0.0,0.0));
 		return result;
 	}
 }

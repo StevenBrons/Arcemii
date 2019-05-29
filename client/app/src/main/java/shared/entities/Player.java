@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
-import shared.abilities.Ability;
-import shared.general.Level;
-import shared.messages.Message;
+import shared.tiles.Tile;
 
 /**
  * The class that handles rendering and actions of Sako, the player character
@@ -17,9 +15,9 @@ import shared.messages.Message;
  */
 public class Player extends Entity {
 
-	private String name = "";
-	private int xPos, yPos;
-	private int xVel, yVel;
+	private String name = "Player#" + (int)(Math.random()*99999);
+	private double xPos, yPos;
+	private double xVel, yVel;
 	private int color;
 
 	private transient ObjectInputStream input;
@@ -53,7 +51,7 @@ public class Player extends Entity {
 	 * @param color the color of the player's hat: 0=blue,1=green,2=grey,3=red
 	 * @author Jelmer Firet
 	 */
-	public Player(int x, int y, int color){
+	public Player(double x, double y, int color){
 		this.xPos = x;
 		this.yPos = y;
 		this.color = color;
@@ -65,7 +63,7 @@ public class Player extends Entity {
 	 * @param dy the y velocity of the player (game pixels)
 	 * @author Jelmer Firet
 	 */
-	public void setVelocity(int dx, int dy){
+	public void setVelocity(double dx, double dy){
 		this.xVel = dx;
 		this.yVel = dy;
 	}
@@ -77,35 +75,27 @@ public class Player extends Entity {
 	@Override
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
-		RenderItem renderItem;
+		String textureName;
 		if (xVel*xVel+yVel*yVel>5){
 			switch (color) {
-				case 0: renderItem = new RenderItem(
-						"player/playerBlueWalking", xPos, yPos, 0.5, 1.0);break;
-				case 1: renderItem = new RenderItem(
-						"player/playerGreenWalking", xPos, yPos, 0.5, 1.0);break;
-				case 2: renderItem = new RenderItem(
-						"player/playerGreyWalking", xPos, yPos, 0.5, 1.0);break;
-				case 3: renderItem = new RenderItem(
-						"player/playerRedWalking", xPos, yPos, 0.5, 1.0);break;
-				default: renderItem = new RenderItem(
-						"player/playerBlueWalking", xPos, yPos, 0.5, 1.0);break;
+				case 0: textureName = "player/playerBlueWalking";break;
+				case 1: textureName = "player/playerGreenWalking";break;
+				case 2: textureName = "player/playerGreyWalking";break;
+				case 3: textureName = "player/playerRedWalking";break;
+				default: textureName = "player/playerBlueWalking";break;
 			}
 		}
 		else{
 			switch (color) {
-				case 0: renderItem = new RenderItem(
-						"player/playerBlueIdle", xPos, yPos, 0.5, 1.0);break;
-				case 1: renderItem = new RenderItem(
-						"player/playerGreenIdle", xPos, yPos, 0.5, 1.0);break;
-				case 2: renderItem = new RenderItem(
-						"player/playerGreyIdle", xPos, yPos, 0.5, 1.0);break;
-				case 3: renderItem = new RenderItem(
-						"player/playerRedIdle", xPos, yPos, 0.5, 1.0);break;
-				default: renderItem = new RenderItem(
-						"player/playerBlueIdle", xPos, yPos, 0.5, 1.0);break;
+				case 0: textureName = "player/playerBlueIdle";break;
+				case 1: textureName = "player/playerGreenIdle";break;
+				case 2: textureName = "player/playerGreyIdle";break;
+				case 3: textureName = "player/playerRedIdle";break;
+				default: textureName = "player/playerBlueIdle";break;
 			}
 		}
+		RenderItem renderItem = new RenderItem(textureName,
+				(int)(Tile.WIDTH*xPos),(int)(Tile.HEIGHT*yPos),0.5,1.0);
 		if (xVel < 0){
 			renderItem.setFlip(true);
 		}
@@ -148,7 +138,7 @@ public class Player extends Entity {
 	 * @return x position of this player (game pixels)
 	 * @author Jelmer Firet
 	 */
-	public int getxPos() {
+	public double getxPos() {
 		return xPos;
 	}
 
@@ -156,7 +146,7 @@ public class Player extends Entity {
 	 * @return y position of this player (game pixels)
 	 * @author Jelmer Firet
 	 */
-	public int getyPos() {
+	public double getyPos() {
 		return yPos;
 	}
 
