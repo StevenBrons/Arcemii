@@ -12,7 +12,8 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Boss extends Entity {
-	
+	private double xPos,yPos;
+
 	/**
 	 * Initialises the boss mob
 	 * @param x the x position of the feet of the Boss (game pixels)
