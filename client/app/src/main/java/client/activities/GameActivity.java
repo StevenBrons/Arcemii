@@ -2,6 +2,7 @@ package client.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import client.controller.ClientGameHandler;
@@ -21,13 +22,13 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ClientGameHandler.handler.setGameActivity(this);
 
         view = new GameView(this);
         Texture.init(getAssets());
         FrameLayout frame = new FrameLayout(this);
         frame.addView(view);
         setContentView(frame);
+        ClientGameHandler.handler.setGameActivity(this);
     }
 
     public void draw(Level level) {

@@ -24,7 +24,7 @@ public class ClientGameHandler {
 	public static ClientGameHandler handler;
 
 	private Connection connection;
-	private Player player = new Player(1.5,2,0);
+	private Player player = new Player(2.5,2.5,0);
 
 	private Context context;
 
@@ -49,15 +49,14 @@ public class ClientGameHandler {
 			@Override
 			public void run() {
 				int TICKSPEED = ServerGameHandler.TICKSPEED;
+				running = true;
 				while (running) {
 					long start = System.currentTimeMillis();
 
-					if (gameActivity == null || level == null) {
-						return;
+					if (gameActivity != null && level != null) {
+						gameActivity.draw(level);
+						//player.sendMessage(new ActionMessage(player.getActions()));
 					}
-
-					gameActivity.draw(level);
-					player.sendMessage(new ActionMessage(player.getActions()));
 
 					long timeTook = System.currentTimeMillis() - start;
 					try {
