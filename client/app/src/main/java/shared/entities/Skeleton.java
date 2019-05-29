@@ -4,21 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
+import shared.general.Level;
 import shared.tiles.Tile;
 
 public class Skeleton extends Entity {
-	private int xPos,yPos;
-	private int xVel,yVel;
+
 	private boolean shooting;
 
-	public Skeleton(int x,int y){
-		this.xPos = x;
-		this.yPos = y;
-	}
-
-	public void setVelocity(int dx, int dy){
-		this.xVel = dx;
-		this.yVel = dy;
+	Skeleton(double x, double y) {
+		super(x, y);
 	}
 
 	public void setShooting(boolean shooting){
@@ -43,5 +37,15 @@ public class Skeleton extends Entity {
 		}
 		result.add(renderItem);
 		return result;
+	}
+
+	@Override
+	public void invokeAll(Level level) {
+
+	}
+
+	@Override
+	public boolean update(Level level) {
+		return false;
 	}
 }

@@ -6,10 +6,14 @@ import android.util.Log;
 
 import com.debernardi.archemii.R;
 
+import client.activities.GameActivity;
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
+import server.general.ServerGameHandler;
 import shared.entities.Player;
+import shared.general.Level;
 import shared.general.Party;
+import shared.messages.ActionMessage;
 import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
 
@@ -18,17 +22,22 @@ import static android.content.Context.MODE_PRIVATE;
 public class ClientGameHandler {
 
 	public static ClientGameHandler handler;
+
 	private Connection connection;
 	private Player player = new Player(36,48,0);
 
 	private Context context;
 
 	private SharedPreferences.OnSharedPreferenceChangeListener listener;
-	private Boolean listeningForMessages;
+	private boolean listeningForMessages;
 
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
+	private GameActivity gameActivity;
+
 	private Party party;
+	private Level level;
+	private boolean running = false;
 
 	private ClientGameHandler(Context context) {
 		this.context = context;
@@ -120,10 +129,42 @@ public class ClientGameHandler {
 			case "PlayerInfoMessage":
 				playerInfoMessage();
 				break;
+			case "Level":
+				startGame((Level) m);
+				break;
 			case "HeartbeatMessage":
 				heartbeatMessage();
 				break;
 		}
+	}
+
+
+	private void startGame(final Level level) {
+		this.level = level;
+		this.running = true;
+		Thread gameLoop = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int TICKSPEED = ServerGameHandler.TICKSPEED;
+				while (running) {
+					long start = System.currentTimeMillis();
+
+					gameActivity.draw(level);
+					player.sendMessage(new ActionMessage(player.getActions()));
+
+					long timeTook = System.currentTimeMillis() - start;
+					try {
+						if (timeTook > TICKSPEED) {
+							timeTook = TICKSPEED;
+						}
+						Thread.sleep(TICKSPEED - timeTook);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		gameLoop.start();
 	}
 
 	/**
@@ -180,6 +221,10 @@ public class ClientGameHandler {
 	 */
 	public void setLobbyActivity(LobbyActivity lobbyActivity){
 		this.lobbyActivity = lobbyActivity;
+	}
+
+	public void setGameActivity(GameActivity gameActivity) {
+		this.gameActivity = gameActivity;
 	}
 
 	public Player getPlayer(){

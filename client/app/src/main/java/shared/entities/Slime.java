@@ -5,6 +5,7 @@ import java.util.List;
 
 import shared.entities.Entity;
 import client.view.RenderItem;
+import shared.general.Level;
 import shared.tiles.Tile;
 
 public class Slime extends Entity {
@@ -36,5 +37,14 @@ public class Slime extends Entity {
 		}
 		result.add(renderItem);
 		return result;
+	}
+
+	@Override
+	public void invokeAll(Level level) {
+	}
+
+	@Override
+	public boolean update(Level level) {
+		return false;
 	}
 }

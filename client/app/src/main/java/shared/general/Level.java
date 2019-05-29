@@ -5,10 +5,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import shared.entities.Entity;
+import shared.entities.Player;
+import shared.messages.Message;
 import shared.tiles.Tile;
 
-public class Level implements Serializable {
-  public static final long serialVersionUID = 1L;
+public class Level extends Message {
 
   private Tile[][] tiles;
   private ArrayList<Entity> entities;
@@ -43,4 +44,24 @@ public class Level implements Serializable {
     return entities.get(idx);
   }
 
+
+  /**
+   * Execute actions of all entities
+   */
+  public void execute() {
+    for (Entity e : entities) {
+      e.executeAll(this);
+    }
+  }
+
+  /**
+   * Invoke abilities on all entities except for players, who invoke their own
+   */
+  public void invoke() {
+    for (Entity e : entities) {
+      if (!(e instanceof Player)) {
+        e.invokeAll(this);
+      }
+    }
+  }
 }

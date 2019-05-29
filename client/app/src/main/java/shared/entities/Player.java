@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
-import shared.general.Party;
+import shared.abilities.Ability;
+import shared.general.Level;
 import shared.messages.Message;
 
 /**
@@ -15,11 +16,11 @@ import shared.messages.Message;
  */
 public class Player extends Entity {
 
-	private String name = "Player#" + (int)(Math.random()*99999);
+	private String name = "";
 	private int xPos, yPos;
 	private int xVel, yVel;
 	private int color;
-	private transient Party curParty;
+
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
 
@@ -92,6 +93,20 @@ public class Player extends Entity {
 		}
 		result.add(renderItem);
 		return result;
+	}
+
+	@Override
+	public void invokeAll(Level level) {
+		// the abilities are invoked by the client!
+	}
+
+	@Override
+	public boolean update(Level level) {
+		return false;
+	}
+
+	public ArrayList<Ability> getActions() {
+		return actions;
 	}
 
 	/**
