@@ -13,7 +13,10 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
+import client.activities.GameActivity;
 import client.controller.ClientGameHandler;
 import shared.entities.Arrow;
 import shared.entities.Boss;
@@ -32,6 +35,7 @@ import shared.tiles.Wall;
  */
 
 public class GameView extends View {
+    public static Lock renderItemLock = new ReentrantLock();
     Bitmap screen;
     Canvas temporary;
     Rect src;
@@ -84,10 +88,12 @@ public class GameView extends View {
         Player player = ClientGameHandler.handler.getPlayer();
         int offsetX = (getWidth()/8-(int)(Tile.WIDTH*player.getxPos()));
         int offsetY = (getHeight()/8-(int)(Tile.HEIGHT*player.getyPos()));
-        for (int i = renderItems.size() - 1; i >= 0; i--){
-            RenderItem object = renderItems.get(i);
+        renderItemLock.lock();
+        for (RenderItem object:renderItems){
             object.renderTo(temporary,offsetX,offsetY);
+            Log.d("renderItems.size()",Integer.toString(renderItems.size()));
         }
+        renderItemLock.unlock();
         canvas.drawBitmap(screen,src, des,new Paint());
     }
 
@@ -100,17 +106,17 @@ public class GameView extends View {
             return;
         }
         this.level = level;
-        renderItems.clear();
         Player player = ClientGameHandler.handler.getPlayer();
-        renderItems.addAll(player.getRenderItem());
-        for (int idx = 0;idx<level.getNumEntity();idx++){
-            renderItems.addAll(level.getEntityAt(idx).getRenderItem());
-        }
-
         int minX = -1+((int)(Tile.WIDTH*player.getxPos())-screen.getWidth()/2)/Tile.WIDTH;
         int maxX =  1+((int)(Tile.WIDTH*player.getxPos())+screen.getWidth()/2)/Tile.WIDTH;
         int minY = -1+((int)(Tile.HEIGHT*player.getyPos())-screen.getHeight()/2)/Tile.HEIGHT;
         int maxY =  1+((int)(Tile.HEIGHT*player.getyPos())+screen.getHeight()/2)/Tile.HEIGHT;
+        renderItemLock.lock();
+        renderItems.clear();
+        for (int idx = 0;idx<level.getNumEntity();idx++){
+            renderItems.addAll(level.getEntityAt(idx).getRenderItem());
+        }
+
         for (int tileX = minX;tileX<=maxX;tileX++){
             for (int tileY = minY;tileY<=maxY;tileY++){
                 renderItems.addAll(level.getTileAt(tileX,tileY)
@@ -118,5 +124,6 @@ public class GameView extends View {
             }
         }
         Collections.sort(renderItems);
+        renderItemLock.unlock();
     }
 }

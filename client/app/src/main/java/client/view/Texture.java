@@ -17,12 +17,11 @@ import java.util.HashMap;
  */
 public class Texture {
 
-    static HashMap<String, Bitmap> textures = new HashMap<>();
+    static HashMap<String, Texture> textures = new HashMap<>();
+    private Bitmap bitmap;
     private static AssetManager manager;
 
     private String name;
-    private boolean animated = false;
-    private int frames = 0;
 
     /**
      * Initializes the texture class, needs to be called before the game needs to display textures
@@ -30,18 +29,6 @@ public class Texture {
      */
     public static void init(AssetManager manager) {
         Texture.manager = manager;
-    }
-
-    /**
-     * Adds a texture to the global texture list
-     * @param name The name (path) of the texture
-     * @param bitmap The bitmap of the texture to add
-     * @author Steven Bronsveld
-     */
-    public static void addTexture(String name, Bitmap bitmap){
-        if (!hasTexture(name)){
-            textures.put(name,bitmap);
-        }
     }
 
     /**
@@ -54,43 +41,53 @@ public class Texture {
         return textures.containsKey(name);
     }
 
+    Texture(String path,boolean loadTexture){
+        if (loadTexture){
+            try {
+                this.bitmap = BitmapFactory.decodeStream(manager.open(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
-     * Initializes a texture, if the texture has never been loaded, it is loaded.
-     * It checks whether a texture is animated, and loads all frames if applicable.
+     * Gets a texture from the database, if it isn't yet in the database it is constructed
      * @param name The name (path) of the texture
      * @author Steven Bronsveld
      * @author Jelmer Firet
      */
-    public Texture(String name) {
-        this.name = name;
+    public static Texture getTexture(String name) {
+        if (hasTexture(name)){
+            return textures.get(name);
+        }
         String[] namepart = name.split("/");
         StringBuilder path = new StringBuilder("sprites");
         for (int i = 0;i<namepart.length-1;i++){
             path.append('/');
             path.append(namepart[i]);
         }
-        name = namepart[namepart.length-1];
+        String nameEnd = namepart[namepart.length-1];
+
         try {
             for (String spriteFile: manager.list(path.toString())){
                 String spriteName = FilenameUtils.removeExtension(spriteFile);
-                if (spriteName.matches(name)){
-                    if (!textures.containsKey(spriteName)) {
-                        Bitmap b = BitmapFactory.decodeStream(manager.open(path.toString()+ "/" + spriteFile));
-                        textures.put(path.toString()+"/"+spriteName, b);
-                    }
+                Animation animation = new Animation(name);
+                if (spriteName.matches(nameEnd)){
+                    textures.put(name, new Texture(path+"/"+spriteFile,true));
                 }
                 if (spriteName.matches(name+"_\\d+")){
-                    this.animated = true;
-                    if (!textures.containsKey(spriteName)) {
-                        Bitmap b = BitmapFactory.decodeStream(manager.open(path.toString() + "/" + spriteFile));
-                        textures.put(path.toString()+"/"+spriteName, b);
-                    }
-                    frames++;
+                    int frameNum = Integer.parseInt(spriteName.split("_")[1]);
+                    animation.addFrame(frameNum,new Texture(path+"/"+spriteFile,true));
+                }
+                if (!hasTexture(name)){
+                    textures.put(name,animation);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return textures.get(name);
     }
 
     /**
@@ -98,7 +95,7 @@ public class Texture {
      * @author Steven Bronsveld
      */
     public int getWidth() {
-        return getBitmap().getWidth();
+        return bitmap.getWidth();
     }
 
     /**
@@ -106,7 +103,7 @@ public class Texture {
      * @author Steven Bronsveld
      */
     public int getHeight() {
-        return getBitmap().getHeight();
+        return bitmap.getHeight();
     }
 
     /**
@@ -134,10 +131,6 @@ public class Texture {
      * @see Bitmap getBitmap()
      */
     public Bitmap getBitmap(int offset) {
-        if (animated){
-            long time = System.currentTimeMillis()/200;
-            return textures.get("sprites/"+this.name+"_"+ (time+offset) % frames);
-        }
-        return textures.get("sprites/"+this.name);
+        return bitmap;
     }
 }

@@ -27,7 +27,7 @@ public class RenderItem implements Comparable<RenderItem>{
      * @author Jelmer Firet
      */
     public RenderItem(String textureName, double x, double y,double refX, double refY){
-        this.texture = new Texture(textureName);
+        this.texture = Texture.getTexture(textureName);
         this.x = x;
         this.y = y;
         this.refX = refX;
@@ -41,7 +41,7 @@ public class RenderItem implements Comparable<RenderItem>{
 	 * @autor Jelmer Firet
 	 */
     public RenderItem(String textureName, int x, int y, double refX, double refY, int animationOffset){
-		this.texture = new Texture(textureName);
+		this.texture = Texture.getTexture(textureName);
 		this.x = x;
 		this.y = y;
 		this.refX = refX;
