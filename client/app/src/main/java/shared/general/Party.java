@@ -2,7 +2,9 @@ package shared.general;
 
 import java.util.ArrayList;
 
+import server.generator.Generator;
 import shared.entities.Player;
+import shared.messages.GameUpdateMessage;
 import shared.messages.Message;
 
 public class Party extends Message {
@@ -62,13 +64,25 @@ public class Party extends Message {
 		return players;
 	}
 
+
 	public void startGame() {
+		curLevel  = Generator.testLevel();
+		messageAll(curLevel);
 		this.inLobby = false;
 	}
 
 	public void update() {
-		curLevel.invoke();
-		curLevel.execute();
+		if (!inLobby) {
+			curLevel.invoke();
+			curLevel.execute();
+		}
+		sendPlayers();
+	}
+
+	private void sendPlayers(){
+		for (Player p : players) {
+			p.sendMessage(new GameUpdateMessage());
+		}
 	}
 
 

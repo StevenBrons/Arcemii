@@ -44,6 +44,35 @@ public class ClientGameHandler {
 		connection = new Connection(isSingleplayer(), context);
 		startListeningForServermode();
 		startListeningForMessages();
+
+		Thread gameLoop = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int TICKSPEED = ServerGameHandler.TICKSPEED;
+				while (running) {
+					long start = System.currentTimeMillis();
+
+					if (gameActivity == null || level == null) {
+						return;
+					}
+
+					gameActivity.draw(level);
+					player.sendMessage(new ActionMessage(player.getActions()));
+
+					long timeTook = System.currentTimeMillis() - start;
+					try {
+						if (timeTook > TICKSPEED) {
+							timeTook = TICKSPEED;
+						}
+						Thread.sleep(TICKSPEED - timeTook);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		gameLoop.start();
+
 	}
 
 	public static void init(Context context) {
@@ -132,48 +161,14 @@ public class ClientGameHandler {
 			case "Level":
 				startGame((Level) m);
 				break;
-			case "HeartbeatMessage":
-				heartbeatMessage();
-				break;
 		}
 	}
 
 
 	private void startGame(final Level level) {
 		this.level = level;
-		this.running = true;
-		Thread gameLoop = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				int TICKSPEED = ServerGameHandler.TICKSPEED;
-				while (running) {
-					long start = System.currentTimeMillis();
-
-					gameActivity.draw(level);
-					player.sendMessage(new ActionMessage(player.getActions()));
-
-					long timeTook = System.currentTimeMillis() - start;
-					try {
-						if (timeTook > TICKSPEED) {
-							timeTook = TICKSPEED;
-						}
-						Thread.sleep(TICKSPEED - timeTook);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		gameLoop.start();
 	}
 
-	/**
-	 *
-	 * @author Bram Pulles
-	 */
-	private void heartbeatMessage(){
-		connection.setLastHeartbeat(System.currentTimeMillis());
-	}
 
 	/**
 	 * Open the lobby activity.

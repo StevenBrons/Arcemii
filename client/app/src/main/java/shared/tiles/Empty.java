@@ -22,4 +22,9 @@ public class Empty extends Tile{
 				Tile.WIDTH*x,Tile.HEIGHT*y,0.0,0.0));
 		return result;
 	}
+
+	@Override
+	public boolean isSolid() {
+		return false;
+	}
 }

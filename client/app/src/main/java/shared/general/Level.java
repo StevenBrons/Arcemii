@@ -65,4 +65,16 @@ public class Level extends Message {
       }
     }
   }
+
+  @Override
+  public String toString() {
+    String tot = "";
+    for (int x = 0; x < tiles.length; x++) {
+      for (int y = 0; y < tiles[x].length; y++) {
+        tot += tiles[x][y].isSolid() ? "#" : ".";
+      }
+      tot += "\n";
+    }
+    return tot;
+  }
 }

@@ -12,8 +12,6 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Skeleton extends Entity {
-	private double xPos,yPos;
-	private double xVel,yVel;
 	private boolean shooting;
 
 	/**
@@ -23,8 +21,7 @@ public class Skeleton extends Entity {
 	 * @author Jelmer Firet
 	 */
 	public Skeleton(double x,double y){
-		this.xPos = x;
-		this.yPos = y;
+		super(x,y);
 	}
 
 	/**

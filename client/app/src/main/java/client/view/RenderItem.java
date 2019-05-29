@@ -11,7 +11,7 @@ import android.graphics.Paint;
  */
 public class RenderItem implements Comparable<RenderItem>{
     private Texture texture;
-    private int x,y;
+    private double x,y;
     private int animationOffset = 0;
     private double refX,refY;
     private float rotation;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
+import shared.general.Level;
 import shared.tiles.Tile;
 
 /**
@@ -11,16 +12,13 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Boss extends Entity {
-	private double xPos,yPos;
-
 	/**
 	 * Initialises the boss mob
 	 * @param x the x position of the feet of the Boss (game pixels)
 	 * @param y the y position of the feet of the Boss (game pixels)
 	 */
 	public Boss(double x, double y){
-		this.xPos = x;
-		this.yPos = y;
+		super(x,y);
 	}
 
   @Override

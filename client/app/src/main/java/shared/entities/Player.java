@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
+import shared.abilities.Ability;
+import shared.general.Level;
+import shared.messages.Message;
 import shared.tiles.Tile;
 
 /**
@@ -16,14 +19,13 @@ import shared.tiles.Tile;
 public class Player extends Entity {
 
 	private String name = "Player#" + (int)(Math.random()*99999);
-	private double xPos, yPos;
-	private double xVel, yVel;
 	private int color;
 
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
 
 	public Player(ObjectInputStream input, ObjectOutputStream output) {
+		super(0,0);
 		this.input = input;
 		this.output = output;
 	}
@@ -52,8 +54,7 @@ public class Player extends Entity {
 	 * @author Jelmer Firet
 	 */
 	public Player(double x, double y, int color){
-		this.xPos = x;
-		this.yPos = y;
+		super(x,y);
 		this.color = color;
 	}
 
