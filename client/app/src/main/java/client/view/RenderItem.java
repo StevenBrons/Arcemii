@@ -86,14 +86,14 @@ public class RenderItem implements Comparable<RenderItem>{
 	 * @param offsetY the y-offset to where the RenderItem would have been drawn
 	 */
     public void renderTo(Canvas c, int offsetX, int offsetY){
-		Bitmap bitmap = texture.getBitmap(animationOffset);
-		Matrix matrix = new Matrix();
-		matrix.preTranslate((int)(-bitmap.getWidth()*refX),(int)(-bitmap.getHeight()*refY));
-		if (flip){
-			matrix.postScale(-1.0f,1.0f);
-		}
-		matrix.postRotate(rotation);
-		matrix.postTranslate((float) x+offsetX,(float)y+offsetY);
-		c.drawBitmap(bitmap,matrix,new Paint());
+			Bitmap bitmap = texture.getBitmap(animationOffset);
+			Matrix matrix = new Matrix();
+			matrix.preTranslate((int)(-bitmap.getWidth()*refX),(int)(-bitmap.getHeight()*refY));
+			if (flip){
+				matrix.postScale(-1.0f,1.0f);
+			}
+			matrix.postRotate(rotation);
+			matrix.postTranslate((float) x+offsetX,(float)y+offsetY);
+			c.drawBitmap(bitmap,matrix,new Paint());
 	}
 }

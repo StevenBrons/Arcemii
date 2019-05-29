@@ -44,11 +44,13 @@ public class GameView extends View {
      * @author Jelmer Firet
      */
     public void init(){
-        screen = Bitmap.createBitmap(getWidth()/4,getHeight()/4,
+        int width = getWidth();
+        int height = getHeight();
+        screen = Bitmap.createBitmap(width/4,height/4,
                 Bitmap.Config.ARGB_8888);
         temporary = new Canvas(screen);
-        src = new Rect(0,0,getWidth()/4,getHeight()/4);
-        des = new Rect(0,0,getWidth(),getHeight());
+        src = new Rect(0,0,width/4,height/4);
+        des = new Rect(0,0,width,height);
     }
 
     /**
@@ -67,21 +69,23 @@ public class GameView extends View {
      */
     @Override
     public void onDraw(Canvas canvas){
+        if (screen == null) {
+            this.init();
+            return;
+        }
         if (level == null) {
             Paint paint = new Paint();
             paint.setTextSize(80);
             canvas.drawText("Loading...",100,100,paint);
             return;
         }
-        if (screen == null){
-            this.init();
-            updateLevel(level);
-        }
+
         canvas.drawColor(Color.BLACK);
         Player player = ClientGameHandler.handler.getPlayer();
         int offsetX = (getWidth()/8-(int)(Tile.WIDTH*player.getxPos()));
         int offsetY = (getHeight()/8-(int)(Tile.HEIGHT*player.getyPos()));
-        for (RenderItem object : renderItems){
+        for (int i = renderItems.size() - 1; i >= 0; i--){
+            RenderItem object = renderItems.get(i);
             object.renderTo(temporary,offsetX,offsetY);
         }
         canvas.drawBitmap(screen,src, des,new Paint());
@@ -92,7 +96,9 @@ public class GameView extends View {
      * @param level The level to draw
      */
     public void updateLevel(Level level){
-        Log.d("level",level.toString() );
+        if (screen == null) {
+            return;
+        }
         this.level = level;
         renderItems.clear();
         Player player = ClientGameHandler.handler.getPlayer();
