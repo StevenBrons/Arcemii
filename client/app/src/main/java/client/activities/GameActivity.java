@@ -12,6 +12,11 @@ public class GameActivity extends AppCompatActivity {
 
     private final GameView view = new GameView(this);
 
+    /**
+     * Makes a new GameView view in the activity and starts the refresh loop
+     * @param savedInstanceState
+     * @author Jelmer Firet
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

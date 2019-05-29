@@ -8,20 +8,40 @@ import client.view.RenderItem;
 import shared.general.Level;
 import shared.tiles.Tile;
 
+/**
+ * Class that handles actions and rendering of a slime
+ * @author Jelmer Firet
+ */
 public class Slime extends Entity {
 	private int xPos,yPos;
 	private int xVel,yVel;
 
+	/**
+	 * Constructs a new slime
+	 * @param x x position of the bottom of the slime (game pixels)
+	 * @param y y position of the bottom of the slime (game pixels)
+	 * @author Jelmer Firet
+	 */
 	public Slime(int x,int y){
 		this.xPos = x;
 		this.yPos = y;
 	}
 
+	/**
+	 * Sets the velocity of the slime
+	 * @param dx x velocity of the slime (game pixels)
+	 * @param dy y velocity of the slime (game pixels)
+	 * @author Jelmer Firet
+	 */
 	public void setVelocity(int dx, int dy){
 		this.xVel = dx;
 		this.yVel = dy;
 	}
 
+	/**
+	 * @return the RenderItem associated with this slime
+	 * @author Jelmer Firet
+	 */
 	@Override
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
