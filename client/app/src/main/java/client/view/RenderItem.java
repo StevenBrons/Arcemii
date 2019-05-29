@@ -58,16 +58,12 @@ public class RenderItem implements Comparable<RenderItem>{
     	this.rotation = rotation;
 	}
 
-<<<<<<< HEAD
-	  public void setFlip(boolean flip){
-=======
 	/**
 	 * Sets whether the sprite is flipped horizontally; flipping occurs before any rotation
 	 * @param flip sets the flip flag of this RenderItem
 	 * @author Jelmer Firet
 	 */
 	public void setFlip(boolean flip){
->>>>>>> 8415a2ab01ce0f6215026e446e880ce5a51fe0e6
     	this.flip = flip;
 	}
 
