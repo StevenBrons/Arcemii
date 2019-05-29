@@ -12,16 +12,14 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Boss extends Entity {
-	private double xPos,yPos;
-
 	/**
 	 * Initialises the boss mob
 	 * @param x the x position of the feet of the Boss (game pixels)
 	 * @param y the y position of the feet of the Boss (game pixels)
 	 */
-  Boss(double x, double y) {
-    super(x, y);
-  }
+	public Boss(double x, double y){
+		super(x,y);
+	}
 
   @Override
 	public List<RenderItem> getRenderItem(){

@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
 import client.controller.ClientGameHandler;
 import shared.entities.Arrow;
 import shared.entities.Boss;
+import shared.entities.Entity;
 import shared.entities.Player;
 import shared.entities.Skeleton;
 import shared.entities.Slime;
@@ -56,42 +59,6 @@ public class GameView extends View {
      */
     public GameView(Context context) {
         super(context);
-        ArrayList<Entity> entities = new ArrayList<>();
-        entities.add(new Boss(1.5,4));
-        entities.add(new Slime(3.5,3));
-        entities.add(new Slime(4.5,3));
-        ((Slime)entities.get(2)).setVelocity(-2,2);
-        entities.add(new Skeleton(2.5,3));
-        entities.add(new Skeleton(2.5,4));
-        ((Skeleton)entities.get(4)).setVelocity(2,2);
-        entities.add(new Skeleton(3.5,4));
-        ((Skeleton)entities.get(5)).setShooting(true);
-        ((Skeleton)entities.get(5)).setVelocity(-2,0);
-        entities.add(new Player(2.5,2,1));
-        entities.add(new Player(3.5,2,2));
-        entities.add(new Player(4.5,2,3));
-        entities.add(new Player(1.5,1,0));
-        entities.add(new Player(2.5,1,1));
-        entities.add(new Player(3.5,1,2));
-        entities.add(new Player(4.5,1,3));
-        ((Player)entities.get(9)).setVelocity(2,2);
-        ((Player)entities.get(10)).setVelocity(-2,2);
-        ((Player)entities.get(11)).setVelocity(2,2);
-        ((Player)entities.get(12)).setVelocity(-2,2);
-        entities.add(new Arrow(4.5,3.5,2,2));
-        Tile[][] terrain = new Tile[12][18];
-        for (int x = 0;x<12;x++){
-            for (int y = 0;y<18;y++){
-                if (x == 0 || x > 4 || y == 0 || y > 4){
-                    terrain[x][y] = new Wall();
-                }
-                else{
-                    terrain[x][y] = new Empty();
-                }
-            }
-        }
-        Level testLevel = new Level(terrain,entities);
-        this.level = testLevel;
     }
 
     /**
@@ -100,6 +67,12 @@ public class GameView extends View {
      */
     @Override
     public void onDraw(Canvas canvas){
+        if (level == null) {
+            Paint paint = new Paint();
+            paint.setTextSize(80);
+            canvas.drawText("Loading...",100,100,paint);
+            return;
+        }
         if (screen == null){
             this.init();
             updateLevel(level);
@@ -119,6 +92,7 @@ public class GameView extends View {
      * @param level The level to draw
      */
     public void updateLevel(Level level){
+        Log.d("level",level.toString() );
         this.level = level;
         renderItems.clear();
         Player player = ClientGameHandler.handler.getPlayer();

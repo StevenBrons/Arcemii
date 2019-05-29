@@ -1,15 +1,18 @@
 package shared.tiles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
 
-public abstract class Tile {
+public abstract class Tile implements Serializable {
+
+
     public final static int WIDTH  = 24;
     public final static int HEIGHT = 24;
     public final static int TOPOFFSET = 24;
-    boolean isSolid() {
+    public boolean isSolid() {
         return true;
     }
 

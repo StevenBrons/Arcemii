@@ -12,8 +12,6 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Arrow extends Entity{
-	private double xPos,yPos;
-	private double xVel,yVel;
 
 	/**
 	 * Initialises an arrow
@@ -24,8 +22,7 @@ public class Arrow extends Entity{
 	 * @author Jelmer Firet
 	 */
 	public Arrow(double x,double y, double dx, double dy){
-		this.xPos = x;
-		this.yPos = y;
+		super(x,y);
 		this.xVel = dx;
 		this.yVel = dy;
 	}

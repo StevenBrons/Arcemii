@@ -13,9 +13,6 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Slime extends Entity {
-	private double xPos,yPos;
-	private double xVel,yVel;
-
 	/**
 	 * Constructs a new slime
 	 * @param x x position of the bottom of the slime (game pixels)
@@ -23,8 +20,7 @@ public class Slime extends Entity {
 	 * @author Jelmer Firet
 	 */
 	public Slime(double x,double y){
-		this.xPos = x;
-		this.yPos = y;
+		super(x,y);
 	}
 
 	/**
