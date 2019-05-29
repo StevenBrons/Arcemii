@@ -4,22 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
-<<<<<<< HEAD
-import shared.general.Level;
-=======
 import shared.tiles.Tile;
->>>>>>> 9c7e6de2c54021304a64682e58adaabe43dc2f62
 
 /**
  * An arrow projectile shot by e.g. a Skeleton
  * @author Jelmer Firet
  */
 public class Arrow extends Entity{
-<<<<<<< HEAD
-=======
 	private double xPos,yPos;
 	private double xVel,yVel;
->>>>>>> 9c7e6de2c54021304a64682e58adaabe43dc2f62
 
 	/**
 	 * Initialises an arrow
