@@ -5,6 +5,7 @@ import java.util.List;
 
 import client.view.RenderItem;
 import shared.general.Level;
+import shared.tiles.Tile;
 
 /**
  * class that handles actions and rendering of the boss mob
@@ -24,7 +25,8 @@ public class Boss extends Entity {
   @Override
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
-		result.add(new RenderItem("boss/bossFloating",xPos, yPos,0.5,1.0));
+		result.add(new RenderItem("boss/bossFloating",
+				(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0));
 		return result;
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import client.view.RenderItem;
 import shared.general.Level;
+import shared.tiles.Tile;
 
 /**
  * An arrow projectile shot by e.g. a Skeleton
@@ -14,13 +15,13 @@ public class Arrow extends Entity{
 
 	/**
 	 * Initialises an arrow
-	 * @param x the x position of the center of the arrow (game pixels)
-	 * @param y the y position of the center of the arrow (game pixels)
-	 * @param dx the velocity in the x direction (game pixels)
-	 * @param dy the velocity in the y direction (game pixels)
+	 * @param x the x position of the center of the arrow (tiles)
+	 * @param y the y position of the center of the arrow (tiles)
+	 * @param dx the velocity in the x direction (tiles)
+	 * @param dy the velocity in the y direction (tiles)
 	 * @author Jelmer Firet
 	 */
-	public Arrow(int x,int y, int dx, int dy){
+	public Arrow(double x,double y, double dx, double dy){
 		this.xPos = x;
 		this.yPos = y;
 		this.xVel = dx;
@@ -34,7 +35,8 @@ public class Arrow extends Entity{
 	@Override
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
-		RenderItem renderItem = new RenderItem("arrowHorizontal",xPos,yPos,0.5,0.5);
+		RenderItem renderItem = new RenderItem("arrowHorizontal",
+				(int)(Tile.WIDTH*xPos),(int)(Tile.HEIGHT*yPos),0.5,0.5);
 		renderItem.setRotation(180.0f/(float)Math.PI*(float)Math.atan2((float)yVel,(float) xVel));
 		result.add(renderItem);
 		return result;
