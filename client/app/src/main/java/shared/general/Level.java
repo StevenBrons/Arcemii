@@ -14,7 +14,7 @@ public class Level implements Serializable {
     private ArrayList<Entity> entities;
     private transient ArrayList<Object> updates = new ArrayList<>();
 
-    Level (Tile[][] tiles, ArrayList<Entity> entities) {
+    public Level (Tile[][] tiles, ArrayList<Entity> entities) {
         this.tiles = tiles;
         this.entities = entities;
     }
