@@ -2,7 +2,8 @@ package server.general;
 
 import java.util.ArrayList;
 
-import shared.messages.HeartbeatMessage;
+import shared.entities.Player;
+import shared.general.Party;
 import shared.messages.JoinPartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
@@ -11,25 +12,48 @@ import shared.messages.PlayerInfoMessage;
 public class ServerGameHandler {
 
 	private ArrayList<Party> parties = new ArrayList<>();
+	public static final int TICKSPEED = 100;
 
 	public ServerGameHandler() {
+		Thread gameLoop = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					long start = System.currentTimeMillis();
+					for (Party p : parties) {
+						p.update();
+					}
+
+					long timeTook = System.currentTimeMillis() - start;
+					try {
+						if (timeTook > TICKSPEED) {
+							timeTook = TICKSPEED;
+						}
+						Thread.sleep(TICKSPEED - timeTook);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		gameLoop.start();
 	}
 
 	/**
 	 * Make a new thread to receive messages from the new client.
 	 * Send a message to the client with the client information.
-	 * @param client
+	 * @param player
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
-	public void addPlayer(final Client client) {
-		System.out.println("A new client has joined: " + client.getPlayer().getName());
+	public void addPlayer(final Player player) {
+		System.out.println("A new client has joined: " + player.getName());
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 			while (true) {
 				try {
-					Message m = (Message) client.getInputStream().readObject();
-					handlePlayerInput(m, client);
+					Message m = (Message) player.getInputStream().readObject();
+					handlePlayerInput(m, player);
 				} catch (Exception e) {
 				}
 			}
@@ -37,53 +61,44 @@ public class ServerGameHandler {
 		});
 		thread.start();
 
-		client.sendMessage(new PlayerInfoMessage());
+		player.sendMessage(new PlayerInfoMessage());
 	}
 
 	/**
 	 * Handles the message send by a certain client.
 	 * @param m message.
-	 * @param client
+	 * @param player
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
-	private void handlePlayerInput(Message m, Client client) {
+	private void handlePlayerInput(Message m, Player player) {
 		switch (m.getType()) {
 			case "CreatePartyMessage":
-				createPartyMessage(client);
+				createPartyMessage(player);
 				break;
 			case "JoinPartyMessage":
-				joinPartyMessage((JoinPartyMessage)m, client);
+				joinPartyMessage((JoinPartyMessage)m, player);
 				break;
 			case "LeavePartyMessage":
-				leavePartyMessage(client);
+				leavePartyMessage(player);
 				break;
 			case "PlayerInfoMessage":
-				playerInfoMessage((PlayerInfoMessage)m, client);
+				playerInfoMessage((PlayerInfoMessage)m, player);
 				break;
-			case "HeartbeatMessage":
-				heartbeatMessage(client);
+			case "StartGameMessage":
+				startGameMessage(player);
 				break;
 		}
 	}
 
 	/**
-	 * Send a heartbeat to the client.
-	 * @param client
-	 * @author Bram Pulles
-	 */
-	private void heartbeatMessage(Client client){
-		client.sendMessage(new HeartbeatMessage());
-	}
-
-	/**
 	 * This method receives information about the client on the client side and sets a new name for the client.
 	 * @param m client info message.
-	 * @param client
+	 * @param player
 	 * @author Bram Pulles
 	 */
-	private void playerInfoMessage(PlayerInfoMessage m, Client client){
+	private void playerInfoMessage(PlayerInfoMessage m, Player player){
 		if(m.getName().length() > 0)
-			client.getPlayer().setName(m.getName());
+			player.setName(m.getName());
 	}
 
 	/**
@@ -92,8 +107,9 @@ public class ServerGameHandler {
 	 * @param client
 	 * @author Bram Pulles
 	 */
-	private void leavePartyMessage(Client client){
-		for(Party party : parties) {
+	private void leavePartyMessage(Player client){
+		for(int i = parties.size() -1; i >= 0; i--) {
+			Party party = parties.get(i);
 			if (party.containsPlayer(client)) {
 				party.removePlayer(client);
 				if(party.isEmpty())
@@ -105,26 +121,36 @@ public class ServerGameHandler {
 	/**
 	 * Join the client to the given party.
 	 * @param m join party message.
-	 * @param client
+	 * @param player
 	 * @author Bram Pulles
 	 */
-	private void joinPartyMessage(JoinPartyMessage m, Client client){
+	private void joinPartyMessage(JoinPartyMessage m, Player player){
 		for(Party party : parties){
 			if(party.getPartyId() == m.getPartyId()){
-				client.sendMessage(new PartyJoinedMessage());
-				party.addPlayer(client);
+				player.sendMessage(new PartyJoinedMessage());
+				party.addPlayer(player);
+			}
+		}
+	}
+
+	private void startGameMessage(Player player) {
+		for (Party party : parties) {
+			if (party.containsPlayer(player)) {
+				party.startGame();
+				return;
 			}
 		}
 	}
 
 	/**
 	 * Create a new party.
-	 * @param client
+	 * @param player
 	 * @author Bram Pulles
 	 */
-	private void createPartyMessage(Client client){
+	private void createPartyMessage(Player player){
 		Party party = new Party();
-		party.addPlayer(client);
+		party.addPlayer(player);
 		parties.add(party);
 	}
+
 }
