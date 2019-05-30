@@ -13,7 +13,6 @@ import server.general.ServerGameHandler;
 import shared.entities.Player;
 import shared.general.Level;
 import shared.general.Party;
-import shared.messages.ActionMessage;
 import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
 
