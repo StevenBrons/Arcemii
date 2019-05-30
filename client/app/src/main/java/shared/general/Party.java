@@ -52,10 +52,6 @@ public class Party extends Message {
 		return players.contains(player);
 	}
 
-	public void setCurrentLevel(Level level){
-		curLevel = level;
-	}
-
 	public boolean isEmpty(){
 		return players.size() == 0;
 	}
@@ -66,7 +62,9 @@ public class Party extends Message {
 
 
 	public void startGame() {
-		curLevel  = Generator.testLevel();
+		Generator g = new Generator(10,10,5,5);
+
+		curLevel  = g.generate(10);
 		messageAll(curLevel);
 		this.inLobby = false;
 	}
