@@ -1,15 +1,18 @@
 package shared.tiles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
 
-public abstract class Tile {
+public abstract class Tile implements Serializable {
+
+
     public final static int WIDTH  = 24;
     public final static int HEIGHT = 24;
     public final static int TOPOFFSET = 24;
-    boolean isSolid() {
+    public boolean isSolid() {
         return true;
     }
 
@@ -21,7 +24,8 @@ public abstract class Tile {
      */
     public List<RenderItem> getRenderItem(int x, int y){
         List<RenderItem> result = new ArrayList<>();
-        result.add(new RenderItem("fallback",x,y,0.0,1.0));
+        result.add(new RenderItem("fallback",
+                Tile.WIDTH*x,Tile.HEIGHT*y,0.0,1.0));
         return result;
     }
 }

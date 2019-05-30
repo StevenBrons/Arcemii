@@ -6,35 +6,71 @@ import android.util.Log;
 
 import com.debernardi.archemii.R;
 
+import client.activities.GameActivity;
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
+import server.general.ServerGameHandler;
 import shared.entities.Player;
+import shared.general.Level;
+import shared.general.Party;
 import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
-import shared.messages.UpdatePartyMessage;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class ClientGameHandler {
 
 	public static ClientGameHandler handler;
+
 	private Connection connection;
-	private Player player = new Player(36,48,0);
+	private Player player = new Player(2.5,2.5,0);
 
 	private Context context;
 
 	private SharedPreferences.OnSharedPreferenceChangeListener listener;
-	private Boolean listeningForMessages;
+	private boolean listeningForMessages;
 
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
-	private UpdatePartyMessage updatePartyMessage;
+	private GameActivity gameActivity;
+
+	private Party party;
+	private Level level;
+	private boolean running = false;
 
 	private ClientGameHandler(Context context) {
 		this.context = context;
 		connection = new Connection(isSingleplayer(), context);
 		startListeningForServermode();
 		startListeningForMessages();
+
+		Thread gameLoop = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int TICKSPEED = ServerGameHandler.TICKSPEED;
+				running = true;
+				while (running) {
+					long start = System.currentTimeMillis();
+
+					if (gameActivity != null && level != null) {
+						gameActivity.draw(level);
+						//player.sendMessage(new ActionMessage(player.getActions()));
+					}
+
+					long timeTook = System.currentTimeMillis() - start;
+					try {
+						if (timeTook > TICKSPEED) {
+							timeTook = TICKSPEED;
+						}
+						Thread.sleep(TICKSPEED - timeTook);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		gameLoop.start();
+
 	}
 
 	public static void init(Context context) {
@@ -114,26 +150,23 @@ public class ClientGameHandler {
 			case "PartyJoinedMessage":
 				partyJoinedMessage();
 				break;
-			case "UpdatePartyMessage":
-				updatePartyMessage((UpdatePartyMessage)m);
+			case "Party":
+				updatePartyMessage((Party)m);
 				break;
 			case "PlayerInfoMessage":
 				playerInfoMessage();
 				break;
-			case "HeartbeatMessage":
-				heartbeatMessage();
+			case "Level":
+				startGame((Level) m);
 				break;
 		}
 	}
 
-	/**
-	 *
-	 * @author Bram Pulles
-	 */
-	private void heartbeatMessage(){
-		Log.d("CONNECTION", "Heartbeat: " + System.currentTimeMillis());
-		connection.setLastHeartbeat(System.currentTimeMillis());
+
+	private void startGame(final Level level) {
+		this.level = level;
 	}
+
 
 	/**
 	 * Open the lobby activity.
@@ -145,13 +178,13 @@ public class ClientGameHandler {
 
 	/**
 	 * Send the new info to the lobby activity.
-	 * @param m update party message.
-	 * @author Bram Pulles
+	 * @param party update party.
+	 * @author Steven Bronsveld
 	 */
-	private void updatePartyMessage(UpdatePartyMessage m){
-		updatePartyMessage = m;
+	private void updatePartyMessage(Party party){
+		this.party = party;
 		if(lobbyActivity != null)
-			lobbyActivity.updatePartyMessage(m);
+			lobbyActivity.updateParty(party);
 	}
 
 	/**
@@ -183,16 +216,15 @@ public class ClientGameHandler {
 		this.lobbyActivity = lobbyActivity;
 	}
 
-	/**
-	 * @return the latest update party message.
-	 * @author Bram Pulles
-	 */
-	public UpdatePartyMessage getUpdatePartyMessage(){
-		return updatePartyMessage;
+	public void setGameActivity(GameActivity gameActivity) {
+		this.gameActivity = gameActivity;
 	}
 
 	public Player getPlayer(){
 		return player;
 	}
 
+  public Party getParty() {
+		return party;
+  }
 }
