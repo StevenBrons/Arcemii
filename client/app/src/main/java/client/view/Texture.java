@@ -70,19 +70,18 @@ public class Texture {
         String nameEnd = namepart[namepart.length-1];
 
         try {
+            Animation animation = new Animation(name);
             for (String spriteFile: manager.list(path.toString())){
                 String spriteName = FilenameUtils.removeExtension(spriteFile);
-                Animation animation = new Animation(name);
                 if (spriteName.matches(nameEnd)){
                     textures.put(name, new Texture(path+"/"+spriteFile,true));
                 }
-                if (spriteName.matches(name+"_\\d+")){
-                    int frameNum = Integer.parseInt(spriteName.split("_")[1]);
-                    animation.addFrame(frameNum,new Texture(path+"/"+spriteFile,true));
+                if (spriteName.matches(nameEnd+"_\\d+")){
+                    animation.addFrame(new Texture(path+"/"+spriteFile,true));
                 }
-                if (!hasTexture(name)){
-                    textures.put(name,animation);
-                }
+            }
+            if (!hasTexture(name) && animation.length() > 0){
+                textures.put(name,animation);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -91,7 +91,6 @@ public class GameView extends View {
         renderItemLock.lock();
         for (RenderItem object:renderItems){
             object.renderTo(temporary,offsetX,offsetY);
-            Log.d("renderItems.size()",Integer.toString(renderItems.size()));
         }
         renderItemLock.unlock();
         canvas.drawBitmap(screen,src, des,new Paint());

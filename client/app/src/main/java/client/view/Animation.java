@@ -22,16 +22,20 @@ public class Animation extends Texture {
 		this.name = name;
 	}
 
-	public void addFrame(int frameIdx, Texture frame){
-		frames.add(frameIdx,frame);
+	public void addFrame(Texture frame){
+		frames.add(frame);
 	}
 
 	public Bitmap getBitmap(int offset){
 		long time = System.currentTimeMillis()/200;
-		return textures.get("sprites/"+this.name+"_"+ (time+offset) % frames.size()).getBitmap();
+		return frames.get((int)((time+offset) % frames.size())).getBitmap();
 	}
 
 	public Bitmap getBitmap(){
 		return getBitmap(0);
+	}
+
+	public int length(){
+		return frames.size();
 	}
 }
