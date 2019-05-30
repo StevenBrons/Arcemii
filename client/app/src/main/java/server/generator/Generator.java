@@ -258,9 +258,23 @@ public class Generator {
      *
      * */
 
+  public static Level testLevel() {
+    Tile[][] tiles = new Tile[5][5];
+
+    for (int x = 0; x < tiles.length; x++) {
+      for (int y = 0; y < tiles[0].length; y++) {
+        tiles[x][y] = Math.random() > 0.5 ? new Wall() : new Empty();
+      }
+    }
+
+    Level l = new Level(tiles,new ArrayList<Entity>());
+    return l;
+  }
+
     public Level generate(int n_rooms) {
         BlockGrid grid = new BlockGrid(n_rows, n_columns);
         grid.generateGrid(n_rooms);
         return grid.convertToLevel(n_rooms,block_rows, block_columns);
     }
+  
 }

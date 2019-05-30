@@ -2,15 +2,17 @@ package client.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 
-import com.debernardi.archemii.R;
-
+import client.controller.ClientGameHandler;
 import client.view.GameView;
 import client.view.Texture;
+import shared.general.Level;
 
 public class GameActivity extends AppCompatActivity {
-    private boolean running = false;
+
+    private GameView view;
 
     /**
      * Makes a new GameView view in the activity and starts the refresh loop
@@ -20,25 +22,19 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        view = new GameView(this);
         Texture.init(getAssets());
         FrameLayout frame = new FrameLayout(this);
-        final GameView view = new GameView(this);
         frame.addView(view);
         setContentView(frame);
-        this.running = true;
-        Thread gameLoop = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (running) {
-                    view.postInvalidate();
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        gameLoop.start();
+        ClientGameHandler.handler.setGameActivity(this);
+    }
+
+    public void draw(Level level) {
+        if (view != null) {
+            view.updateLevel(level);
+            view.postInvalidate();
+        }
     }
 }

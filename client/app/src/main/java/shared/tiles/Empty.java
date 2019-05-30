@@ -18,7 +18,13 @@ public class Empty extends Tile{
 	 */
 	public List<RenderItem> getRenderItem(int x, int y){
 		List<RenderItem> result = new ArrayList<>();
-		result.add(new RenderItem("grassPlaceholder",x,y,0.0,0.0));
+		result.add(new RenderItem("grassPlaceholder",
+				Tile.WIDTH*x,Tile.HEIGHT*y,0.0,0.0));
 		return result;
+	}
+
+	@Override
+	public boolean isSolid() {
+		return false;
 	}
 }
