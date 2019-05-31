@@ -54,15 +54,15 @@ public class Skeleton extends Entity {
 		RenderItem renderItem;
 		if (shooting){
 			renderItem = new RenderItem("skeleton/skeletonShooting",
-					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0,2);
+					(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}
 		else if (xVel*xVel+yVel*yVel>5){
 			renderItem = new RenderItem("skeleton/skeletonWalking",
-					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0,2);
+					(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}
 		else{
 			renderItem = new RenderItem("skeleton/skeletonIdle",
-					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0,2);
+					(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}
 		if (xVel < 0){
 			renderItem.setFlip(true);
