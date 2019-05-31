@@ -1,7 +1,9 @@
 package server.generator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 import shared.entities.Entity;
 import shared.general.Level;
@@ -13,13 +15,18 @@ import shared.tiles.Wall;
 
 public class Generator {
 
-    private class Connection {
+    private class Connection implements Comparable<Connection>{
         Cell from, to;
         int weight;
         Connection(Cell from, Cell to, int weight){
             this.from = from;
             this.to = to;
             this.weight = weight;
+        }
+
+        @Override
+        public int compareTo(Connection other) {
+            return this.weight-other.weight;
         }
     }
 
@@ -50,7 +57,7 @@ public class Generator {
     }
 
     private enum Block {
-        Empty, Room, Road
+        Empty, Room, Road, RoomEdge
     }
 
     private class BlockGrid {
@@ -163,7 +170,8 @@ public class Generator {
          * @author Robert Koprinkov
          */
 
-        void generateGrid(int n_rooms) {
+        void generateGrid(int n_rooms,int room_width, int room_height) {
+            Random rand = new Random(System.currentTimeMillis());
             for (int n = 0; n < n_rows; n++) {
                 for (int m = 0; m < n_cols; m++) {
                     grid[n][m] = Block.Empty;
@@ -171,15 +179,30 @@ public class Generator {
             }
             rooms = new ArrayList<>();
             while (n_rooms > 0) {
-                int row = (int) (Math.random() * n_rows);
-                int column = (int) (Math.random() * n_columns);
-                if (grid[row][column] == Block.Empty) {
-                    grid[row][column] = Block.Room;
-                    rooms.add(new Cell(row, column, n_rooms - 1));//, Block.Room));
+                int row = rand.nextInt(n_rows-room_height);
+                int column = rand.nextInt(n_columns-room_width);
+                boolean valid = true;
+                for (int y = 0;y<room_height;y++){
+                    for (int x = 0;x<room_width;x++){
+                        valid &= (grid[row+y][column+x] == Block.Empty);
+                    }
+                }
+                if (valid) {
+                    for (int y = row-1;y<row+room_height+1;y++) if (0 <= y && y < n_rows){
+                        for (int x = column-1;x<column+room_width+1;x++) if (0 <= x && x < n_columns){
+                            if (y == row-1 || y == row+room_height || x == column-1 || x == column+room_width){
+                                grid[y][x] = Block.RoomEdge;
+                            }
+                            else{
+                                grid[y][x] = Block.Room;
+                            }
+                        }
+                    }
+                    rooms.add(new Cell(row+room_height/2, column+room_width/2, n_rooms - 1));//, Block.Room));
                     n_rooms--;
                 }
             }
-            //now we are ready to apply kurskal's to get a minimum spanning (so smallest amount of tunnels) that connects all rooms
+            //now we are ready to apply Kruskall's to get a minimum spanning (so smallest amount of tunnels) that connects all rooms
             ArrayList<Connection> graph_edges = new ArrayList<>();
             for (int i = 0; i < rooms.size(); i++) {
                 for (int j = 0; j < i; j++) {
@@ -193,6 +216,7 @@ public class Generator {
                     }
                 }
             }
+            Collections.sort(graph_edges);
             ArrayList<Connection> mst_edges = kruskals(rooms.size(), graph_edges);
             //now we can connect the individual rooms
             for (int i = 0; i < mst_edges.size(); i++) {
@@ -208,10 +232,12 @@ public class Generator {
         * @param n_rooms, blockheight, blockwidth
         * */
         Level convertToLevel(int n_rooms, int blockheight, int blockwidth) {
+            Random rand = new Random(System.currentTimeMillis());
+
             Tile[][] fullgrid = new Tile[blockheight * this.n_rows][blockwidth * n_cols];
             for (int i = 0; i < n_rows; i++) {
                 for (int j = 0; j < n_cols; j++) {
-                    if (grid[i][j] == Block.Empty) {
+                    if (grid[i][j] == Block.Empty || grid[i][j] == Block.RoomEdge) {
                         for (int n = 0; n < blockheight; n++) {
                             for (int m = 0; m < blockwidth; m++) {
                                 fullgrid[i * blockheight + n][j * blockwidth + m] = new Wall();
@@ -226,9 +252,9 @@ public class Generator {
                         if (grid[i][j] == Block.Room) {
                             if(i==start.getRow()&&j==start.getCol()){
                                 //start cell
-                                fullgrid[i * blockheight + (int) (Math.random() * blockheight)][j * blockwidth + (int) (Math.random() * blockwidth)] = new Start();
+                                fullgrid[i * blockheight + rand.nextInt(blockheight)][j * blockwidth + rand.nextInt(blockwidth)] = new Start();
                             } else if(i==finish.getRow() && j==finish.getCol()){
-                                fullgrid[i * blockheight + (int) (Math.random() * blockheight)][j * blockwidth + (int) (Math.random() * blockwidth)] = new Finish();
+                                fullgrid[i * blockheight + rand.nextInt(blockheight)][j * blockwidth + rand.nextInt(blockwidth)] = new Finish();
                             }
                         }
                     }
@@ -255,25 +281,10 @@ public class Generator {
      * Generates a level with n_rooms rooms where the dungeon and each room are within the boundaries specified above
      * @author Robert Koprinkov
      * @param n_rooms Number of rooms
-     *
      * */
-
-  public static Level testLevel() {
-    Tile[][] tiles = new Tile[5][5];
-
-    for (int x = 0; x < tiles.length; x++) {
-      for (int y = 0; y < tiles[0].length; y++) {
-        tiles[x][y] = Math.random() > 0.5 ? new Wall() : new Empty();
-      }
-    }
-
-    Level l = new Level(tiles,new ArrayList<Entity>());
-    return l;
-  }
-
     public Level generate(int n_rooms) {
         BlockGrid grid = new BlockGrid(n_rows, n_columns);
-        grid.generateGrid(n_rooms);
+        grid.generateGrid(n_rooms,5,3);
         return grid.convertToLevel(n_rooms,block_rows, block_columns);
     }
   
