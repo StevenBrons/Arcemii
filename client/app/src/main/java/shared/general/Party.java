@@ -1,6 +1,8 @@
 package shared.general;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import server.generator.Generator;
 import shared.entities.Player;
@@ -9,6 +11,7 @@ import shared.messages.Message;
 
 public class Party extends Message {
 
+	private Lock levelLock = new ReentrantLock();
 	private transient Level curLevel;
 	private int partyId;
 	private ArrayList<Player> players;
@@ -64,22 +67,28 @@ public class Party extends Message {
 	public void startGame() {
 		Generator g = new Generator(22,22,2,2);
 		curLevel  = g.generate(6);
-		System.out.println(curLevel.toString());
+
+		for (Player p : players) {
+			curLevel.spawnPlayer(p);
+		}
+
 		messageAll(curLevel);
 		this.inLobby = false;
 	}
 
 	public void update() {
 		if (!inLobby) {
+			levelLock.lock();
 			curLevel.invoke();
 			curLevel.execute();
+			levelLock.unlock();
 		}
-		sendPlayers();
+		sendPlayers(new GameUpdateMessage(curLevel.getChanges()));
 	}
 
-	private void sendPlayers(){
+	private void sendPlayers(Message m){
 		for (Player p : players) {
-			p.sendMessage(new GameUpdateMessage());
+			p.sendMessage(m);
 		}
 	}
 

@@ -61,7 +61,7 @@ public class ServerGameHandler {
 		});
 		thread.start();
 
-		player.sendMessage(new PlayerInfoMessage());
+		player.sendMessage(new PlayerInfoMessage(player));
 	}
 
 	/**
@@ -76,13 +76,13 @@ public class ServerGameHandler {
 				createPartyMessage(player);
 				break;
 			case "JoinPartyMessage":
-				joinPartyMessage((JoinPartyMessage)m, player);
+				joinPartyMessage((JoinPartyMessage) m, player);
 				break;
 			case "LeavePartyMessage":
 				leavePartyMessage(player);
 				break;
 			case "PlayerInfoMessage":
-				playerInfoMessage((PlayerInfoMessage)m, player);
+				playerInfoMessage((PlayerInfoMessage) m, player);
 				break;
 			case "StartGameMessage":
 				startGameMessage(player);
@@ -97,8 +97,9 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void playerInfoMessage(PlayerInfoMessage m, Player player){
-		if(m.getName().length() > 0)
+		if(m.getName().length() > 0) {
 			player.setName(m.getName());
+		}
 	}
 
 	/**
