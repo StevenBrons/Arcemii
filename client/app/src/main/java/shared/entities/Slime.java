@@ -44,11 +44,11 @@ public class Slime extends Entity {
 		RenderItem renderItem;
 		if (xVel*xVel+yVel*yVel > 5){
 			renderItem = new RenderItem("slime/redSlimeJump",
-					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0);
+					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}
 		else{
 			renderItem = new RenderItem("slime/testSlime",
-					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0);
+					(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}
 		if (xVel < 0){
 			renderItem.setFlip(true);

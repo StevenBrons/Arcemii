@@ -12,6 +12,7 @@ import android.graphics.Paint;
 public class RenderItem implements Comparable<RenderItem>{
     private Texture texture;
     private double x,y;
+    private int layer;
     private int animationOffset = 0;
     private double refX,refY;
     private float rotation;
@@ -26,12 +27,13 @@ public class RenderItem implements Comparable<RenderItem>{
      * @param refY The y position of the reference point within the image: 0.0 = top, 1.0 = bottom
      * @author Jelmer Firet
      */
-    public RenderItem(String textureName, double x, double y,double refX, double refY){
+    public RenderItem(String textureName, double x, double y,double refX, double refY, int layer){
         this.texture = Texture.getTexture(textureName);
         this.x = x;
         this.y = y;
         this.refX = refX;
         this.refY = refY;
+        this.layer = layer;
     }
 
 	/**
@@ -40,12 +42,13 @@ public class RenderItem implements Comparable<RenderItem>{
 	 * @see RenderItem
 	 * @autor Jelmer Firet
 	 */
-    public RenderItem(String textureName, int x, int y, double refX, double refY, int animationOffset){
+    public RenderItem(String textureName, int x, int y, double refX, double refY, int layer, int animationOffset){
 		this.texture = Texture.getTexture(textureName);
 		this.x = x;
 		this.y = y;
 		this.refX = refX;
 		this.refY = refY;
+		this.layer = layer;
     	this.animationOffset = animationOffset;
 	}
 
@@ -75,6 +78,12 @@ public class RenderItem implements Comparable<RenderItem>{
      */
     @Override
     public int compareTo(RenderItem other) {
+    	if (this.layer < other.layer){
+    		return -1;
+		}
+    	if (this.layer > other.layer){
+    		return 1;
+		}
         return (int) ((this.y * 1000) - (other.y * 1000));
     }
 

@@ -37,7 +37,7 @@ public abstract class Entity implements Serializable {
      */
     public List<RenderItem> getRenderItem(){
         List<RenderItem> result = new ArrayList<>();
-        result.add(new RenderItem("fallback",0,0,0.0,0.0));
+        result.add(new RenderItem("fallback",0,0,0.0,0.0,2));
         return result;
     }
 
