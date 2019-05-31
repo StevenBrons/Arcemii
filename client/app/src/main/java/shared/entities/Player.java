@@ -96,7 +96,7 @@ public class Player extends Entity {
 			}
 		}
 		RenderItem renderItem = new RenderItem(textureName,
-				(int)(Tile.WIDTH*xPos),(int)(Tile.HEIGHT*yPos),0.5,1.0);
+				(int)(Tile.WIDTH*xPos),(int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		if (xVel < 0){
 			renderItem.setFlip(true);
 		}
