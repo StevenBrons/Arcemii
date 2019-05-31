@@ -15,9 +15,9 @@
 
         <Button
             android:id="@+id/btnStartGame"
-            android:layout_width="321dp"
-            android:layout_height="64dp"
-            android:layout_marginBottom="84dp"
+            android:layout_width="233dp"
+            android:layout_height="54dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/button"
             android:onClick="onStartGame"
             android:text="@string/start_game"
@@ -25,43 +25,44 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.889"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/lobbyGamePin"
-            android:layout_width="135dp"
-            android:layout_height="54dp"
+            android:layout_width="94dp"
+            android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="44dp"
             android:layout_marginEnd="8dp"
             android:text="@string/empty_game_pin"
             android:textAlignment="center"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.895"
+            app:layout_constraintHorizontal_bias="0.924"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="205dp"
-            android:layout_height="55dp"
+            android:layout_width="138dp"
+            android:layout_height="41dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="44dp"
             android:layout_marginEnd="8dp"
             android:text="@string/game_pin"
             android:textAlignment="center"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.042"
+            app:layout_constraintHorizontal_bias="0.753"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/playersTxtView"
-            android:layout_width="304dp"
-            android:layout_height="234dp"
+            android:layout_width="276dp"
+            android:layout_height="214dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -78,10 +79,10 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/btnStartGame"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintHorizontal_bias="0.946"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.627" />
+            app:layout_constraintVertical_bias="0.879" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

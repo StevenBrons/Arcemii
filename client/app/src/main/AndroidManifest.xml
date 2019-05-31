@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="client.activities.GameActivity"></activity>
-        <activity android:name="client.activities.LobbyActivity" />
+        <activity android:name="client.activities.LobbyActivity"
+            android:screenOrientation="landscape" />
         <activity android:name="client.activities.JoinPartyActivity" />
         <activity android:name="client.activities.SettingsActivity" />
         <activity android:name="client.activities.MainActivity">
