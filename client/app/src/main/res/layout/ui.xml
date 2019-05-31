@@ -4,14 +4,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#80000000">
+
+    <ImageButton
+        android:id="@+id/AbilityButtonMiddle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="75dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@null"
+        android:onClick="onAbilityMiddle"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/abilityplaceholder" />
+
+    <ImageButton
+        android:id="@+id/AbilityButtonBottom"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="100dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@null"
+        android:onClick="onAbilityBottom"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/abilityplaceholder" />
 
     <client.view.JoystickView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    
+    <ImageButton
+        android:id="@+id/AbilityButtonUpper"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="100dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@null"
+        android:onClick="onAbilityUpper"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/abilityplaceholder" />
+
 
 </android.support.constraint.ConstraintLayout>
