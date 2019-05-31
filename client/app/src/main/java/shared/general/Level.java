@@ -69,8 +69,8 @@ public class Level extends Message {
   @Override
   public String toString() {
     String tot = "";
-    for (int x = 0; x < tiles.length; x++) {
-      for (int y = 0; y < tiles[x].length; y++) {
+    for (int y = tiles[0].length-1; y >= 0; y--) {
+      for (int x = 0; x < tiles.length; x++) {
         tot += tiles[x][y].isSolid() ? "#" : ".";
       }
       tot += "\n";
