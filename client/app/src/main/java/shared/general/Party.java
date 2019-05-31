@@ -67,14 +67,6 @@ public class Party extends Message {
 	public void startGame() {
 		Generator g = new Generator(22,22,2,2,5,3);
 		curLevel  = g.generate(6);
-<<<<<<< HEAD
-
-		for (Player p : players) {
-			curLevel.spawnPlayer(p);
-		}
-
-=======
->>>>>>> 7b383f7c4d0235f3075cb91117caf5ed1013e1a0
 		messageAll(curLevel);
 		this.inLobby = false;
 	}
