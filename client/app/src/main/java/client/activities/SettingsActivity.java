@@ -78,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
 			editor.putString(getString(R.string.sharedpref_username), newUsername.getText().toString());
 			editor.apply();
 
-			ClientGameHandler.handler.playerInfoMessage();
+			ClientGameHandler.handler.sendPlayerInfoMessage();
 		}
 	}
 

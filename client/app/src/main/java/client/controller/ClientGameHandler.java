@@ -10,9 +10,11 @@ import client.activities.GameActivity;
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
 import server.general.ServerGameHandler;
+import shared.entities.Entity;
 import shared.entities.Player;
 import shared.general.Level;
 import shared.general.Party;
+import shared.messages.GameUpdateMessage;
 import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
 
@@ -23,7 +25,7 @@ public class ClientGameHandler {
 	public static ClientGameHandler handler;
 
 	private Connection connection;
-	private Player player = new Player(2.5,2.5,0);
+	private Player player = new Player(0,0,0);
 
 	private Context context;
 
@@ -154,11 +156,27 @@ public class ClientGameHandler {
 				updatePartyMessage((Party)m);
 				break;
 			case "PlayerInfoMessage":
-				playerInfoMessage();
+				playerInfoMessage((PlayerInfoMessage) m);
 				break;
 			case "Level":
 				startGame((Level) m);
 				break;
+			case "GameUpdateMessage":
+				updateGame((GameUpdateMessage) m);
+				break;
+		}
+	}
+
+	private void updateGame(GameUpdateMessage m) {
+		for (Entity e : m.getChanges()) {
+			if (e.getUUID() == player.getUUID()) {
+				player = (Player) e;
+			}
+			if (e.isDead()) {
+				//TODO
+			} else {
+				level.addEntity(e);
+			}
 		}
 	}
 
@@ -193,11 +211,16 @@ public class ClientGameHandler {
 	 * name to the server. The settings screen can also call this function for a name update.
 	 * @author Bram Pulles
 	 */
-	public void playerInfoMessage(){
+	public void playerInfoMessage(PlayerInfoMessage m){
+		this.player = m.getPlayer();
+	}
+
+	public void sendPlayerInfoMessage() {
 		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPrefs.getString("username", "-");
-		if(!username.equals("-"))
-			handler.connection.sendMessage(new PlayerInfoMessage(username));
+		Player player = new Player(-1,-1,-1);
+		player.setName(username);
+		handler.connection.sendMessage(new PlayerInfoMessage(player));
 	}
 
 	/**

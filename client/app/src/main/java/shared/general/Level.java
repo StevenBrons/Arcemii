@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import shared.entities.Entity;
 import shared.entities.Player;
 import shared.messages.Message;
+import shared.tiles.Start;
 import shared.tiles.Tile;
 import shared.tiles.Void;
 
@@ -66,15 +67,50 @@ public class Level extends Message {
     }
   }
 
+
+  public void addEntity(Entity e) {
+    entities.add(e);
+    e.setChanged(true);
+  }
+
   @Override
   public String toString() {
     String tot = "";
-    for (int x = 0; x < tiles.length; x++) {
-      for (int y = 0; y < tiles[x].length; y++) {
+    for (int y = tiles[0].length - 1; y >= 0; y--) {
+      for (int x = 0; x < tiles.length; x++) {
         tot += tiles[x][y].isSolid() ? "#" : ".";
       }
       tot += "\n";
     }
     return tot;
   }
+
+  public void spawnPlayer(Player player) {
+    double spawnX = 0;
+    double spawnY = 0;
+
+    for (int x = 0; x < tiles.length; x++) {
+      for (int y = 0; y < tiles[x].length; y++) {
+        if (tiles[x][y] instanceof Start) {
+          spawnX = x + 0.5;
+          spawnY = y + 0.5;
+        }
+      }
+    }
+
+    player.setPos(spawnX,spawnY);
+    entities.add(player);
+  }
+
+  public ArrayList<Entity> getChanges() {
+    ArrayList<Entity> changedEntities = new ArrayList();
+    for (Entity e : entities) {
+      if (e.isChanged()) {
+        changedEntities.add(e);
+        e.setChanged(false);
+      }
+    }
+    return changedEntities;
+  }
+
 }

@@ -23,16 +23,6 @@ public class Slime extends Entity {
 		super(x,y);
 	}
 
-	/**
-	 * Sets the velocity of the slime
-	 * @param dx x velocity of the slime (game pixels)
-	 * @param dy y velocity of the slime (game pixels)
-	 * @author Jelmer Firet
-	 */
-	public void setVelocity(double dx, double dy){
-		this.xVel = dx;
-		this.yVel = dy;
-	}
 
 	/**
 	 * @return the RenderItem associated with this slime

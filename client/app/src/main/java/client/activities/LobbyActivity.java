@@ -89,10 +89,10 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	private boolean isMaster(){
-		SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
-		String username = sharedPrefs.getString(getString(R.string.sharedpref_username), "-");
-
-		return players != null && players.size() > 0 && players.get(0) != null && username.equals(players.get(0).getName());
+		return players != null &&
+						players.size() > 0 &&
+						players.get(0) != null &&
+						players.get(0).getUUID().equals(ClientGameHandler.handler.getPlayer().getUUID());
 	}
 
 	/**
