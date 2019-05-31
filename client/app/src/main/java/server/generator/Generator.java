@@ -245,7 +245,6 @@ public class Generator {
                 double right = (room.getCol() + room_width) * block_width;
                 Random rand = new Random();
                 int roomType = rand.nextInt(4);
-                System.out.println(roomType);
                 if (roomType == 0) {
                     entities.add(new Boss((left + right) / 2, (top + bottom) / 2));
                 }
@@ -257,26 +256,21 @@ public class Generator {
                 }
                 if (roomType == 2) {
                     for (int i = 0; i < 5; i++) {
-                        System.out.print(i);
                         entities.add(new Slime(left + rand.nextDouble() * (right - left),
                                 bottom + rand.nextDouble() * (top - bottom)));
                     }
                 }
                 if (roomType == 3) {
                     for (int i = 0; i < 3; i++) {
-                        System.out.print(i);
                         entities.add(new Skeleton(left + rand.nextDouble() * (right - left),
                                 bottom + rand.nextDouble() * (top - bottom)));
                     }
                     for (int i = 0; i < 2; i++) {
-                        System.out.print(i);
                         entities.add(new Slime(left + rand.nextDouble() * (right - left),
                                 bottom + rand.nextDouble() * (top - bottom)));
                     }
                 }
             }
-
-            System.out.println("Done");
         }
 
         /**
