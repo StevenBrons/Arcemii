@@ -5,7 +5,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
+import shared.entities.Boss;
 import shared.entities.Entity;
+import shared.entities.Skeleton;
+import shared.entities.Slime;
 import shared.general.Level;
 import shared.tiles.Empty;
 import shared.tiles.Finish;
@@ -63,7 +66,8 @@ public class Generator {
     private class BlockGrid {
         private int n_rows, n_cols;
         private Block[][] grid;
-        private ArrayList<Cell> rooms;
+        private ArrayList<Cell> roomBottomLeft;
+        private ArrayList<Entity> entities;
         private int max_distance_between_rooms = -1;
         private Cell start, finish;
 
@@ -160,7 +164,8 @@ public class Generator {
             this.n_cols = n_columns;
             this.n_rows = n_rows;
             grid = new Block[n_rows][n_columns];
-            rooms = new ArrayList<>();
+            roomBottomLeft = new ArrayList<>();
+            this.entities = new ArrayList<>();
         }
 
         /**
@@ -177,7 +182,7 @@ public class Generator {
                     grid[n][m] = Block.Empty;
                 }
             }
-            rooms = new ArrayList<>();
+            ArrayList<Cell> roomCenters = new ArrayList<>();
             while (n_rooms > 0) {
                 int row = rand.nextInt(n_rows-room_height);
                 int column = rand.nextInt(n_columns-room_width);
@@ -198,26 +203,27 @@ public class Generator {
                             }
                         }
                     }
-                    rooms.add(new Cell(row+room_height/2, column+room_width/2, n_rooms - 1));//, Block.Room));
+                    roomCenters.add(new Cell(row+room_height/2, column+room_width/2, n_rooms - 1));//, Block.Room));
+                    roomBottomLeft.add(new Cell(row,column,n_rooms-1));
                     n_rooms--;
                 }
             }
             //now we are ready to apply Kruskall's to get a minimum spanning (so smallest amount of tunnels) that connects all rooms
             ArrayList<Connection> graph_edges = new ArrayList<>();
-            for (int i = 0; i < rooms.size(); i++) {
+            for (int i = 0; i < roomCenters.size(); i++) {
                 for (int j = 0; j < i; j++) {
-                    int distance = Math.abs(rooms.get(i).getRow() - rooms.get(j).getRow()) +
-                            Math.abs(rooms.get(i).getCol() - rooms.get(j).getCol());
-                    graph_edges.add(new Connection(rooms.get(i), rooms.get(j), distance));
+                    int distance = Math.abs(roomCenters.get(i).getRow() - roomCenters.get(j).getRow()) +
+                            Math.abs(roomCenters.get(i).getCol() - roomCenters.get(j).getCol());
+                    graph_edges.add(new Connection(roomCenters.get(i), roomCenters.get(j), distance));
                     if(distance>max_distance_between_rooms){
                         max_distance_between_rooms = distance;
-                        start = rooms.get(i);
-                        finish = rooms.get(j);
+                        start = roomCenters.get(i);
+                        finish = roomCenters.get(j);
                     }
                 }
             }
             Collections.sort(graph_edges);
-            ArrayList<Connection> mst_edges = kruskals(rooms.size(), graph_edges);
+            ArrayList<Connection> mst_edges = kruskals(roomCenters.size(), graph_edges);
             //now we can connect the individual rooms
             for (int i = 0; i < mst_edges.size(); i++) {
                 //we can do that by doing a breadth-first search
@@ -226,12 +232,60 @@ public class Generator {
                 build_bfs(a, b);
             }
         }
+
+        /**
+         * Put enemies into rooms
+         * @author Jelmer Firet
+         */
+        void generateEnemies(int blockheight, int blockwidth, int room_width, int room_height){
+            for (Cell room:roomBottomLeft) {
+                double left = room.getRow() * blockheight;
+                double right = (room.getRow() + room_height) * blockheight;
+                double bottom = room.getCol() * blockwidth;
+                double top = (room.getCol() + room_width) * blockwidth;
+                Random rand = new Random();
+                int roomType = rand.nextInt(4);
+                System.out.println(roomType);
+                if (roomType == 0) {
+                    entities.add(new Boss((left + right) / 2, (top + bottom) / 2));
+                }
+                if (roomType == 1) {
+                    for (int i = 0; i < 5; i++) {
+                        entities.add(new Skeleton(left + rand.nextDouble() * (right - left),
+                                bottom + rand.nextDouble() * (top - bottom)));
+                    }
+                }
+                if (roomType == 2) {
+                    for (int i = 0; i < 5; i++) {
+                        System.out.print(i);
+                        entities.add(new Slime(left + rand.nextDouble() * (right - left),
+                                bottom + rand.nextDouble() * (top - bottom)));
+                    }
+                }
+                if (roomType == 3) {
+                    for (int i = 0; i < 3; i++) {
+                        System.out.print(i);
+                        entities.add(new Skeleton(left + rand.nextDouble() * (right - left),
+                                bottom + rand.nextDouble() * (top - bottom)));
+                    }
+                    for (int i = 0; i < 2; i++) {
+                        System.out.print(i);
+                        entities.add(new Slime(left + rand.nextDouble() * (right - left),
+                                bottom + rand.nextDouble() * (top - bottom)));
+                    }
+                }
+            }
+
+            System.out.println("Done");
+        }
+
         /**
         * Convert this grid of blocks to a Level
         * @author Robert Koprinkov
-        * @param n_rooms, blockheight, blockwidth
+        * @param blockheight number of tiles each block is high
+        * @param blockwidth number of tiles each block is wide
         * */
-        Level convertToLevel(int n_rooms, int blockheight, int blockwidth) {
+        Level convertToLevel(int blockheight, int blockwidth) {
             Random rand = new Random(System.currentTimeMillis());
 
             Tile[][] fullgrid = new Tile[blockheight * this.n_rows][blockwidth * n_cols];
@@ -260,21 +314,23 @@ public class Generator {
                     }
                 }
             }
-            return new Level(fullgrid, new ArrayList<Entity>());
+            return new Level(fullgrid, entities);
         }
     }
 
-    private int n_rows, n_columns, block_columns, block_rows;
+    private int n_rows, n_columns, block_columns, block_rows, room_width, room_height;
     /**
     * Generates a generator for dungeons where there are n_rows rows of blocks, n_columns blocks of column, and each column has block_rowsxblock_columns tiles
     * @author Robert Koprinkov
     * @param n_rows, n_columns, block_columns, block_rows
     * */
-    public Generator(int n_rows, int n_columns, int block_columns, int block_rows) {
+    public Generator(int n_rows, int n_columns, int block_columns, int block_rows, int room_width, int room_height) {
         this.n_columns = n_columns;
         this.n_rows = n_rows;
         this.block_columns = block_columns;
         this.block_rows = block_rows;
+        this.room_width = room_width;
+        this.room_height = room_height;
     }
 
     /**
@@ -284,8 +340,9 @@ public class Generator {
      * */
     public Level generate(int n_rooms) {
         BlockGrid grid = new BlockGrid(n_rows, n_columns);
-        grid.generateGrid(n_rooms,5,3);
-        return grid.convertToLevel(n_rooms,block_rows, block_columns);
+        grid.generateGrid(n_rooms,room_width,room_height);
+        grid.generateEnemies(block_rows,block_columns,room_width,room_height);
+        return grid.convertToLevel(block_rows, block_columns);
     }
   
 }
