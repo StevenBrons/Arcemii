@@ -3,9 +3,8 @@ package client.view;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
+import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -26,28 +25,14 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         void onJoystickMoved(float xPercent, float yPercent, int source);
     }
 
-    public JoystickView(Context context){
-        super(context);
-        getHolder().addCallback(this);
-        setOnTouchListener(this);
-        if(context instanceof JoystickListener)
-            joystickCallback = (JoystickListener) context;
-    }
-
-    public JoystickView(Context context, AttributeSet attributes, int style){
-        super(context, attributes, style);
-        getHolder().addCallback(this);
-        setOnTouchListener(this);
-        if(context instanceof JoystickListener)
-            joystickCallback = (JoystickListener) context;
-    }
-
     public JoystickView (Context context, AttributeSet attributes){
         super(context, attributes);
         getHolder().addCallback(this);
         setOnTouchListener(this);
         if(context instanceof JoystickListener)
             joystickCallback = (JoystickListener) context;
+        this.setZOrderOnTop(true);
+        this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
     }
 
     private void setupDminensions(){
@@ -64,7 +49,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             JoyStick.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             colors.setARGB(255,50,50,50);
             JoyStick.drawCircle(centerX, centerY, Radius, colors);
-            colors.setARGB(255, 0 ,0, 255);
+            colors.setARGB(255,  0 ,0, 255);
             JoyStick.drawCircle(newX, newY, HatRadius, colors);
             getHolder().unlockCanvasAndPost(JoyStick);
         }
@@ -73,6 +58,7 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     @Override
     public void surfaceCreated(SurfaceHolder holder){
         setupDminensions();
+        drawJoystick(centerX, centerY);
     }
 
     @Override
