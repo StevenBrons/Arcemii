@@ -17,7 +17,7 @@ public class Start extends Tile {
 		result.add(new RenderItem("tiles/grass",
 				Tile.WIDTH*x,Tile.HEIGHT*y,0.0,0.0,0));
 		result.add(new RenderItem("tiles/start",
-				Tile.WIDTH*x+Tile.WIDTH/2,Tile.HEIGHT*y+Tile.HEIGHT/2,0.5,0.5,1));
+				Tile.WIDTH*x+Tile.WIDTH/2,-Tile.HEIGHT*y+Tile.HEIGHT/2,0.5,0.5,1));
 		return result;
 	}
 }

@@ -25,7 +25,7 @@ public abstract class Tile implements Serializable {
     public List<RenderItem> getRenderItem(int x, int y){
         List<RenderItem> result = new ArrayList<>();
         result.add(new RenderItem("fallback",
-                Tile.WIDTH*x,Tile.HEIGHT*y,0.0,1.0,0));
+                Tile.WIDTH*x,-Tile.HEIGHT*y,0.0,1.0,0));
         return result;
     }
 }

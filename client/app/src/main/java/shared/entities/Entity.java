@@ -10,6 +10,7 @@ import client.view.RenderItem;
 import shared.abilities.Ability;
 import shared.abilities.Move;
 import shared.general.Level;
+import shared.tiles.Tile;
 
 public abstract class Entity implements Serializable {
 
@@ -37,7 +38,7 @@ public abstract class Entity implements Serializable {
      */
     public List<RenderItem> getRenderItem(){
         List<RenderItem> result = new ArrayList<>();
-        result.add(new RenderItem("fallback",0,0,0.0,0.0,2));
+        result.add(new RenderItem("fallback",(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.0,0.0,2));
         return result;
     }
 

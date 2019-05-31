@@ -87,7 +87,7 @@ public class GameView extends View {
         canvas.drawColor(Color.BLACK);
         Player player = ClientGameHandler.handler.getPlayer();
         int offsetX = (getWidth()/8-(int)(Tile.WIDTH*player.getxPos()));
-        int offsetY = (getHeight()/8-(int)(Tile.HEIGHT*player.getyPos()));
+        int offsetY = (getHeight()/8+(int)(Tile.HEIGHT*player.getyPos()));
         renderItemLock.lock();
         for (RenderItem object:renderItems){
             object.renderTo(temporary,offsetX,offsetY);

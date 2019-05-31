@@ -25,7 +25,7 @@ public class Boss extends Entity {
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
 		result.add(new RenderItem("boss/bossFloating",
-				(int)(Tile.WIDTH*xPos), (int)(Tile.HEIGHT*yPos),0.5,1.0,2));
+				(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.5,1.0,2));
 		return result;
 	}
 

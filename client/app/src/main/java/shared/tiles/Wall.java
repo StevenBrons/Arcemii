@@ -27,9 +27,9 @@ public class Wall extends Tile {
 		int animationOffset = Math.abs(rand.nextInt());
 ;		List<RenderItem> result = new ArrayList<>();
 		result.add(new RenderItem("tree/treeBordered",
-				Tile.WIDTH*x+randomX,Tile.HEIGHT*y+randomY,0.5,40.0/48.0,2,animationOffset));
+				Tile.WIDTH*x+randomX,-(Tile.HEIGHT*y+randomY),0.5,40.0/48.0,2,animationOffset));
 		result.add(new RenderItem("tiles/grass",
-				Tile.WIDTH*x,Tile.HEIGHT*y,0.0,0.0,0));
+				Tile.WIDTH*x,-Tile.HEIGHT*y,0.0,0.0,0));
 		return result;
 	}
 }
