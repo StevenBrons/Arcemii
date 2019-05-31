@@ -76,7 +76,11 @@ public class Level extends Message {
   @Override
   public String toString() {
     String tot = "";
+<<<<<<< HEAD
     for (int y = tiles[0].length - 1; y >= 0; y--) {
+=======
+    for (int y = tiles[0].length-1; y >= 0; y--) {
+>>>>>>> 7b383f7c4d0235f3075cb91117caf5ed1013e1a0
       for (int x = 0; x < tiles.length; x++) {
         tot += tiles[x][y].isSolid() ? "#" : ".";
       }
