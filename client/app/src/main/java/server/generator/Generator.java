@@ -146,15 +146,15 @@ public class Generator {
                 if (r == row_b && c == col_b) {
                     //found a path!
                     for (int i = sequence.length() - 1; i > 0; i--) {
-                        r -= dx[(sequence.charAt(i) - '0')];
-                        c -= dy[(sequence.charAt(i) - '0')];
-                        grid[r][c] = Block.Road;
+                        c -= dx[(sequence.charAt(i) - '0')];
+                        r -= dy[(sequence.charAt(i) - '0')];
+                        grid[c][r] = Block.Road;
                     }
                     return;
                 }
                 for (int i = 0; i < 4; i++) {
-                    rowq.add(r + dx[i]);
-                    colq.add(c + dy[i]);
+                    colq.add(c + dx[i]);
+                    rowq.add(r + dy[i]);
                     seq.add(sequence.concat(Character.toString((char) ('0' + i))));
                 }
             }
@@ -187,19 +187,19 @@ public class Generator {
                 int row = rand.nextInt(n_rows-room_height);
                 int column = rand.nextInt(n_columns-room_width);
                 boolean valid = true;
-                for (int y = 0;y<room_height;y++){
-                    for (int x = 0;x<room_width;x++){
-                        valid &= (grid[row+y][column+x] == Block.Empty);
+                for (int x = 0;x<room_width;x++){
+                    for (int y = 0;y<room_height;y++){
+                        valid &= (grid[column+x][row+y] == Block.Empty);
                     }
                 }
                 if (valid) {
                     for (int y = row-1;y<row+room_height+1;y++) if (0 <= y && y < n_rows){
                         for (int x = column-1;x<column+room_width+1;x++) if (0 <= x && x < n_columns){
                             if (y == row-1 || y == row+room_height || x == column-1 || x == column+room_width){
-                                grid[y][x] = Block.RoomEdge;
+                                grid[x][y] = Block.RoomEdge;
                             }
                             else{
-                                grid[y][x] = Block.Room;
+                                grid[x][y] = Block.Room;
                             }
                         }
                     }
@@ -237,12 +237,12 @@ public class Generator {
          * Put enemies into rooms
          * @author Jelmer Firet
          */
-        void generateEnemies(int blockheight, int blockwidth, int room_width, int room_height){
+        void generateEnemies(int block_height, int block_width, int room_width, int room_height){
             for (Cell room:roomBottomLeft) {
-                double left = room.getRow() * blockheight;
-                double right = (room.getRow() + room_height) * blockheight;
-                double bottom = room.getCol() * blockwidth;
-                double top = (room.getCol() + room_width) * blockwidth;
+                double bottom = room.getRow() * block_height;
+                double top = (room.getRow() + room_height) * block_height;
+                double left = room.getCol() * block_width;
+                double right = (room.getCol() + room_width) * block_width;
                 Random rand = new Random();
                 int roomType = rand.nextInt(4);
                 System.out.println(roomType);
@@ -291,24 +291,24 @@ public class Generator {
             Tile[][] fullgrid = new Tile[blockheight * this.n_rows][blockwidth * n_cols];
             for (int i = 0; i < n_rows; i++) {
                 for (int j = 0; j < n_cols; j++) {
-                    if (grid[i][j] == Block.Empty || grid[i][j] == Block.RoomEdge) {
+                    if (grid[j][i] == Block.Empty || grid[j][i] == Block.RoomEdge) {
                         for (int n = 0; n < blockheight; n++) {
                             for (int m = 0; m < blockwidth; m++) {
-                                fullgrid[i * blockheight + n][j * blockwidth + m] = new Wall();
+                                fullgrid[j * blockwidth + m][i * blockheight + n] = new Wall();
                             }
                         }
                     } else {
                         for (int n = 0; n < blockheight; n++) {
                             for (int m = 0; m < blockwidth; m++) {
-                                fullgrid[i * blockheight + n][j * blockwidth + m] = new Empty();
+                                fullgrid[j * blockwidth + m][i * blockheight + n] = new Empty();
                             }
                         }
-                        if (grid[i][j] == Block.Room) {
+                        if (grid[j][i] == Block.Room) {
                             if(i==start.getRow()&&j==start.getCol()){
                                 //start cell
-                                fullgrid[i * blockheight + rand.nextInt(blockheight)][j * blockwidth + rand.nextInt(blockwidth)] = new Start();
+                                fullgrid[j * blockwidth + rand.nextInt(blockwidth)][i * blockheight + rand.nextInt(blockheight)] = new Start();
                             } else if(i==finish.getRow() && j==finish.getCol()){
-                                fullgrid[i * blockheight + rand.nextInt(blockheight)][j * blockwidth + rand.nextInt(blockwidth)] = new Finish();
+                                fullgrid[j * blockwidth + rand.nextInt(blockwidth)][i * blockheight + rand.nextInt(blockheight)] = new Finish();
                             }
                         }
                     }
