@@ -82,8 +82,11 @@ We set our next meeting for Thursday and gave everyone new tasks (well, most of 
 	\item Bram: finalize the lobby activity.
 \end{itemize}
 \bigbreak\noindent
-Thursday was our second meeting. Everyone but Thomas was present. This is very inconvenient, as he did not finish his task.\\
-Jelmer had continued with his rendering and the only thing left is rendering outside of a level. Thijs made the following animations:
+Thursday was our second meeting. Everyone but Thomas was present. This is very inconvenient, as he did not finish his task.
+
+Jelmer had continued with his rendering and the only thing left is rendering outside of a level. 
+
+Thijs was assigned the task to work on some sprites, and he made these animations:
 \begin{itemize}
 	\item Idle and walking animations for 4 player characters
 	\item Idle and jumping animations for a slime
@@ -100,4 +103,22 @@ Steven aims to make all game-logic that is not directly dependent on tasks given
 Thomas is given the task to start on the in-game UI. 
 
 
+\subsection*{Week 22}
+At Steven's request, because he had an appointment, the meeting started later than usual. This meant a shorter meeting, as Thomas had to leave us in the break. Sadly, not everyone was on time, so we effectively had only 45 minutes for our meeting. This is very sub-optimal as we start to realize that there is still a \textit{lot} of work to be done before we have an presentable application.
+
+Robert has completed the dungeon generator, but will make some final adjustments before he will merge it with the master branch on GitHub. 
+
+Steven did some work on passing objects between the server and the client. Still a lot has to be done in this part before we can properly test everything. A big part of our struggles are that most tasks seem intertwined with others: Thomas would like to work on in-game abilities, but he can't until a proper connection is made. Bram would like to work on the lobby activity, but this has little meaning when there are no abilities.
+
+An important breakthrough this weekend was that Bram was able to join Jelmer via the app! This means the connection that \textit{is} being made, will probably work correctly later on. Still though, we realize that working with multiplayer was probably a very ambitious idea and the risks we were afraid of in earlier weeks are staring us in the face.
+
+Bram spent most of his weekend working on a bug that causes the player not to enter a good multiplayer mode after they have first switched to singleplayer mode -- as a sidenote: there is a singleplayer toggle added, which just `tricks' the app into thinking it's local device is the server, for the purpose of testing and later on for true offline game possibilities.
+
+Thomas has not been busy yet with the UI and controls. We urge him to look at this quickly, we want (theoretical) player movement by thursday!
+\bigbreak\noindent
+Thurday was Whitsunday, and the university was closed. We did not arrange a meeting, as most had familiy-obligations to attend, but we discussed some important things via Whatsapp, so that everyone would still be able to work this weekend.
+
+There were some problems with the dungeon generation (namely that rooms are not connected) that Robert fixed immediately at Wednesday.
+
+Thursday, Thomas added a joystick for movement, but this is not yet fully integrated in the app.
 \end{document}
