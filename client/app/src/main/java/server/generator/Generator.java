@@ -333,6 +333,11 @@ public class Generator {
      * @param n_rooms Number of rooms
      * */
     public Level generate(int n_rooms) {
+        if (n_rooms > (n_rows/(2*room_height+1))*(n_columns/(2*room_width+1))){
+            System.out.println("WARNING: Level might not finish generating");
+            System.out.println("Maximum safe number of rooms is: "+
+                    (n_rows/(2*room_height+1))*(n_columns/(2*room_width+1)));
+        }
         BlockGrid grid = new BlockGrid(n_rows, n_columns);
         grid.generateGrid(n_rooms,room_width,room_height);
         grid.generateEnemies(block_rows,block_columns,room_width,room_height);
