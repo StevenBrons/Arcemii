@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -91,7 +92,7 @@ public class LobbyActivity extends AppCompatActivity {
 		return players != null &&
 						players.size() > 0 &&
 						players.get(0) != null &&
-						players.get(0).getUUID().equals(ClientGameHandler.handler.getPlayer().getUUID());
+						players.get(0).equals(ClientGameHandler.handler.getPlayer());
 	}
 
 	/**

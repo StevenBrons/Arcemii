@@ -51,8 +51,4 @@ public class Slime extends Entity {
 	public void invokeAll(Level level) {
 	}
 
-	@Override
-	public boolean update(Level level) {
-		return false;
-	}
 }

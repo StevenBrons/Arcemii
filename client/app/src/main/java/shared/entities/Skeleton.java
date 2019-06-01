@@ -63,11 +63,8 @@ public class Skeleton extends Entity {
 
 	@Override
 	public void invokeAll(Level level) {
-
+		invoke(this.move.invoke(1));
 	}
 
-	@Override
-	public boolean update(Level level) {
-		return false;
-	}
+
 }

@@ -85,7 +85,7 @@ public class Level extends Message {
     return tot;
   }
 
-  public void spawnPlayer(Player player) {
+  public synchronized void spawnPlayer(Player player) {
     double spawnX = 0;
     double spawnY = 0;
 
@@ -93,7 +93,7 @@ public class Level extends Message {
       for (int y = 0; y < tiles[x].length; y++) {
         if (tiles[x][y] instanceof Start) {
           spawnX = x + 0.5;
-          spawnY = y + 0.5;
+          spawnY = y - 0.5;
         }
       }
     }

@@ -1,10 +1,13 @@
 package shared.general;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import server.generator.Generator;
+import shared.entities.Entity;
 import shared.entities.Player;
 import shared.messages.GameUpdateMessage;
 import shared.messages.Message;
@@ -65,6 +68,7 @@ public class Party extends Message {
 
 
 	public void startGame() {
+		levelLock.lock();
 		Generator g = new Generator(22,22,2,2,5,3);
 		curLevel  = g.generate(6);
 
@@ -74,6 +78,7 @@ public class Party extends Message {
 
 		messageAll(curLevel);
 		this.inLobby = false;
+		levelLock.unlock();
 	}
 
 	public void update() {
@@ -81,9 +86,12 @@ public class Party extends Message {
 			levelLock.lock();
 			curLevel.invoke();
 			curLevel.execute();
+			ArrayList<Entity> changes = curLevel.getChanges();
 			levelLock.unlock();
+			sendPlayers(new GameUpdateMessage(changes));
+		} else {
+			sendPlayers(new GameUpdateMessage(new ArrayList<Entity>()));
 		}
-		sendPlayers(new GameUpdateMessage(curLevel.getChanges()));
 	}
 
 	private void sendPlayers(Message m){
