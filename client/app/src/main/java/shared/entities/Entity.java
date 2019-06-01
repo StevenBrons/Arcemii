@@ -20,6 +20,7 @@ public abstract class Entity implements Serializable {
     protected transient ArrayList<Ability> actions = new ArrayList<>();
     private transient boolean changed = false;
     private transient double hitbox = 1;
+    private boolean isDead = false;
 
     protected double xPos = 0, yPos = 0, xVel = 0, yVel = 0;
 
@@ -40,6 +41,15 @@ public abstract class Entity implements Serializable {
         List<RenderItem> result = new ArrayList<>();
         result.add(new RenderItem("fallback",(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.0,0.0,2));
         return result;
+    }
+
+    public boolean isDead() {
+        return isDead();
+    }
+
+    public void destroy() {
+        isDead = true;
+        setChanged(true);
     }
 
     public void executeAll(Level level) {
@@ -82,6 +92,12 @@ public abstract class Entity implements Serializable {
       this.yPos = y;
     }
 
+    public void setVel(double x, double y) {
+        setChanged(true);
+        this.xVel = x;
+        this.yVel = y;
+    }
+
     public boolean isChanged() {
       return this.isChanged();
     }
@@ -103,5 +119,9 @@ public abstract class Entity implements Serializable {
 
     public double getHitbox() {
       return hitbox;
+    }
+
+    public UUID getUUID() {
+        return uuid;
     }
 }

@@ -24,16 +24,6 @@ public class Skeleton extends Entity {
 		super(x,y);
 	}
 
-	/**
-	 * Sets the velocity of the skeleton
-	 * @param dx the x velocity of the skeleton (game pixels)
-	 * @param dy the y velocity of the skeleton (game pixels)
-	 * @author Jelmer Firet
-	 */
-	public void setVelocity(double dx, double dy){
-		this.xVel = dx;
-		this.yVel = dy;
-	}
 
 	/**
 	 * Sets whether this skeleton is shooting an arrow

@@ -59,17 +59,6 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * Sets the velocity of the player
-	 * @param dx the x velocity of the player (game pixels)
-	 * @param dy the y velocity of the player (game pixels)
-	 * @author Jelmer Firet
-	 */
-	public void setVelocity(double dx, double dy){
-		this.xVel = dx;
-		this.yVel = dy;
-	}
-
-	/**
 	 * @return the render item associated with this player
 	 * @author Jelmer Firet
 	 */
@@ -133,22 +122,6 @@ public class Player extends Entity {
 	 */
 	public String getName(){
 		return name;
-	}
-
-	/**
-	 * @return x position of this player (game pixels)
-	 * @author Jelmer Firet
-	 */
-	public double getxPos() {
-		return xPos;
-	}
-
-	/**
-	 * @return y position of this player (game pixels)
-	 * @author Jelmer Firet
-	 */
-	public double getyPos() {
-		return yPos;
 	}
 
 }
