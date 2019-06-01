@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="client.activities.GameActivity"></activity>
+        <activity android:name="client.activities.GameActivity"
+            android:screenOrientation="landscape" />
         <activity android:name="client.activities.LobbyActivity"
             android:screenOrientation="landscape" />
         <activity android:name="client.activities.JoinPartyActivity" />
