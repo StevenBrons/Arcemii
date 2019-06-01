@@ -45,14 +45,5 @@ public class Arrow extends Entity{
 	public void invokeAll(Level level) {
 	}
 
-	@Override
-	public boolean update(Level level) {
-		if (xVel != 0 && yVel != 0) {
-			xPos += xVel;
-			yVel += yVel;
-		}
-		// returns false even though a mutation is made!
-		// this is because the client executes this in exactly the same manner!
-		return false;
-	}
+
 }

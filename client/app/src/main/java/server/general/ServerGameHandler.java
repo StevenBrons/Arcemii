@@ -1,5 +1,7 @@
 package server.general;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import shared.entities.Player;
@@ -121,7 +123,7 @@ public class ServerGameHandler {
 
 	/**
 	 * Join the client to the given party.
-	 * @param m join party message.
+	 * \@param m join party message.
 	 * @param player
 	 * @author Bram Pulles
 	 */

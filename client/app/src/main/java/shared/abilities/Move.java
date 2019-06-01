@@ -18,7 +18,7 @@ public class Move extends Ability{
     double x = self.getX();
     double y = self.getY();
     //TODO
-    self.setPos(Math.cos(direction) * SPEED,Math.sin(direction) * SPEED);
+    self.setPos(x + Math.cos(direction) * SPEED,y + Math.sin(direction) * SPEED);
     return true;
   }
 }

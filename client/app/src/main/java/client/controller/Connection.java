@@ -31,8 +31,8 @@ public class Connection {
 
 	private Socket clientSocket;
 
-	private static ObjectInputStream input;
-	private static ObjectOutputStream output;
+	private ObjectInputStream input;
+	private ObjectOutputStream output;
 
 	private Context context;
 
@@ -49,20 +49,25 @@ public class Connection {
 			@Override
 			public void run() {
 				Log.d(tag, "Connecting to server...");
-
 				if (singleplayer) {
-					ArcemiiServer.main(new String[]{"singleplayer"});
-					input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
-					output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
-
-					Log.d(tag, "Connected to singleplayer server.");
-					setIsConnected(true);
+					connectToSingleplayerServer();
 				} else {
 					connectToMultiplayerServer();
 				}
 			}
 		});
 		thread.start();
+	}
+
+
+	private void connectToSingleplayerServer() {
+		ArcemiiServer.main(new String[]{"singleplayer"});
+		input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
+		output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
+		lastHeartbeat = System.currentTimeMillis();
+
+		Log.d(tag, "Connected to singleplayer server.");
+		setIsConnected(true);
 	}
 
 	/**
@@ -155,8 +160,9 @@ public class Connection {
 			if(clientSocket != null)
 				clientSocket.close();
 
-			if(singleplayer)
+			if(singleplayer) {
 				((SinglePlayerServer)ArcemiiServer.server).stopServer();
+			}
 
 			Log.d(tag, "Succesfully closed the connection.");
 		}catch(Exception e){

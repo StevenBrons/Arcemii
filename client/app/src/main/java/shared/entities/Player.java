@@ -1,5 +1,7 @@
 package shared.entities;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,7 +20,7 @@ import shared.tiles.Tile;
  */
 public class Player extends Entity {
 
-	private String name = "Player#" + (int)(Math.random()*99999);
+	private transient String name = "Player#" + (int)(Math.random()*99999);
 	private int color;
 
 	private transient ObjectInputStream input;
@@ -34,7 +36,7 @@ public class Player extends Entity {
 	 * Send message to this client.
 	 * @param m message
 	 */
-	public void sendMessage(Message m) {
+	public synchronized void sendMessage(Message m) {
 		try {
 			output.writeObject(m);
 			output.flush();
@@ -96,11 +98,6 @@ public class Player extends Entity {
 	@Override
 	public void invokeAll(Level level) {
 		// the abilities are invoked by the client!
-	}
-
-	@Override
-	public boolean update(Level level) {
-		return false;
 	}
 
 	public ArrayList<Ability> getActions() {

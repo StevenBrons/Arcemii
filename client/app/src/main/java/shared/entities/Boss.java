@@ -33,8 +33,4 @@ public class Boss extends Entity {
 	public void invokeAll(Level level) {
 	}
 
-	@Override
-	public boolean update(Level level) {
-		return false;
-	}
 }

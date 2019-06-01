@@ -44,7 +44,7 @@ public abstract class Entity implements Serializable {
     }
 
     public boolean isDead() {
-        return isDead();
+        return isDead;
     }
 
     public void destroy() {
@@ -63,8 +63,6 @@ public abstract class Entity implements Serializable {
      * @param level
      */
     public abstract void invokeAll(Level level);
-
-    public abstract boolean update(Level level);
 
     public void invoke(Ability ability) {
         this.actions.add(ability);
@@ -99,11 +97,11 @@ public abstract class Entity implements Serializable {
     }
 
     public boolean isChanged() {
-      return this.isChanged();
+      return changed;
     }
 
     public void setChanged(boolean changed) {
-      this.changed = false;
+      this.changed = changed;
     }
 
     public boolean intersects(Entity e) {
@@ -123,5 +121,13 @@ public abstract class Entity implements Serializable {
 
     public UUID getUUID() {
         return uuid;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof Entity) {
+            return this.uuid.equals(((Entity) obj).getUUID());
+        }
+        return false;
     }
 }

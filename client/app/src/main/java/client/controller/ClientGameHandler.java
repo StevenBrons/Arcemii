@@ -30,7 +30,6 @@ public class ClientGameHandler {
 	private Context context;
 
 	private SharedPreferences.OnSharedPreferenceChangeListener listener;
-	private boolean listeningForMessages;
 
 	private JoinPartyActivity joinPartyActivity;
 	private LobbyActivity lobbyActivity;
@@ -82,26 +81,30 @@ public class ClientGameHandler {
 	}
 
 	public void startListeningForMessages() {
-		listeningForMessages = true;
-
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-			while (listeningForMessages) {
+			while (true) {
 				try {
 					if (connection.isConnected) {
 						Message m = (Message) connection.getInputStream().readObject();
 						handleInput(m);
 					}
 				} catch (Exception e) {
-					Log.d("CONNECTION", "Could not get the message from the server.");
-					e.printStackTrace();
+					if (e.getMessage().equals("Write end dead") || e.getMessage().equals("Socket closed")) {
+						Log.d("CONNECTION", "Connection to server was lost.");
+						break;
+					} else {
+						Log.d("CONNECTION", "Could not get the message from the server.");
+						e.printStackTrace();
+					}
 				}
 			}
 			}
 		});
 		thread.start();
 	}
+
 
 	/**
 	 * Listen to the shared preferences if the servermode changes.
@@ -114,7 +117,6 @@ public class ClientGameHandler {
 		listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 				Log.d("CONNECTION", "Changing connection to: singleplayer=" + isSingleplayer());
-				listeningForMessages = false;
 				connection.stopConnection();
 				connection = new Connection(isSingleplayer(), context);
 				startListeningForMessages();
@@ -169,7 +171,7 @@ public class ClientGameHandler {
 
 	private void updateGame(GameUpdateMessage m) {
 		for (Entity e : m.getChanges()) {
-			if (e.getUUID() == player.getUUID()) {
+			if (e.getUUID().equals(player.getUUID())) {
 				player = (Player) e;
 			}
 			if (e.isDead()) {
