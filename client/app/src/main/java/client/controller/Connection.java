@@ -27,12 +27,12 @@ public class Connection {
 	// Jelmers server ip: 213.124.165.68
 	private static final String hostName = "10.0.2.2";
 	private static final int PORT = 26194;
-	public static boolean isConnected = false;
+	public  boolean isConnected = false;
 
 	private Socket clientSocket;
 
-	private ObjectInputStream input;
-	private ObjectOutputStream output;
+	private static ObjectInputStream input;
+	private static ObjectOutputStream output;
 
 	private Context context;
 
@@ -75,7 +75,6 @@ public class Connection {
 	 * @author Bram Pulles and Steven Bronsveld.
 	 */
 	private void connectToMultiplayerServer(){
-		while(!isConnected) {
 			try {
 				clientSocket = new Socket(hostName, PORT);
 				output = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -87,7 +86,6 @@ public class Connection {
 			} catch (IOException e) {
 				Log.d(tag, "Could not connect to the server.");
 			}
-		}
 	}
 
 	/**
@@ -110,7 +108,7 @@ public class Connection {
 	 * @param connected
 	 * @author Bram Pulles
 	 */
-	private void setIsConnected(Boolean connected){
+	private synchronized void setIsConnected(Boolean connected){
 		isConnected = connected;
 
 		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_connectioninfo), MODE_PRIVATE);
@@ -131,7 +129,7 @@ public class Connection {
 	 * Send a message to the server from the client.
 	 * @param msg message
 	 */
-	public void sendMessage(final Message msg) {
+	public synchronized void sendMessage(final Message msg) {
 		if (isConnected){
 			Thread t = new Thread(new Runnable() {
 				@Override
@@ -145,13 +143,14 @@ public class Connection {
 			});
 			t.start();
 		}
+
 	}
 
 	/**
 	 * Stop this connection.
 	 * @author Bram Pulles
 	 */
-	public void stopConnection(){
+	public synchronized void stopConnection(){
 		setIsConnected(false);
 
 		try{

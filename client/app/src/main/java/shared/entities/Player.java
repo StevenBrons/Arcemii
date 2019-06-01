@@ -42,6 +42,7 @@ public class Player extends Entity {
 			output.flush();
 			output.reset();
 		} catch (IOException e) {
+//			e.printStackTrace();
 		}
 	}
 	public ObjectInputStream getInputStream() {
