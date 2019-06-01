@@ -85,15 +85,15 @@ public abstract class Entity implements Serializable {
     }
 
     public void setPos(double x, double y) {
-      setChanged(true);
       this.xPos = x;
       this.yPos = y;
+      setChanged(true);
     }
 
     public void setVel(double x, double y) {
-        setChanged(true);
         this.xVel = x;
         this.yVel = y;
+        setChanged(true);
     }
 
     public boolean isChanged() {

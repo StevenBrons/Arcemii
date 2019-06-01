@@ -183,11 +183,7 @@ public class ClientGameHandler {
 			if (e.getUUID().equals(player.getUUID())) {
 				player = (Player) e;
 			}
-			if (e.isDead()) {
-				//TODO
-			} else {
-				level.addEntity(e);
-			}
+			level.updateEntity(e);
 		}
 	}
 

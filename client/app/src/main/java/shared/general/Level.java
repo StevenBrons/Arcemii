@@ -113,4 +113,17 @@ public class Level extends Message {
     return changedEntities;
   }
 
+  public void updateEntity(Entity updateEntity) {
+    for (int i = entities.size() - 1; i >= 0; i--) {
+      if (entities.get(i).equals(updateEntity)) {
+        if (updateEntity.isDead()) {
+          entities.remove(i);
+        } else {
+          entities.set(i,updateEntity);
+        }
+        return;
+      }
+    }
+    addEntity(updateEntity);
+  }
 }
