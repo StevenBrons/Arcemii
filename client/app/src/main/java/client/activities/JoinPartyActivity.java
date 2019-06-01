@@ -27,7 +27,7 @@ public class JoinPartyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join_party);
 
         gamePin = findViewById(R.id.gamePinField);
-		ClientGameHandler.handler.setJoinPartyActivity(this);
+				ClientGameHandler.handler.setJoinPartyActivity(this);
     }
 
 	/**
