@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.debernardi.archemii.R;
 
+import java.io.StreamCorruptedException;
+
 import client.activities.GameActivity;
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
@@ -84,19 +86,26 @@ public class ClientGameHandler {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-			while (true) {
+			while (!connection.isConnected) {
+			}
+			while (connection.isConnected) {
 				try {
-					if (connection.isConnected) {
-						Message m = (Message) connection.getInputStream().readObject();
-						handleInput(m);
-					}
+					Message m = (Message) connection.getInputStream().readObject();
+					handleInput(m);
 				} catch (Exception e) {
-					if (e.getMessage().equals("Write end dead") || e.getMessage().equals("Socket closed")) {
+					if (e.getMessage().equals("Socket closed") || e instanceof StreamCorruptedException) {
 						Log.d("CONNECTION", "Connection to server was lost.");
+						e.printStackTrace();
 						break;
 					} else {
-						Log.d("CONNECTION", "Could not get the message from the server.");
-						e.printStackTrace();
+						if (e.getMessage().equals("Write end dead")) {
+							//TODO
+							//Find this magic bug on singleplayer server
+						} else {
+							Log.d("CONNECTION", "Could not get the message from the server.");
+							e.printStackTrace();
+						}
+
 					}
 				}
 			}
@@ -116,7 +125,7 @@ public class ClientGameHandler {
 		// Set up a listener for connection information.
 		listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-				Log.d("CONNECTION", "Changing connection to: singleplayer=" + isSingleplayer());
+				Log.d("CONNECTION", "Changing connection to: " + (isSingleplayer() ? "singleplayer" : "multiplayer"));
 				connection.stopConnection();
 				connection = new Connection(isSingleplayer(), context);
 				startListeningForMessages();
@@ -217,12 +226,14 @@ public class ClientGameHandler {
 		this.player = m.getPlayer();
 	}
 
+
+
 	public void sendPlayerInfoMessage() {
 		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPrefs.getString("username", "-");
 		Player player = new Player(-1,-1,-1);
 		player.setName(username);
-		handler.connection.sendMessage(new PlayerInfoMessage(player));
+		sendMessage(new PlayerInfoMessage(player));
 	}
 
 	/**

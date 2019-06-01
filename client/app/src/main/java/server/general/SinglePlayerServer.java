@@ -1,5 +1,7 @@
 package server.general;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -59,6 +61,7 @@ public class SinglePlayerServer extends ArcemiiServer {
 	 * @author Bram Pulles
 	 */
 	public void stopServer(){
+		Log.d("CONNECTION","Stopping singleplayer server");
 		try{
 			oIn1.close();
 			oOut1.close();

@@ -78,10 +78,10 @@ public class MainActivity extends AppCompatActivity {
 	public void onCreateParty(View v){
 		if(isConnected()) {
 			ClientGameHandler.sendMessage(new CreatePartyMessage());
-
-			Intent intCreateParty = new Intent(this, LobbyActivity.class);
-			startActivity(intCreateParty);
 		}
+		Intent intCreateParty = new Intent(this, LobbyActivity.class);
+		startActivity(intCreateParty);
+
 	}
 
 	/**
