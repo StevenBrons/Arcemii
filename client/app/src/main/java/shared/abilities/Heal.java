@@ -10,4 +10,9 @@ public class Heal extends Ability {
 		// TODO: Implement heal ability.
 		return false;
 	}
+
+	@Override
+	public Ability invoke(double direction) {
+		return null;
+	}
 }

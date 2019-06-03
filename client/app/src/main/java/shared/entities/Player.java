@@ -25,6 +25,7 @@ public class Player extends Entity {
 
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
+	private transient double direction = 0;
 
 	public Player(ObjectInputStream input, ObjectOutputStream output) {
 		super(0,0);
@@ -122,4 +123,21 @@ public class Player extends Entity {
 		return name;
 	}
 
+
+	public void invokeBottom() {
+		invoke(abilities.get(1));
+	}
+
+	public void invokeMiddle() {
+		invoke(abilities.get(2));
+	}
+
+	public void invokeUpper() {
+		invoke(abilities.get(3));
+	}
+
+	public void invokeMove(double angle) {
+		this.direction = angle;
+		invoke(move.invoke(angle));
+	}
 }

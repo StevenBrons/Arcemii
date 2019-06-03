@@ -16,7 +16,7 @@ public abstract class Entity implements Serializable {
 
     private UUID uuid;
     protected transient Move move;
-    private transient ArrayList<Ability> abilities = new ArrayList<>();
+    protected transient ArrayList<Ability> abilities = new ArrayList<>();
     protected transient ArrayList<Ability> actions = new ArrayList<>();
     private transient boolean changed = false;
     private transient double hitbox = 1;
