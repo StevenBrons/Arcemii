@@ -12,6 +12,11 @@ public class Range extends Ability {
 		// TODO: Implement the range ability.
 		return false;
 	}
+
+	@Override
+	public Ability invoke(double direction) {
+		return null;
+	}
 	@Override
 	public String getName(){return name;}
 }

@@ -12,6 +12,11 @@ public class Melee extends Ability {
 		// TODO: Implement melee ability.
 		return false;
 	}
+
+	@Override
+	public Ability invoke(double direction) {
+		return null;
+	}
 	@Override
 	public String getName(){return name;}
 }
