@@ -21,7 +21,7 @@ import shared.tiles.Tile;
  */
 public class Player extends Entity {
 
-	private transient String name = "Player#" + (int)(Math.random()*99999);
+	private String name = "Player#" + (int)(Math.random()*99999);
 	private int color;
 
 	private transient boolean unique = true;
