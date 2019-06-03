@@ -12,6 +12,7 @@ public class Server {
 
 	public static final int PORT = 26194;
 	private boolean running;
+	private boolean starting = true;
 
 	private ServerSocket serverSocket;
 
@@ -26,6 +27,7 @@ public class Server {
 					serverSocket = new ServerSocket(PORT);
 					System.out.println("Server is running at port " + PORT + ".");
 
+					starting = false;
 					while (isRunning()) {
 						Socket socket = serverSocket.accept();
 						ObjectInputStream playerInput = new ObjectInputStream(socket.getInputStream());
@@ -66,5 +68,9 @@ public class Server {
 	 */
 	private synchronized boolean isRunning(){
 		return running;
+	}
+
+	public synchronized boolean isStarting(){
+		return starting;
 	}
 }

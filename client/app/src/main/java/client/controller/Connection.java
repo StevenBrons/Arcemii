@@ -9,6 +9,7 @@ import com.debernardi.archemii.R;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import server.general.ArcemiiServer;
@@ -54,9 +55,9 @@ public class Connection {
 	private void runLocalServer(){
 		ArcemiiServer.main(new String[]{""});
 		hostName = "localhost";
-		try{
-			Thread.sleep(1000);
-		}catch(Exception e){
+
+		// Wait until the server has been started.
+		while(ArcemiiServer.server.isStarting()){
 		}
 	}
 
@@ -68,7 +69,9 @@ public class Connection {
 		Log.d(TAG, "Connecting to server...");
 
 		try {
-			clientSocket = new Socket(hostName, PORT);
+//			clientSocket = new Socket(hostName, PORT);
+			clientSocket = new Socket();
+			clientSocket.connect(new InetSocketAddress(hostName, PORT), 100);
 			output = new ObjectOutputStream(clientSocket.getOutputStream());
 			input = new ObjectInputStream(clientSocket.getInputStream());
 
@@ -130,8 +133,10 @@ public class Connection {
 		setIsConnected(false);
 
 		try{
-			input.close();
-			output.close();
+			if(input != null)
+				input.close();
+			if(output != null)
+				output.close();
 			if(clientSocket != null)
 				clientSocket.close();
 
@@ -144,7 +149,7 @@ public class Connection {
 		}
 	}
 
-	public synchronized boolean isConnected(){
+	public boolean isConnected(){
 		return isConnected;
 	}
 
