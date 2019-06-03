@@ -12,14 +12,11 @@ public class Heal extends Ability {
 		// TODO: Implement heal ability.
 		return false;
 	}
-<<<<<<< HEAD
 
 	@Override
 	public Ability invoke(double direction) {
 		return null;
 	}
-=======
->>>>>>> 200098043a4a2c9e53827c4bcccf6008ec38279a
 	@Override
 	public String getName(){return name;}
 }
