@@ -84,6 +84,8 @@ public abstract class Entity implements Serializable {
       return this.yVel;
     }
 
+    public ArrayList<Ability> getAbilities(){return abilities;}
+
     public void setPos(double x, double y) {
       this.xPos = x;
       this.yPos = y;
