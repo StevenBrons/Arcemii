@@ -16,11 +16,15 @@ public class ServerGameHandler {
 	private ArrayList<Party> parties = new ArrayList<>();
 	public static final int TICKSPEED = 100;
 
+	private boolean running;
+
 	public ServerGameHandler() {
-		Thread gameLoop = new Thread(new Runnable() {
+		running = true;
+
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (true) {
+				while (isRunning()) {
 					long start = System.currentTimeMillis();
 					for (Party p : parties) {
 						p.update();
@@ -37,8 +41,7 @@ public class ServerGameHandler {
 					}
 				}
 			}
-		});
-		gameLoop.start();
+		}).start();
 	}
 
 	/**
@@ -49,19 +52,19 @@ public class ServerGameHandler {
 	 */
 	public void addPlayer(final Player player) {
 		System.out.println("A new client has joined: " + player.getName());
-		Thread thread = new Thread(new Runnable() {
+
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
-			while (true) {
-				try {
-					Message m = (Message) player.getInputStream().readObject();
-					handlePlayerInput(m, player);
-				} catch (Exception e) {
+				while (isRunning()) {
+					try {
+						Message m = (Message) player.getInputStream().readObject();
+						handlePlayerInput(m, player);
+					} catch (Exception e) {
+					}
 				}
 			}
-			}
-		});
-		thread.start();
+		}).start();
 
 		player.sendMessage(new PlayerInfoMessage(player));
 	}
@@ -154,6 +157,14 @@ public class ServerGameHandler {
 		Party party = new Party();
 		party.addPlayer(player);
 		parties.add(party);
+	}
+
+	public synchronized void stop(){
+		running = false;
+	}
+
+	public synchronized boolean isRunning(){
+		return running;
 	}
 
 }

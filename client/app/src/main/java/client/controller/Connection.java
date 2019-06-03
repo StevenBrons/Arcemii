@@ -12,20 +12,18 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import server.general.ArcemiiServer;
-import server.general.SinglePlayerServer;
 import shared.messages.Message;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Connection {
 
-	private static final String tag = "CONNECTION";
+	private static final String TAG = "CONNECTION";
 
 	private static final int TIMEOUT = 300000;
-	private long lastHeartbeat;
 
 	// Jelmers server ip: 213.124.165.68
-	private static final String hostName = "10.0.2.2";
+	private static final String hostName = "localhost";
 	private static final int PORT = 26194;
 	public  boolean isConnected = false;
 
@@ -36,71 +34,58 @@ public class Connection {
 
 	private Context context;
 
-	private boolean singleplayer;
+	private final boolean singleplayer;
 
 	public Connection(final boolean singleplayer, Context context) {
 		this.singleplayer = singleplayer;
 		this.context = context;
 
-		if (isConnected)
-			return;
-
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Log.d(tag, "Connecting to server...");
 				if (singleplayer) {
-					connectToSingleplayerServer();
-				} else {
-					connectToMultiplayerServer();
+					runLocalServer();
 				}
+
+				Log.d(TAG, "Connecting to server...");
+				connectToServer();
 			}
 		});
 		thread.start();
 	}
 
 
-	private void connectToSingleplayerServer() {
-		ArcemiiServer.main(new String[]{"singleplayer"});
-		input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
-		output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
-		lastHeartbeat = System.currentTimeMillis();
+	private void runLocalServer(){
+		ArcemiiServer.main();
+	}
 
-		Log.d(tag, "Connected to singleplayer server.");
-		setIsConnected(true);
+	private void connectToSingleplayerServer() {
+		connectToServer();
+
+//		ArcemiiServer.main(new String[]{"singleplayer"});
+//		input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
+//		output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
+//		lastHeartbeat = System.currentTimeMillis();
+//
+//		Log.d(TAG, "Connected to singleplayer server.");
+//		setIsConnected(true);
 	}
 
 	/**
 	 * Establish a connection with the mutliplayer server.
 	 * @author Bram Pulles and Steven Bronsveld.
 	 */
-	private void connectToMultiplayerServer(){
+	private void connectToServer(){
 			try {
 				clientSocket = new Socket(hostName, PORT);
 				output = new ObjectOutputStream(clientSocket.getOutputStream());
 				input = new ObjectInputStream(clientSocket.getInputStream());
 
-				Log.d(tag, "Connected to multiplayer server.");
-				lastHeartbeat = System.currentTimeMillis();
+				Log.d(TAG, "Connected to multiplayer server.");
 				setIsConnected(true);
 			} catch (IOException e) {
-				Log.d(tag, "Could not connect to the server.");
+				Log.d(TAG, "Could not connect to the server.");
 			}
-	}
-
-	/**
-	 * Check if the connection is lost using the heartbeat and
-	 * update the isconnected variable accordingly.
-	 * @return if the connection is lost.
-	 * @author Bram Pulles
-	 */
-	private boolean isConnectionLost(){
-		long currentTime = System.currentTimeMillis();
-		if(currentTime - lastHeartbeat > TIMEOUT){
-			setIsConnected(false);
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -143,7 +128,6 @@ public class Connection {
 			});
 			t.start();
 		}
-
 	}
 
 	/**
@@ -159,13 +143,12 @@ public class Connection {
 			if(clientSocket != null)
 				clientSocket.close();
 
-			if(singleplayer) {
-				((SinglePlayerServer)ArcemiiServer.server).stopServer();
-			}
+			if(singleplayer)
 
-			Log.d(tag, "Succesfully closed the connection.");
+
+			Log.d(TAG, "Succesfully closed the connection.");
 		}catch(Exception e){
-			Log.d(tag, "Could not properly close the connection.");
+			Log.d(TAG, "Could not properly close the connection.");
 		}
 	}
 
