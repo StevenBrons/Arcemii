@@ -36,6 +36,13 @@ public class Connection {
 
 	private final boolean singleplayer;
 
+	/**
+	 * Start a new connection.
+	 * If singleplayer then also run a local server.
+	 * @param singleplayer
+	 * @param context
+	 * @author Bram Pulles
+	 */
 	public Connection(final boolean singleplayer, Context context) {
 		this.singleplayer = singleplayer;
 		this.context = context;
@@ -46,13 +53,16 @@ public class Connection {
 				if (singleplayer) {
 					runLocalServer();
 				}
-
 				connectToServer();
 			}
 		}).start();
 	}
 
 
+	/**
+	 * Start a local server in order to play offline.
+	 * @author Bram Pulles
+	 */
 	private void runLocalServer(){
 		ArcemiiServer.main(new String[]{""});
 		hostName = "localhost";
@@ -63,7 +73,7 @@ public class Connection {
 	}
 
 	/**
-	 * Establish a connection with the mutliplayer server.
+	 * Establish a connection with the server.
 	 * @author Bram Pulles and Steven Bronsveld.
 	 */
 	private void connectToServer(){
@@ -149,10 +159,18 @@ public class Connection {
 		}
 	}
 
+	/**
+	 * @return if this connection is connected to a server.
+	 * @author Bram Pulles
+	 */
 	public boolean isConnected(){
 		return isConnected;
 	}
 
+	/**
+	 * @return if this connection is still starting (booting up).
+	 * @author Bram Pulles
+	 */
 	public synchronized boolean isStarting(){
 		return isStarting;
 	}

@@ -40,6 +40,11 @@ public class ClientGameHandler {
 	private Party party;
 	private Level level;
 
+	/**
+	 * Start a new connection, listen for changes in the server-mode and start the game loop.
+	 * @param context
+	 * @author Bram Pulles
+	 */
 	private ClientGameHandler(Context context) {
 		this.context = context;
 
@@ -75,6 +80,10 @@ public class ClientGameHandler {
 		}).start();
 	}
 
+	/**
+	 * Start a new connection and start listening for messages.
+	 * @author Bram Pulles
+	 */
 	private void newConnection(){
 		if(connection != null){
 			connection.stop();
@@ -90,6 +99,10 @@ public class ClientGameHandler {
 		}
 	}
 
+	/**
+	 * Listen for messages from the server.
+	 * @author Bram Pulles and Steven Bronsveld.
+	 */
 	public void listenForMessages() {
 		new Thread(new Runnable() {
 			@Override
@@ -119,6 +132,7 @@ public class ClientGameHandler {
 	/**
 	 * Listen to the shared preferences if the servermode changes.
 	 * If the servermode changes create a new connection.
+	 * @author Bram Pulles
 	 */
 	private void listenForServermode(){
 		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_servermodeinfo), MODE_PRIVATE);
@@ -137,6 +151,7 @@ public class ClientGameHandler {
 	/**
 	 * Use the shared preferences to determine if the servermode is singleplayer.
 	 * @return if the servermode is singleplayer.
+	 * @author Bram Pulles
 	 */
 	private boolean isSingleplayer(){
 		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_servermodeinfo), MODE_PRIVATE);
@@ -188,11 +203,9 @@ public class ClientGameHandler {
 		}
 	}
 
-
 	private void startGame(final Level level) {
 		this.level = level;
 	}
-
 
 	/**
 	 * Open the lobby activity.
@@ -205,7 +218,7 @@ public class ClientGameHandler {
 	/**
 	 * Send the new info to the lobby activity.
 	 * @param party update party.
-	 * @author Steven Bronsveld
+	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	private void partyMessage(Party party){
 		this.party = party;

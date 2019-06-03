@@ -1,7 +1,5 @@
 package server.general;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import shared.entities.Player;
@@ -45,6 +43,7 @@ public class ServerGameHandler {
 	}
 
 	/**
+	 * Put the player in an initial party.
 	 * Make a new thread to receive messages from the new client.
 	 * Send a message to the client with the client information.
 	 * @param player
@@ -113,8 +112,7 @@ public class ServerGameHandler {
 	}
 
 	/**
-	 * Remove the client from his party.
-	 * Also remove the party if the party is empty.
+	 * Remove the player from his party.
 	 * @param player
 	 * @author Bram Pulles
 	 */
@@ -122,6 +120,12 @@ public class ServerGameHandler {
 		leaveParty(player);
 	}
 
+	/**
+	 * Remove the player from the party, if in any.
+	 * And remove the party if the party is empty.
+	 * @param player
+	 * @author Bram Pulles
+	 */
 	private void leaveParty(Player player){
 		for(int i = parties.size() -1; i >= 0; i--) {
 			Party party = parties.get(i);
@@ -162,7 +166,7 @@ public class ServerGameHandler {
 	}
 
 	/**
-	 * Create a new party.
+	 * Create a new party and send this to the player.
 	 * @param player
 	 * @author Bram Pulles
 	 */
@@ -170,6 +174,12 @@ public class ServerGameHandler {
 		player.sendMessage(createParty(player));
 	}
 
+	/**
+	 * Create a new party.
+	 * @param player
+	 * @return the party just created.
+	 * @author Bram Pulles
+	 */
 	private Party createParty(Player player){
 		Party party = new Party();
 		party.addPlayer(player);
@@ -200,6 +210,10 @@ public class ServerGameHandler {
 		return running;
 	}
 
+	/**
+	 * @return a list of all the parties on the server.
+	 * @author Bram Pulles
+	 */
 	public ArrayList<Party> getParties(){
 		return parties;
 	}
