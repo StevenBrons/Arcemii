@@ -39,20 +39,21 @@ public class ClientGameHandler {
 
 	private Party party;
 	private Level level;
-	private boolean running = false;
 
 	private ClientGameHandler(Context context) {
 		this.context = context;
-		connection = new Connection(isSingleplayer(), context);
-		startListeningForServermode();
-		startListeningForMessages();
 
-		Thread gameLoop = new Thread(new Runnable() {
+		newConnection();
+		listenForServermode();
+		gameLoop();
+	}
+
+	public void gameLoop(){
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				int TICKSPEED = ServerGameHandler.TICKSPEED;
-				running = true;
-				while (running) {
+				while (true) {
 					long start = System.currentTimeMillis();
 
 					if (gameActivity != null && level != null) {
@@ -71,9 +72,16 @@ public class ClientGameHandler {
 					}
 				}
 			}
-		});
-		gameLoop.start();
+		}).start();
+	}
 
+	private void newConnection(){
+		if(connection != null){
+			connection.stop();
+		}
+
+		connection = new Connection(isSingleplayer(), context);
+		listenForMessages();
 	}
 
 	public static void init(Context context) {
@@ -82,36 +90,29 @@ public class ClientGameHandler {
 		}
 	}
 
-	public void startListeningForMessages() {
-		Thread thread = new Thread(new Runnable() {
+	public void listenForMessages() {
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
-			while (!connection.isConnected) {
-			}
-			while (connection.isConnected) {
-				try {
-					Message m = (Message) connection.getInputStream().readObject();
-					handleInput(m);
-				} catch (Exception e) {
-					if (e.getMessage().equals("Socket closed") || e instanceof StreamCorruptedException) {
-						Log.d("CONNECTION", "Connection to server was lost.");
-						e.printStackTrace();
-						break;
-					} else {
-						if (e.getMessage().equals("Write end dead")) {
-							//TODO
-							//Find this magic bug on singleplayer server
-						} else {
-							Log.d("CONNECTION", "Could not get the message from the server.");
-							e.printStackTrace();
-						}
+				// Wait until the connection is established.
+				while(connection.isStarting()){
+				}
 
+				while (connection.isConnected()) {
+					try {
+						Message m = (Message) connection.getInputStream().readObject();
+						handleInput(m);
+					} catch (Exception e) {
+						if ((e.getMessage() != null && e.getMessage().equals("Socket closed")) || e instanceof StreamCorruptedException) {
+							Log.d("CONNECTION", "Connection to server was lost.");
+							break;
+						}
+						e.printStackTrace();
 					}
 				}
+				Log.d(Connection.TAG, "Stopped listening for messages.");
 			}
-			}
-		});
-		thread.start();
+		}).start();
 	}
 
 
@@ -119,16 +120,14 @@ public class ClientGameHandler {
 	 * Listen to the shared preferences if the servermode changes.
 	 * If the servermode changes create a new connection.
 	 */
-	private void startListeningForServermode(){
+	private void listenForServermode(){
 		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_servermodeinfo), MODE_PRIVATE);
 
 		// Set up a listener for connection information.
 		listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 				Log.d("CONNECTION", "Changing connection to: " + (isSingleplayer() ? "singleplayer" : "multiplayer"));
-				connection.stopConnection();
-				connection = new Connection(isSingleplayer(), context);
-				startListeningForMessages();
+				newConnection();
 			}
 		};
 
@@ -159,12 +158,14 @@ public class ClientGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	public void handleInput(Message m) {
+		Log.d(Connection.TAG, "Client receives message: " + m);
+
 		switch (m.getType()){
 			case "PartyJoinedMessage":
 				partyJoinedMessage();
 				break;
 			case "Party":
-				updatePartyMessage((Party)m);
+				partyMessage((Party)m);
 				break;
 			case "PlayerInfoMessage":
 				playerInfoMessage((PlayerInfoMessage) m);
@@ -206,7 +207,7 @@ public class ClientGameHandler {
 	 * @param party update party.
 	 * @author Steven Bronsveld
 	 */
-	private void updatePartyMessage(Party party){
+	private void partyMessage(Party party){
 		this.party = party;
 		if(lobbyActivity != null)
 			lobbyActivity.updateParty(party);
@@ -220,15 +221,20 @@ public class ClientGameHandler {
 	 */
 	public void playerInfoMessage(PlayerInfoMessage m){
 		this.player = m.getPlayer();
+		sendPlayerInfoMessage();
 	}
 
-
-
+	/**
+	 * Send a message to the server with the player information.
+	 * @author Bram Pulles and Steven Bronsveld
+	 */
 	public void sendPlayerInfoMessage() {
 		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPrefs.getString("username", "-");
+
 		Player player = new Player(-1,-1,-1);
 		player.setName(username);
+
 		sendMessage(new PlayerInfoMessage(player));
 	}
 
@@ -256,7 +262,7 @@ public class ClientGameHandler {
 		return player;
 	}
 
-  public Party getParty() {
+	public Party getParty() {
 		return party;
-  }
+	}
 }

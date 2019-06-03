@@ -13,6 +13,8 @@ public class Server {
 	public static final int PORT = 26194;
 	private boolean running;
 
+	private ServerSocket serverSocket;
+
 	public Server(final ServerGameHandler gameHandler) {
 		System.out.println("Starting server...");
 		running = true;
@@ -21,7 +23,7 @@ public class Server {
 			@Override
 			public void run() {
 				try {
-					ServerSocket serverSocket = new ServerSocket(PORT);
+					serverSocket = new ServerSocket(PORT);
 					System.out.println("Server is running at port " + PORT + ".");
 
 					while (isRunning()) {
@@ -32,7 +34,10 @@ public class Server {
 						gameHandler.addPlayer(player);
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					if(e.getMessage().equals("Socket closed") || e instanceof java.net.BindException){
+					}else{
+						e.printStackTrace();
+					}
 				}
 			}
 		}).start();
@@ -45,6 +50,14 @@ public class Server {
 	 */
 	public synchronized void stop(){
 		running = false;
+
+		if(!serverSocket.isClosed()) {
+			try {
+				serverSocket.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

@@ -133,8 +133,9 @@ public class ServerGameHandler {
 	private void joinPartyMessage(JoinPartyMessage m, Player player){
 		for(Party party : parties){
 			if(party.getPartyId() == m.getPartyId()){
-				player.sendMessage(new PartyJoinedMessage());
 				party.addPlayer(player);
+				player.sendMessage(new PartyJoinedMessage());
+				player.sendMessage(party);
 			}
 		}
 	}
@@ -155,16 +156,25 @@ public class ServerGameHandler {
 	 */
 	private void createPartyMessage(Player player){
 		Party party = new Party();
+		System.out.println("Creating a new party with id: " + party.getPartyId() + ".");
 		party.addPlayer(player);
 		parties.add(party);
+		player.sendMessage(party);
 	}
 
 	/**
 	 * Stop the server game handler from sending and receiving messages.
+	 * Also close all the connections with the players.
 	 * @author Bram Pulles
 	 */
 	public synchronized void stop(){
 		running = false;
+
+		for(Party party : parties){
+			for(Player player : party.getPlayers()){
+				player.stop();
+			}
+		}
 	}
 
 	/**
