@@ -195,14 +195,10 @@ public class ClientGameHandler {
 
 	private void transferTransientPlayer(Player p) {
 		ArrayList<Ability> abilities = player.getAbilities();
-		double direction = player.direction;
-		boolean move = player.move;
 
 		player = p;
 		player.setAbilities(abilities);
 		player.setActions(new ArrayList<Ability>());
-		player.direction = direction;
-		player.move = move;
 	}
 
 

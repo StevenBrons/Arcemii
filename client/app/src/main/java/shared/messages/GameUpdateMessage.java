@@ -25,4 +25,9 @@ public class GameUpdateMessage extends Message {
 	public long getCreateTime() {
 		return createTime;
 	}
+
+	@Override
+	public String toString() {
+		return getType() + ": " + getChanges();
+	}
 }

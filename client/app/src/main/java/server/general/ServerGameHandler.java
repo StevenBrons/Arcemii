@@ -74,6 +74,7 @@ public class ServerGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	private void handlePlayerInput(Message m, Player player) {
+		Console.log(ConsoleTag.CONNECTION,m,player);
 		switch (m.getType()) {
 			case "CreatePartyMessage":
 				createPartyMessage(player);
@@ -97,7 +98,6 @@ public class ServerGameHandler {
 	}
 
 	private void actionMessage(ActionMessage m, Player player) {
-		Console.log(ConsoleTag.CONNECTION,m.getActions(),player);
 		player.setActions(m.getActions());
 	}
 

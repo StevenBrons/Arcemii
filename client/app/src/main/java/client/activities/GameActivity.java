@@ -52,9 +52,9 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
         frame.addView(UI);
         setContentView(frame);
 
-        final ImageButton ability1 = findViewById(R.id.AbilityButtonBottom);
-        final ImageButton ability2 = findViewById(R.id.AbilityButtonMiddle);
-        final ImageButton ability3 = findViewById(R.id.AbilityButtonUpper);
+//        final ImageButton ability1 = findViewById(R.id.AbilityButtonBottom);
+//        final ImageButton ability2 = findViewById(R.id.AbilityButtonMiddle);
+//        final ImageButton ability3 = findViewById(R.id.AbilityButtonUpper);
         /*
         Player me = ClientGameHandler.handler.getPlayer();
         ArrayList<Ability> myAbilities = me.getAbilities();
@@ -79,9 +79,9 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
         ability3.setImageDrawable(res);
 
         */
-        ability1.setImageResource(R.drawable.heal);
-        ability2.setImageResource(R.drawable.melee);
-        ability3.setImageResource(R.drawable.range);
+//        ability1.setImageResource(R.drawable.heal);
+//        ability2.setImageResource(R.drawable.melee);
+//        ability3.setImageResource(R.drawable.range);
 
         ClientGameHandler.handler.setGameActivity(this);
     }
@@ -109,7 +109,7 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
     public void onJoystickMoved(float xPercent, float yPercent, int source) {
         Player player = ClientGameHandler.handler.getPlayer();
         double range = 0.2;
-        double angle = Math.atan2(yPercent,xPercent);
+        double angle = -Math.atan2(yPercent,xPercent);
         player.direction = angle;
         if (Math.pow(xPercent,2) + Math.pow(yPercent,2) > Math.pow(range,2)) {
             player.move = true;
