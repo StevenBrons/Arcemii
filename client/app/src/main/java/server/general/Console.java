@@ -6,7 +6,7 @@ import shared.entities.Player;
 
 public class Console {
 
-	static boolean log = false;
+	private static boolean log = false;
 
 	public Console() {
 		Thread thread = new Thread(new Runnable() {
@@ -29,7 +29,6 @@ public class Console {
 					default:
 						help();
 				}
-				System.out.print("> ");
 			}
 			}
 		});

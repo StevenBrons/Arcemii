@@ -1,10 +1,9 @@
 package shared.entities;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +13,14 @@ import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
 
-/**
- * The class that handles rendering and actions of Sako, the player character
- * @author Jelmer Firet
- */
 public class Player extends Entity {
 
-	private transient String name = "Player#" + (int)(Math.random()*99999);
+	private String name = "Player#" + (int)(Math.random()*99999);
 	private int color;
 
 	//server only
+	private transient boolean unique = true;
+	private transient InetAddress ip;
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
 
@@ -31,10 +28,11 @@ public class Player extends Entity {
 	public static transient double direction = 0;
 	public static transient boolean move = false;
 
-	public Player(ObjectInputStream input, ObjectOutputStream output) {
+	public Player(InetAddress ip, ObjectInputStream input, ObjectOutputStream output) {
 		super(0,0);
 		this.input = input;
 		this.output = output;
+		this.ip = ip;
 	}
 
 	/**
@@ -127,7 +125,6 @@ public class Player extends Entity {
 		return name;
 	}
 
-
 	public synchronized void invokeBottom() {
 		invoke(abilities.get(1));
 	}
@@ -165,4 +162,46 @@ public class Player extends Entity {
 		return getName();
 	}
 
+	/**
+	 * @return the ip of the players device.
+	 * @author Bram Pulles
+	 */
+	public InetAddress getIp(){
+		return ip;
+	}
+
+	/**
+	 * Set the player to not unique.
+	 * This should be based on the ip address.
+	 * @author Bram Pulles
+	 */
+	public void setNotUnique(){
+		unique = false;
+	}
+
+	/**
+	 * @return if the player is unique, based on the ip address.
+	 * @author Bram Pulles
+	 */
+	public boolean isUnique(){
+		return unique;
+	}
+
+	/**
+	 * Close the streams used by this player.
+	 * @author Bram Pulles
+	 */
+	public void stop(){
+		try{
+			output.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		try{
+			input.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }
