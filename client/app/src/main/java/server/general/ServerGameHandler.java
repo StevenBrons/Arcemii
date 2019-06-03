@@ -1,7 +1,5 @@
 package server.general;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import shared.entities.Player;
@@ -17,11 +15,15 @@ public class ServerGameHandler {
 	private ArrayList<Party> parties = new ArrayList<>();
 	public static final int TICKSPEED = 100;
 
+	private boolean running;
+
 	public ServerGameHandler() {
-		Thread gameLoop = new Thread(new Runnable() {
+		running = true;
+
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (true) {
+				while (isRunning()) {
 					long start = System.currentTimeMillis();
 					for (Party p : parties) {
 						p.update();
@@ -38,11 +40,11 @@ public class ServerGameHandler {
 					}
 				}
 			}
-		});
-		gameLoop.start();
+		}).start();
 	}
 
 	/**
+	 * Put the player in an initial party.
 	 * Make a new thread to receive messages from the new client.
 	 * Send a message to the client with the client information.
 	 * @param player
@@ -50,19 +52,24 @@ public class ServerGameHandler {
 	 */
 	public void addPlayer(final Player player) {
 		System.out.println("A new client has joined: " + player.getName());
-		Thread thread = new Thread(new Runnable() {
+
+		// Put the player in an initial party.
+		createParty(player);
+
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
-			while (true) {
-				try {
-					Message m = (Message) player.getInputStream().readObject();
-					handlePlayerInput(m, player);
-				} catch (Exception e) {
+				while (isRunning() && player.isUnique()) {
+					try {
+						Message m = (Message) player.getInputStream().readObject();
+						handlePlayerInput(m, player);
+					} catch (Exception e) {
+					}
 				}
+				leaveParty(player);
+				System.out.println("Removed player: " + player.getName());
 			}
-			}
-		});
-		thread.start();
+		}).start();
 
 		player.sendMessage(new PlayerInfoMessage(player));
 	}
@@ -114,16 +121,25 @@ public class ServerGameHandler {
 	}
 
 	/**
-	 * Remove the client from his party.
-	 * Also remove the party if the party is empty.
-	 * @param client
+	 * Remove the player from his party.
+	 * @param player
 	 * @author Bram Pulles
 	 */
-	private void leavePartyMessage(Player client){
+	private void leavePartyMessage(Player player){
+		leaveParty(player);
+	}
+
+	/**
+	 * Remove the player from the party, if in any.
+	 * And remove the party if the party is empty.
+	 * @param player
+	 * @author Bram Pulles
+	 */
+	private void leaveParty(Player player){
 		for(int i = parties.size() -1; i >= 0; i--) {
 			Party party = parties.get(i);
-			if (party.containsPlayer(client)) {
-				party.removePlayer(client);
+			if (party.containsPlayer(player)) {
+				party.removePlayer(player);
 				if(party.isEmpty())
 					parties.remove(party);
 			}
@@ -139,8 +155,12 @@ public class ServerGameHandler {
 	private void joinPartyMessage(JoinPartyMessage m, Player player){
 		for(Party party : parties){
 			if(party.getPartyId() == m.getPartyId()){
-				player.sendMessage(new PartyJoinedMessage());
+				// Remove the player from the initial party.
+				leavePartyMessage(player);
+
 				party.addPlayer(player);
+				player.sendMessage(new PartyJoinedMessage());
+				player.sendMessage(party);
 			}
 		}
 	}
@@ -155,14 +175,56 @@ public class ServerGameHandler {
 	}
 
 	/**
-	 * Create a new party.
+	 * Create a new party and send this to the player.
 	 * @param player
 	 * @author Bram Pulles
 	 */
 	private void createPartyMessage(Player player){
+		player.sendMessage(createParty(player));
+	}
+
+	/**
+	 * Create a new party.
+	 * @param player
+	 * @return the party just created.
+	 * @author Bram Pulles
+	 */
+	private Party createParty(Player player){
 		Party party = new Party();
 		party.addPlayer(player);
 		parties.add(party);
+		return party;
+	}
+
+	/**
+	 * Stop the server game handler from sending and receiving messages.
+	 * Also close all the connections with the players.
+	 * @author Bram Pulles
+	 */
+	public synchronized void stop(){
+		running = false;
+
+		for(Party party : parties){
+			for(Player player : party.getPlayers()){
+				player.stop();
+			}
+		}
+	}
+
+	/**
+	 * @return if the server game handler is running.
+	 * @author Bram Pulles
+	 */
+	public synchronized boolean isRunning(){
+		return running;
+	}
+
+	/**
+	 * @return a list of all the parties on the server.
+	 * @author Bram Pulles
+	 */
+	public ArrayList<Party> getParties(){
+		return parties;
 	}
 
 }

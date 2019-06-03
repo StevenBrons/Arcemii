@@ -2,16 +2,23 @@ package server.general;
 
 public abstract class ArcemiiServer {
 
-    public static Console console = new Console();
-    public static ServerGameHandler gameHandler = new ServerGameHandler();
-    public static ArcemiiServer server;
+	public static Console console;
+	public static ServerGameHandler gameHandler;
+	public static Server server;
 
-    public static void main(String args[]) {
-        if (args.length > 0 && args[0].equals("singleplayer")) {
-            server = new SinglePlayerServer();
-        } else {
-            server = new MultiplayerServer();
-        }
-    }
+	public static void main(String[] args) {
+		console = new Console();
+		gameHandler = new ServerGameHandler();
+		server = new Server(gameHandler);
+	}
+
+	/**
+	 * Stop the server and the game handler.
+	 * @author Bram Pulles
+	 */
+	public static void stop(){
+		server.stop();
+		gameHandler.stop();
+	}
 
 }
