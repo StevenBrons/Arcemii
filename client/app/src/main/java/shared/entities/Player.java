@@ -28,8 +28,8 @@ public class Player extends Entity {
 	private transient ObjectOutputStream output;
 
 	//client only
-	public transient double direction = 0;
-	public transient boolean move = false;
+	public static transient double direction = 0;
+	public static transient boolean move = false;
 
 	public Player(ObjectInputStream input, ObjectOutputStream output) {
 		super(0,0);

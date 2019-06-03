@@ -17,4 +17,9 @@ public class ActionMessage extends Message {
   public ArrayList<Ability> getActions() {
     return actions;
   }
+
+  @Override
+  public String toString() {
+    return getType() + ": " + getActions();
+  }
 }

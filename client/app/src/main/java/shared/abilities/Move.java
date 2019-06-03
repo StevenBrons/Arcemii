@@ -7,7 +7,7 @@ public class Move extends Ability{
 
   private static final String name = "move";
 
-  private static final double SPEED = 0.005;
+  private static final double SPEED = 0.1;
   double direction;
 
   public Ability invoke(double direction) {
@@ -28,4 +28,9 @@ public class Move extends Ability{
   }
   @Override
   public String getName(){return name;}
+
+  @Override
+  public String toString() {
+    return "move(" + direction + ")";
+  }
 }

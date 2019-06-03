@@ -122,8 +122,11 @@ public class Connection {
 		return input;
 	}
 
-	private ObjectOutputStream getOutputStream() {
-		return output;
+
+	private synchronized  void write(final Message msg) throws IOException{
+		output.writeObject(msg);
+		output.flush();
+		output.reset();
 	}
 
 	/**
@@ -136,7 +139,7 @@ public class Connection {
 				@Override
 				public void run() {
 					try {
-						getOutputStream().writeObject(msg);
+						write(msg);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
