@@ -10,4 +10,9 @@ public class Range extends Ability {
 		// TODO: Implement the range ability.
 		return false;
 	}
+
+	@Override
+	public Ability invoke(double direction) {
+		return null;
+	}
 }

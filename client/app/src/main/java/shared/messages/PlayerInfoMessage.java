@@ -1,5 +1,8 @@
 package shared.messages;
 
+import java.util.ArrayList;
+
+import shared.abilities.Ability;
 import shared.entities.Player;
 
 /**
@@ -11,9 +14,11 @@ public class PlayerInfoMessage extends Message {
 
 	private String name;
 	private Player player;
+	private ArrayList<Ability> abilities;
 
 	public PlayerInfoMessage(Player player){
-		this.name = player.getName(); this.player = player;
+		this.name = player.getName();
+		this.player = player;
 	}
 
 	public String getName() {

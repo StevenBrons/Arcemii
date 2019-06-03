@@ -11,4 +11,6 @@ public abstract class Ability implements Serializable {
 
     public abstract boolean execute(Level level, Entity self);
 
+    public abstract Ability invoke(double direction);
+
 }
