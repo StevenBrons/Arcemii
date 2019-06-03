@@ -38,8 +38,8 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     private void setupDminensions(){
         centerX = getWidth()/2;
         centerY = getHeight()/2;
-        Radius  = Math.min(getWidth(), getHeight())/4;
-        HatRadius = Math.min(getWidth(), getHeight())/8;
+        Radius  = Math.min(getWidth(), getHeight())/3;
+        HatRadius = Math.min(getWidth(), getHeight())/6;
     }
 
     private void drawJoystick(float newX, float newY){
@@ -47,9 +47,9 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             Canvas JoyStick = this.getHolder().lockCanvas();
             Paint colors = new Paint();
             JoyStick.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            colors.setARGB(255,50,50,50);
+            colors.setARGB(200,192,192,192);
             JoyStick.drawCircle(centerX, centerY, Radius, colors);
-            colors.setARGB(255,  0 ,0, 255);
+            colors.setARGB(200,  128,128, 128);
             JoyStick.drawCircle(newX, newY, HatRadius, colors);
             getHolder().unlockCanvasAndPost(JoyStick);
         }
