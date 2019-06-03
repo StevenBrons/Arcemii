@@ -39,10 +39,18 @@ public class Server {
 
 	}
 
+	/**
+	 * Stop the server thread. This thread listens for new connections from clients.
+	 * @author Bram Pulles
+	 */
 	public synchronized void stop(){
 		running = false;
 	}
 
+	/**
+	 * @return if this server is running (waiting for connections from clients).
+	 * @author Bram Pulles
+	 */
 	private synchronized boolean isRunning(){
 		return running;
 	}

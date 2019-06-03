@@ -159,10 +159,18 @@ public class ServerGameHandler {
 		parties.add(party);
 	}
 
+	/**
+	 * Stop the server game handler from sending and receiving messages.
+	 * @author Bram Pulles
+	 */
 	public synchronized void stop(){
 		running = false;
 	}
 
+	/**
+	 * @return if the server game handler is running.
+	 * @author Bram Pulles
+	 */
 	public synchronized boolean isRunning(){
 		return running;
 	}
