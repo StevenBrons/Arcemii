@@ -53,16 +53,21 @@ public class ServerGameHandler {
 	public void addPlayer(final Player player) {
 		System.out.println("A new client has joined: " + player.getName());
 
+		// Put the player in an initial party.
+		createParty(player);
+
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (isRunning()) {
+				while (isRunning() && player.isUnique()) {
 					try {
 						Message m = (Message) player.getInputStream().readObject();
 						handlePlayerInput(m, player);
 					} catch (Exception e) {
 					}
 				}
+				leaveParty(player);
+				System.out.println("Removed player: " + player.getName());
 			}
 		}).start();
 
@@ -110,14 +115,18 @@ public class ServerGameHandler {
 	/**
 	 * Remove the client from his party.
 	 * Also remove the party if the party is empty.
-	 * @param client
+	 * @param player
 	 * @author Bram Pulles
 	 */
-	private void leavePartyMessage(Player client){
+	private void leavePartyMessage(Player player){
+		leaveParty(player);
+	}
+
+	private void leaveParty(Player player){
 		for(int i = parties.size() -1; i >= 0; i--) {
 			Party party = parties.get(i);
-			if (party.containsPlayer(client)) {
-				party.removePlayer(client);
+			if (party.containsPlayer(player)) {
+				party.removePlayer(player);
 				if(party.isEmpty())
 					parties.remove(party);
 			}
@@ -133,6 +142,9 @@ public class ServerGameHandler {
 	private void joinPartyMessage(JoinPartyMessage m, Player player){
 		for(Party party : parties){
 			if(party.getPartyId() == m.getPartyId()){
+				// Remove the player from the initial party.
+				leavePartyMessage(player);
+
 				party.addPlayer(player);
 				player.sendMessage(new PartyJoinedMessage());
 				player.sendMessage(party);
@@ -155,11 +167,14 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void createPartyMessage(Player player){
+		player.sendMessage(createParty(player));
+	}
+
+	private Party createParty(Player player){
 		Party party = new Party();
-		System.out.println("Creating a new party with id: " + party.getPartyId() + ".");
 		party.addPlayer(player);
 		parties.add(party);
-		player.sendMessage(party);
+		return party;
 	}
 
 	/**
@@ -183,6 +198,10 @@ public class ServerGameHandler {
 	 */
 	public synchronized boolean isRunning(){
 		return running;
+	}
+
+	public ArrayList<Party> getParties(){
+		return parties;
 	}
 
 }
