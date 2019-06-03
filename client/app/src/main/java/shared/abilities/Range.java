@@ -5,6 +5,8 @@ import shared.general.Level;
 
 public class Range extends Ability {
 
+	private static final String name = "range";
+
 	@Override
 	public boolean execute(Level level, Entity self) {
 		// TODO: Implement the range ability.
@@ -15,4 +17,6 @@ public class Range extends Ability {
 	public Ability invoke(double direction) {
 		return null;
 	}
+	@Override
+	public String getName(){return name;}
 }

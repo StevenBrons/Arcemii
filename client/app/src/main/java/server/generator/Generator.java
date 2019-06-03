@@ -237,28 +237,34 @@ public class Generator {
          */
         void generateEnemies(int block_height, int block_width, int room_width, int room_height){
             for (Cell room:roomBottomLeft) {
+            	if (room.getRow()+room_height/2 == start.getRow() && room.getCol()+room_width/2 == start.getCol()){
+            		continue;
+				}
                 double bottom = room.getRow() * block_height;
                 double top = (room.getRow() + room_height) * block_height;
                 double left = room.getCol() * block_width;
                 double right = (room.getCol() + room_width) * block_width;
                 Random rand = new Random();
-                int roomType = rand.nextInt(4);
-                if (roomType == 0) {
+                int roomType = rand.nextInt(3);
+				if (room.getRow()+room_height/2 == finish.getRow() && room.getCol()+room_width/2 == finish.getCol()){
+					roomType = -1;
+				}
+                if (roomType == -1) {
                     entities.add(new Boss((left + right) / 2, (top + bottom) / 2));
                 }
-                if (roomType == 1) {
+                if (roomType == 0) {
                     for (int i = 0; i < 5; i++) {
                         entities.add(new Skeleton(left + rand.nextDouble() * (right - left),
                                 bottom + rand.nextDouble() * (top - bottom)));
                     }
                 }
-                if (roomType == 2) {
+                if (roomType == 1) {
                     for (int i = 0; i < 5; i++) {
                         entities.add(new Slime(left + rand.nextDouble() * (right - left),
                                 bottom + rand.nextDouble() * (top - bottom)));
                     }
                 }
-                if (roomType == 3) {
+                if (roomType == 2) {
                     for (int i = 0; i < 3; i++) {
                         entities.add(new Skeleton(left + rand.nextDouble() * (right - left),
                                 bottom + rand.nextDouble() * (top - bottom)));

@@ -5,6 +5,8 @@ import shared.general.Level;
 
 public class Melee extends Ability {
 
+	private static final String name = "meelee";
+
 	@Override
 	public boolean execute(Level level, Entity self) {
 		// TODO: Implement melee ability.
@@ -15,4 +17,6 @@ public class Melee extends Ability {
 	public Ability invoke(double direction) {
 		return null;
 	}
+	@Override
+	public String getName(){return name;}
 }
