@@ -5,6 +5,8 @@ import shared.general.Level;
 
 public class Move extends Ability{
 
+  private static final String name = "move";
+
   private static final double SPEED = 0.005;
   double direction;
 
@@ -24,4 +26,6 @@ public class Move extends Ability{
     self.setPos(x + dx,y + dy);
     return true;
   }
+  @Override
+  public String getName(){return name;}
 }
