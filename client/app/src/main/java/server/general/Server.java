@@ -20,6 +20,11 @@ public class Server {
 	private ServerSocket serverSocket;
 	private ServerGameHandler gameHandler;
 
+	/**
+	 * Start a new server.
+	 * @param gameHandler
+	 * @author Bram Pulles and Steven Bronsveld
+	 */
 	public Server(final ServerGameHandler gameHandler) {
 		System.out.println("Starting server...");
 		running = true;
@@ -71,6 +76,12 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Check if this ip address is already in use by another player in the server.
+	 * If so then this other player will be set to not unique and consequently
+	 * be removed from the server.
+	 * @param ip
+	 */
 	private void checkUniqueness(InetAddress ip){
 		ArrayList<Party> parties = gameHandler.getParties();
 		for(Party party : parties){
@@ -91,6 +102,10 @@ public class Server {
 		return running;
 	}
 
+	/**
+	 * @return if this server is starting (booting up).
+	 * @author Bram Pulles
+	 */
 	public synchronized boolean isStarting(){
 		return starting;
 	}

@@ -1,7 +1,5 @@
 package shared.entities;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,10 +13,6 @@ import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
 
-/**
- * The class that handles rendering and actions of Sako, the player character.
- * @author Jelmer Firet
- */
 public class Player extends Entity {
 
 	private String name = "Player#" + (int)(Math.random()*99999);
@@ -126,18 +120,35 @@ public class Player extends Entity {
 		return name;
 	}
 
+	/**
+	 * @return the ip of the players device.
+	 * @author Bram Pulles
+	 */
 	public InetAddress getIp(){
 		return ip;
 	}
 
+	/**
+	 * Set the player to not unique.
+	 * This should be based on the ip address.
+	 * @author Bram Pulles
+	 */
 	public void setNotUnique(){
 		unique = false;
 	}
 
+	/**
+	 * @return if the player is unique, based on the ip address.
+	 * @author Bram Pulles
+	 */
 	public boolean isUnique(){
 		return unique;
 	}
 
+	/**
+	 * Close the streams used by this player.
+	 * @author Bram Pulles
+	 */
 	public void stop(){
 		try{
 			output.close();
