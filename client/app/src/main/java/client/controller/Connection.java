@@ -70,7 +70,6 @@ public class Connection {
 		Log.d(TAG, "Connecting to server...");
 
 		try {
-//			clientSocket = new Socket(hostName, PORT);
 			clientSocket = new Socket();
 			clientSocket.connect(new InetSocketAddress(hostName, PORT), 100);
 			output = new ObjectOutputStream(clientSocket.getOutputStream());
