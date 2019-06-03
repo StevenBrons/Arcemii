@@ -24,7 +24,7 @@ public class Console {
 						stop();
 						break;
 					case "log":
-						log = true;
+						log = !log;
 						break;
 					default:
 						help();
@@ -36,10 +36,14 @@ public class Console {
 		thread.start();
 	}
 
-	public static void log(String tag,String message, Player player) {
+	public static void log(ConsoleTag tag,String message, Player player) {
 		if (log) {
-			System.out.println(message);
+			System.out.println(player.toString() + "/" + tag.toString() + ": " + message);
 		}
+	}
+
+	public static void log(ConsoleTag tag,Object message, Player player) {
+		log(tag,message.toString(),player);
 	}
 
 	private void stop(){
@@ -54,4 +58,8 @@ public class Console {
 		//System.out.println("parties");
 	}
 
+}
+
+enum ConsoleTag {
+	CONNECTION
 }

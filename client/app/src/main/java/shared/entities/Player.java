@@ -23,9 +23,13 @@ public class Player extends Entity {
 	private transient String name = "Player#" + (int)(Math.random()*99999);
 	private int color;
 
+	//server only
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
-	private transient double direction = 0;
+
+	//client only
+	public transient double direction = 0;
+	public transient boolean move = false;
 
 	public Player(ObjectInputStream input, ObjectOutputStream output) {
 		super(0,0);
@@ -124,20 +128,41 @@ public class Player extends Entity {
 	}
 
 
-	public void invokeBottom() {
+	public synchronized void invokeBottom() {
 		invoke(abilities.get(1));
 	}
 
-	public void invokeMiddle() {
+	public synchronized void invokeMiddle() {
 		invoke(abilities.get(2));
 	}
 
-	public void invokeUpper() {
+	public synchronized void invokeUpper() {
 		invoke(abilities.get(3));
 	}
 
-	public void invokeMove(double angle) {
-		this.direction = angle;
-		invoke(move.invoke(angle));
+	public synchronized void invokeMove() {
+	  if (move) {
+      invoke(abilities.get(0).invoke(direction));
+    }
 	}
+
+	public synchronized void setAbilities(ArrayList<Ability> abilities) {
+		this.abilities = abilities;
+	}
+
+  public synchronized void clearActions() {
+		if (actions != null) {
+			actions.clear();
+		}
+  }
+
+	public synchronized void setActions(ArrayList<Ability> actions) {
+	  this.actions = actions;
+  }
+
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 }

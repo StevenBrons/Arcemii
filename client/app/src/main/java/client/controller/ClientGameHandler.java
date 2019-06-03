@@ -7,15 +7,18 @@ import android.util.Log;
 import com.debernardi.archemii.R;
 
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 
 import client.activities.GameActivity;
 import client.activities.JoinPartyActivity;
 import client.activities.LobbyActivity;
 import server.general.ServerGameHandler;
+import shared.abilities.Ability;
 import shared.entities.Entity;
 import shared.entities.Player;
 import shared.general.Level;
 import shared.general.Party;
+import shared.messages.ActionMessage;
 import shared.messages.GameUpdateMessage;
 import shared.messages.Message;
 import shared.messages.PlayerInfoMessage;
@@ -27,7 +30,7 @@ public class ClientGameHandler {
 	public static ClientGameHandler handler;
 
 	private Connection connection;
-	private Player player = new Player(0,0,0);
+	private static Player player = new Player(0,0,0);
 
 	private Context context;
 
@@ -57,7 +60,10 @@ public class ClientGameHandler {
 
 					if (gameActivity != null && level != null) {
 						gameActivity.draw(level);
-						//player.sendMessage(new ActionMessage(player.getActions()));
+						player.invokeMove();
+						ActionMessage msg = new ActionMessage(player.getActions());
+						sendMessage(msg);
+						player.clearActions();
 					}
 
 					long timeTook = System.currentTimeMillis() - start;
@@ -181,10 +187,22 @@ public class ClientGameHandler {
 	private void updateGame(GameUpdateMessage m) {
 		for (Entity e : m.getChanges()) {
 			if (e.getUUID().equals(player.getUUID())) {
-				player = (Player) e;
+				transferTransientPlayer((Player) e);
 			}
 			level.updateEntity(e);
 		}
+	}
+
+	private void transferTransientPlayer(Player p) {
+		ArrayList<Ability> abilities = player.getAbilities();
+		double direction = player.direction;
+		boolean move = player.move;
+
+		player = p;
+		player.setAbilities(abilities);
+		player.setActions(new ArrayList<Ability>());
+		player.direction = direction;
+		player.move = move;
 	}
 
 
@@ -219,7 +237,9 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 */
 	public void playerInfoMessage(PlayerInfoMessage m){
-		this.player = m.getPlayer();
+		player = m.getPlayer();
+		player.setAbilities(m.getAbilities());
+		player.setActions(new ArrayList<Ability>());
 	}
 
 

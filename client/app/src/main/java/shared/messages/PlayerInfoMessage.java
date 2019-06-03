@@ -18,6 +18,7 @@ public class PlayerInfoMessage extends Message {
 
 	public PlayerInfoMessage(Player player){
 		this.name = player.getName();
+		this.abilities = player.getAbilities();
 		this.player = player;
 	}
 
@@ -28,4 +29,9 @@ public class PlayerInfoMessage extends Message {
 	public Player getPlayer() {
 		return player;
 	}
+
+	public ArrayList<Ability> getAbilities() {
+		return abilities;
+	}
+
 }

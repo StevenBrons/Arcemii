@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import shared.entities.Player;
 import shared.general.Party;
+import shared.messages.ActionMessage;
 import shared.messages.JoinPartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
@@ -89,7 +90,15 @@ public class ServerGameHandler {
 			case "StartGameMessage":
 				startGameMessage(player);
 				break;
+			case "ActionMessage":
+				actionMessage((ActionMessage) m,player);
+				break;
 		}
+	}
+
+	private void actionMessage(ActionMessage m, Player player) {
+		Console.log(ConsoleTag.CONNECTION,m.getActions(),player);
+		player.setActions(m.getActions());
 	}
 
 	/**
