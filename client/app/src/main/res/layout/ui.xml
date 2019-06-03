@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#00000000">
 
-    <ImageButton
+    z<ImageButton
         android:id="@+id/AbilityButtonMiddle"
         android:layout_width="48dp"
         android:layout_height="48dp"
