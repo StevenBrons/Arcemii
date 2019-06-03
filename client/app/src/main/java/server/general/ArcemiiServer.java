@@ -6,7 +6,7 @@ public abstract class ArcemiiServer {
 	public static ServerGameHandler gameHandler;
 	public static Server server;
 
-	public static void main() {
+	public static void main(String[] args) {
 		console = new Console();
 		gameHandler = new ServerGameHandler();
 		server = new Server(gameHandler);

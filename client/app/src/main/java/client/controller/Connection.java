@@ -18,18 +18,17 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Connection {
 
-	private static final String TAG = "CONNECTION";
+	public static final String TAG = "CONNECTION";
 
-	private static final int TIMEOUT = 300000;
-
-	private static final String hostName = "localhost";
-	private static final int PORT = 26194;
-	public  boolean isConnected = false;
+	private String hostName = "10.0.2.2";
+	private final int PORT = 26194;
+	private boolean isConnected = false;
+	private boolean isStarting = true;
 
 	private Socket clientSocket;
 
-	private static ObjectInputStream input;
-	private static ObjectOutputStream output;
+	private ObjectInputStream input;
+	private ObjectOutputStream output;
 
 	private Context context;
 
@@ -39,35 +38,26 @@ public class Connection {
 		this.singleplayer = singleplayer;
 		this.context = context;
 
-		Thread thread = new Thread(new Runnable() {
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				if (singleplayer) {
 					runLocalServer();
 				}
 
-				Log.d(TAG, "Connecting to server...");
 				connectToServer();
 			}
-		});
-		thread.start();
+		}).start();
 	}
 
 
 	private void runLocalServer(){
-		ArcemiiServer.main();
-	}
-
-	private void connectToSingleplayerServer() {
-		connectToServer();
-
-//		ArcemiiServer.main(new String[]{"singleplayer"});
-//		input = ((SinglePlayerServer) ArcemiiServer.server).getInputStream();
-//		output = ((SinglePlayerServer) ArcemiiServer.server).getOutputStream();
-//		lastHeartbeat = System.currentTimeMillis();
-//
-//		Log.d(TAG, "Connected to singleplayer server.");
-//		setIsConnected(true);
+		ArcemiiServer.main(new String[]{""});
+		hostName = "localhost";
+		try{
+			Thread.sleep(1000);
+		}catch(Exception e){
+		}
 	}
 
 	/**
@@ -75,16 +65,20 @@ public class Connection {
 	 * @author Bram Pulles and Steven Bronsveld.
 	 */
 	private void connectToServer(){
-			try {
-				clientSocket = new Socket(hostName, PORT);
-				output = new ObjectOutputStream(clientSocket.getOutputStream());
-				input = new ObjectInputStream(clientSocket.getInputStream());
+		Log.d(TAG, "Connecting to server...");
 
-				Log.d(TAG, "Connected to multiplayer server.");
-				setIsConnected(true);
-			} catch (IOException e) {
-				Log.d(TAG, "Could not connect to the server.");
-			}
+		try {
+			clientSocket = new Socket(hostName, PORT);
+			output = new ObjectOutputStream(clientSocket.getOutputStream());
+			input = new ObjectInputStream(clientSocket.getInputStream());
+
+			Log.d(TAG, "Connected to server.");
+			setIsConnected(true);
+		} catch (IOException e) {
+			Log.d(TAG, "Could not connect to the server.");
+		}
+
+		isStarting = false;
 	}
 
 	/**
@@ -113,9 +107,9 @@ public class Connection {
 	 * Send a message to the server from the client.
 	 * @param msg message
 	 */
-	public synchronized void sendMessage(final Message msg) {
-		if (isConnected){
-			Thread t = new Thread(new Runnable() {
+	public void sendMessage(final Message msg) {
+		if (isConnected()){
+			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					try {
@@ -124,8 +118,7 @@ public class Connection {
 						e.printStackTrace();
 					}
 				}
-			});
-			t.start();
+			}).start();
 		}
 	}
 
@@ -133,7 +126,7 @@ public class Connection {
 	 * Stop this connection.
 	 * @author Bram Pulles
 	 */
-	public synchronized void stopConnection(){
+	public synchronized void stop(){
 		setIsConnected(false);
 
 		try{
@@ -143,12 +136,20 @@ public class Connection {
 				clientSocket.close();
 
 			if(singleplayer)
-
+				ArcemiiServer.stop();
 
 			Log.d(TAG, "Succesfully closed the connection.");
 		}catch(Exception e){
 			Log.d(TAG, "Could not properly close the connection.");
 		}
+	}
+
+	public synchronized boolean isConnected(){
+		return isConnected;
+	}
+
+	public synchronized boolean isStarting(){
+		return isStarting;
 	}
 
 }

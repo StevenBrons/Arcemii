@@ -90,9 +90,9 @@ public class LobbyActivity extends AppCompatActivity {
 	 */
 	private boolean isMaster(){
 		return players != null &&
-						players.size() > 0 &&
-						players.get(0) != null &&
-						players.get(0).equals(ClientGameHandler.handler.getPlayer());
+					players.size() > 0 &&
+					players.get(0) != null &&
+					players.get(0).equals(ClientGameHandler.handler.getPlayer());
 	}
 
 	/**

@@ -122,4 +122,18 @@ public class Player extends Entity {
 		return name;
 	}
 
+	public void stop(){
+		try{
+			output.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+		try{
+			input.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 }
