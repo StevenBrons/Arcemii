@@ -38,8 +38,8 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
     private void setupDminensions(){
         centerX = getWidth()/2;
         centerY = getHeight()/2;
-        Radius  = Math.min(getWidth(), getHeight())/4;
-        HatRadius = Math.min(getWidth(), getHeight())/8;
+        Radius  = Math.min(getWidth(), getHeight())/3;
+        HatRadius = Math.min(getWidth(), getHeight())/6;
     }
 
     private void drawJoystick(float newX, float newY){
