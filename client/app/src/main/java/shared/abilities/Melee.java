@@ -5,7 +5,7 @@ import shared.general.Level;
 
 public class Melee extends Ability {
 
-	private static final String name = "meelee";
+	private static final String name = "melee";
 
 	@Override
 	public boolean execute(Level level, Entity self) {

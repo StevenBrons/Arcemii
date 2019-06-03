@@ -39,18 +39,40 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
         frame.addView(view);
         LayoutInflater factory = LayoutInflater.from(this);
         View UI = factory.inflate(R.layout.ui, null);
-        Player me = ClientGameHandler.handler.getPlayer();
-        ArrayList<Ability> myAbilities = me.getAbilities();
-        final ImageButton ability1 =(ImageButton) findViewById(R.id.AbilityButtonBottom);
-        final ImageButton ability2 =(ImageButton) findViewById(R.id.AbilityButtonMiddle);
-        final ImageButton ability3 =(ImageButton) findViewById(R.id.AbilityButtonUpper);
-        String uri = "@drawable/";
-        String temp = uri + myAbilities.get(0).getName();
-        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-        Drawable res = getResources().getDrawable(imageResource);
-        ability1.setImageDrawable(res);
         frame.addView(UI);
         setContentView(frame);
+
+        final ImageButton ability1 = findViewById(R.id.AbilityButtonBottom);
+        final ImageButton ability2 = findViewById(R.id.AbilityButtonMiddle);
+        final ImageButton ability3 = findViewById(R.id.AbilityButtonUpper);
+        /*
+        Player me = ClientGameHandler.handler.getPlayer();
+        ArrayList<Ability> myAbilities = me.getAbilities();
+
+
+
+        String uri = "@drawable/";
+
+        String temp = uri + myAbilities.get(1).getName();
+        int imageResource = getResources().getIdentifier(temp, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+        ability1.setImageDrawable(res);
+
+        temp = uri + myAbilities.get(2).getName();
+        imageResource = getResources().getIdentifier(temp, null, getPackageName());
+        res = getResources().getDrawable(imageResource);
+        ability2.setImageDrawable(res);
+
+        temp = uri + myAbilities.get(3).getName();
+        imageResource = getResources().getIdentifier(temp, null, getPackageName());
+        res = getResources().getDrawable(imageResource);
+        ability3.setImageDrawable(res);
+
+        */
+        ability1.setImageResource(R.drawable.heal);
+        ability2.setImageResource(R.drawable.melee);
+        ability3.setImageResource(R.drawable.range);
+
         ClientGameHandler.handler.setGameActivity(this);
     }
 
