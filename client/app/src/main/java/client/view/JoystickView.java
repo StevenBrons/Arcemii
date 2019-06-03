@@ -47,9 +47,9 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
             Canvas JoyStick = this.getHolder().lockCanvas();
             Paint colors = new Paint();
             JoyStick.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            colors.setARGB(255,50,50,50);
+            colors.setARGB(200,192,192,192);
             JoyStick.drawCircle(centerX, centerY, Radius, colors);
-            colors.setARGB(255,  0 ,0, 255);
+            colors.setARGB(200,  128,128, 128);
             JoyStick.drawCircle(newX, newY, HatRadius, colors);
             getHolder().unlockCanvasAndPost(JoyStick);
         }
