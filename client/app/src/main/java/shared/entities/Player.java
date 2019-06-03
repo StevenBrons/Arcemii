@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import shared.messages.Message;
 import shared.tiles.Tile;
 
 /**
- * The class that handles rendering and actions of Sako, the player character
+ * The class that handles rendering and actions of Sako, the player character.
  * @author Jelmer Firet
  */
 public class Player extends Entity {
@@ -23,13 +24,16 @@ public class Player extends Entity {
 	private transient String name = "Player#" + (int)(Math.random()*99999);
 	private int color;
 
+	private transient boolean unique = true;
+	private transient InetAddress ip;
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
 
-	public Player(ObjectInputStream input, ObjectOutputStream output) {
+	public Player(InetAddress ip, ObjectInputStream input, ObjectOutputStream output) {
 		super(0,0);
 		this.input = input;
 		this.output = output;
+		this.ip = ip;
 	}
 
 	/**
@@ -120,6 +124,18 @@ public class Player extends Entity {
 	 */
 	public String getName(){
 		return name;
+	}
+
+	public InetAddress getIp(){
+		return ip;
+	}
+
+	public void setNotUnique(){
+		unique = false;
+	}
+
+	public boolean isUnique(){
+		return unique;
 	}
 
 	public void stop(){

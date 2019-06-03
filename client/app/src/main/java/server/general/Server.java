@@ -3,10 +3,13 @@ package server.general;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import shared.entities.Player;
+import shared.general.Party;
 
 public class Server {
 
@@ -15,10 +18,12 @@ public class Server {
 	private boolean starting = true;
 
 	private ServerSocket serverSocket;
+	private ServerGameHandler gameHandler;
 
 	public Server(final ServerGameHandler gameHandler) {
 		System.out.println("Starting server...");
 		running = true;
+		this.gameHandler = gameHandler;
 
 		new Thread(new Runnable() {
 			@Override
@@ -30,9 +35,13 @@ public class Server {
 					starting = false;
 					while (isRunning()) {
 						Socket socket = serverSocket.accept();
+
+						InetAddress ip = socket.getInetAddress();
+						checkUniqueness(ip);
+
 						ObjectInputStream playerInput = new ObjectInputStream(socket.getInputStream());
 						ObjectOutputStream playerOutput = new ObjectOutputStream(socket.getOutputStream());
-						Player player = new Player(playerInput, playerOutput);
+						Player player = new Player(ip, playerInput, playerOutput);
 						gameHandler.addPlayer(player);
 					}
 				} catch (IOException e) {
@@ -58,6 +67,18 @@ public class Server {
 				serverSocket.close();
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+		}
+	}
+
+	private void checkUniqueness(InetAddress ip){
+		ArrayList<Party> parties = gameHandler.getParties();
+		for(Party party : parties){
+			for(Player player : party.getPlayers()){
+				System.out.println(player.getIp() + "==" + ip);
+				if(player.getIp().equals(ip)){
+					player.setNotUnique();
+				}
 			}
 		}
 	}

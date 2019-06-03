@@ -25,9 +25,9 @@ public class Party extends Message {
 		players = new ArrayList<>();
 	}
 
-	public void addPlayer(Player client) {
-		if (!players.contains(client)) {
-			players.add(client);
+	public void addPlayer(Player player) {
+		if (!players.contains(player)) {
+			players.add(player);
 		}
 		messageAll(this);
 	}
