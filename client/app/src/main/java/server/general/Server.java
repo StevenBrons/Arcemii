@@ -86,7 +86,6 @@ public class Server {
 		ArrayList<Party> parties = gameHandler.getParties();
 		for(Party party : parties){
 			for(Player player : party.getPlayers()){
-				System.out.println(player.getIp() + "==" + ip);
 				if(player.getIp().equals(ip)){
 					player.setNotUnique();
 				}

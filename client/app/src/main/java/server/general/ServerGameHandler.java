@@ -51,7 +51,7 @@ public class ServerGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	public void addPlayer(final Player player) {
-		System.out.println("A new client has joined: " + player.getName());
+		System.out.println("A new player has joined: " + player.getName());
 
 		// Put the player in an initial party.
 		createParty(player);
@@ -67,7 +67,7 @@ public class ServerGameHandler {
 					}
 				}
 				leaveParty(player);
-				System.out.println("Removed player: " + player.getName());
+				System.out.println("A player has been removed: " + player.getName());
 			}
 		}).start();
 
@@ -156,11 +156,10 @@ public class ServerGameHandler {
 		for(Party party : parties){
 			if(party.getPartyId() == m.getPartyId()){
 				// Remove the player from the initial party.
-				leavePartyMessage(player);
+				leaveParty(player);
 
 				party.addPlayer(player);
 				player.sendMessage(new PartyJoinedMessage());
-				player.sendMessage(party);
 			}
 		}
 	}
