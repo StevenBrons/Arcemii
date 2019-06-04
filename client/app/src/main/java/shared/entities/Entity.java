@@ -18,7 +18,7 @@ public abstract class Entity implements Serializable {
     protected transient ArrayList<Ability> abilities = new ArrayList<>();
     protected transient ArrayList<Ability> actions = new ArrayList<>();
     private transient boolean changed = false;
-    private transient double hitbox = 1;
+    private transient double hitbox = 0.2;
     protected int health = 0;
     protected int maxhealth = 0;
 
@@ -59,7 +59,7 @@ public abstract class Entity implements Serializable {
 
 	public void damage(int amount){
 		assert health-amount < health: "Integer overflow of health";
-		health = health - amount;
+		health -= amount;
 	}
 
     public void executeAll(Level level) {

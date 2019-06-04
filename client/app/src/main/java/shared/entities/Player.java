@@ -9,6 +9,7 @@ import java.util.List;
 
 import client.view.RenderItem;
 import shared.abilities.Ability;
+import shared.abilities.Move;
 import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
@@ -103,6 +104,7 @@ public class Player extends Entity {
 	@Override
 	public void invokeAll(Level level) {
 		// the abilities are invoked by the client!
+
 	}
 
 	public ArrayList<Ability> getActions() {
@@ -140,7 +142,7 @@ public class Player extends Entity {
 
 	public synchronized void invokeMove() {
 	  if (move) {
-      invoke(abilities.get(0).invoke(direction));
+      invoke(((Move)abilities.get(0)).invoke(direction));
     }
 	}
 
