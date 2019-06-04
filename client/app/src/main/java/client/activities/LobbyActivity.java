@@ -30,8 +30,13 @@ public class LobbyActivity extends AppCompatActivity {
 	private TextView txtPlayers;
 	private Ability abilities[] = {new Heal(), new Melee(), new Move(), new Range()};
 	private String ability_names[] = {"heal", "melee", "move", "range"};
+	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "idk lol", "range attack"};
 	//contains ID of the slots the ith ability is assigned to
 	private int assigned_to_slot[] = {0, 0, 0, 0};
+	private int ability_slots[] = {R.id.ability1, R.id.ability2, R.id.ability3};
+	private int ability_title_ids[] = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
+	private int ability_description_ids[] = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
+
 
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -157,14 +162,28 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 	/**
+	 * Returns an integers [0, 2]: the ability slot to which this ID belongs. Returns -1 if this ID was not found.
+	 * @author Robert Koprinkov
+	 * @param id
+	 * */
+
+	int getAbilitySlot(int id){
+		for(int i=0; i<ability_slots.length; i++){
+			if(ability_slots[i]==id)
+				return i;
+		}
+		return -1;
+	}
+
+	/**
 	 * Handles pressing of one of the ability buttons.
 	 * When pressed, the next ability that has not been used by one of the other slots is used.
 	 * @param view
 	 * @author Robert Koprinkov
 	 * */
 	public void onChangeAbility(View view) {
-		Log.e("changing ability", view.getId() + "");
 		int id = view.getId();
+		int ability_slot = getAbilitySlot(id);
 		int nextab = 0;
 		for(int i=0; i<abilities.length; i++){
 			if(assigned_to_slot[i]==id){
@@ -180,6 +199,7 @@ public class LobbyActivity extends AppCompatActivity {
 		}
 		//we have an unassigned ability
 		assigned_to_slot[nextab] = id;
-		((Button)view).setText(ability_names[nextab]);
+		((TextView)findViewById(ability_title_ids[ability_slot])).setText(ability_names[nextab]);
+		((TextView)findViewById(ability_description_ids[ability_slot])).setText(ability_descriptions[nextab]);
 	}
 }

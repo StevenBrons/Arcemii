@@ -15,41 +15,109 @@
         android:layout_weight="1"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent">
-        <Button
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="vertical"
             android:id="@+id/ability1"
-            android:textColor="@android:color/background_light"
             android:onClick="onChangeAbility"
-            android:textSize="24sp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/button"
-            android:text="@string/ability_button"
-            />
-
-        <Button
+            android:background="@color/button"
+            >
+                <TextView
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:text="@string/ability_button"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:id="@+id/ability_name1"
+                    />
+                    <TextView
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@android:color/background_light"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/ability_description1"
+                        />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="vertical"
             android:id="@+id/ability2"
-            android:textColor="@android:color/background_light"
             android:onClick="onChangeAbility"
-            android:textSize="24sp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/ability_button"
-            />
-
-        <Button
+            android:background="@color/colorPrimary"
+            >
+            <TextView
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:text="@string/ability_button"
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:id="@+id/ability_name2"
+                />
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@android:color/background_light"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/ability_description2"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="vertical"
             android:id="@+id/ability3"
             android:onClick="onChangeAbility"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
             android:layout_weight="1"
-            android:backgroundTint="@color/colorAccent"
-            android:text="@string/ability_button"
-            />
+            android:background="@color/colorAccent"
+            >
+            <TextView
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:text="@string/ability_button"
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:id="@+id/ability_name3"
+                />
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@android:color/background_light"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/ability_description3"
+                />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/abilityDescription"
             android:layout_width="match_parent"
