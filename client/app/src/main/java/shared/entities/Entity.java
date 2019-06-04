@@ -19,7 +19,8 @@ public abstract class Entity implements Serializable {
     protected transient ArrayList<Ability> actions = new ArrayList<>();
     private transient boolean changed = false;
     private transient double hitbox = 1;
-    private boolean isDead = false;
+    protected int health = 0;
+    protected int maxhealth = 0;
 
     protected double xPos = 0, yPos = 0, xVel = 0, yVel = 0;
 
@@ -43,13 +44,23 @@ public abstract class Entity implements Serializable {
     }
 
     public boolean isDead() {
-        return isDead;
+        return health < 0;
     }
 
     public void destroy() {
-        isDead = true;
+    	health = -10000;
         setChanged(true);
     }
+
+    public void heal(int amount){
+    	assert health+amount > health: "Integer overflow of health";
+    	health = Math.min(maxhealth,health+amount);
+	}
+
+	public void damage(int amount){
+		assert health-amount < health: "Integer overflow of health";
+		health = health - amount;
+	}
 
     public void executeAll(Level level) {
         for (Ability a : actions) {

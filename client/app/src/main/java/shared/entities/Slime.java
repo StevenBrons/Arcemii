@@ -21,6 +21,7 @@ public class Slime extends Entity {
 	 */
 	public Slime(double x,double y){
 		super(x,y);
+		maxhealth = health = 20;
 	}
 
 

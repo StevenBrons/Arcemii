@@ -62,6 +62,7 @@ public class Player extends Entity {
 	public Player(double x, double y, int color){
 		super(x,y);
 		this.color = color;
+		maxhealth = health = 50;
 	}
 
 	/**

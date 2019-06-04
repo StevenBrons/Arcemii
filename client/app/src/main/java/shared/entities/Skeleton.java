@@ -26,6 +26,7 @@ public class Skeleton extends Entity {
 	 */
 	public Skeleton(double x,double y){
 		super(x,y);
+		maxhealth = health = 10;
 	}
 
 
