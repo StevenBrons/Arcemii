@@ -1,6 +1,7 @@
 package client.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -179,7 +180,7 @@ public class ClientGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	public void handleInput(Message m) {
-		Log.d(Connection.TAG, "Client receives message: " + m);
+//		Log.d(Connection.TAG, "Client receives message: " + m);
 
 		switch (m.getType()){
 			case "PartyJoinedMessage":
@@ -217,8 +218,15 @@ public class ClientGameHandler {
 		player.setActions(new ArrayList<Ability>());
 	}
 
+	/**
+	 * Set the level and start the game activity.
+	 * @param level
+	 * @author Bram Pulles and Steven Bronsveld
+	 */
 	private void startGame(final Level level) {
 		this.level = level;
+		Intent intGame = new Intent(context, GameActivity.class);
+		context.startActivity(intGame);
 	}
 
 	/**

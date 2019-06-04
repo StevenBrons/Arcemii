@@ -100,8 +100,6 @@ public class LobbyActivity extends AppCompatActivity {
 	 */
 	public void onStartGame(View v){
 		if(isMaster()){
-			Intent intGame = new Intent(this, GameActivity.class);
-			startActivity(intGame);
 			ClientGameHandler.sendMessage(new StartGameMessage());
 		}
 	}

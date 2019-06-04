@@ -127,6 +127,7 @@ public class ServerGameHandler {
 	 */
 	private void leavePartyMessage(Player player){
 		leaveParty(player);
+		createParty(player);
 	}
 
 	/**
@@ -155,7 +156,6 @@ public class ServerGameHandler {
 	private void joinPartyMessage(JoinPartyMessage m, Player player){
 		for(Party party : parties){
 			if(party.getPartyId() == m.getPartyId()){
-				// Remove the player from the initial party.
 				leaveParty(player);
 
 				party.addPlayer(player);
@@ -179,6 +179,7 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void createPartyMessage(Player player){
+		leaveParty(player);
 		player.sendMessage(createParty(player));
 	}
 

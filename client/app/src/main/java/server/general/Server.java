@@ -87,7 +87,8 @@ public class Server {
 		for(Party party : parties){
 			for(Player player : party.getPlayers()){
 				if(player.getIp().equals(ip)){
-					player.setNotUnique();
+					//TODO: Remove this when the server is online. This is only for the emulators.
+					//player.setNotUnique();
 				}
 			}
 		}
