@@ -69,11 +69,22 @@ public class Skeleton extends Entity {
 	public void invokeAll(Level level) {
 		this.actions.clear();
 		if (rangedAttack.available()){
+			Entity targetPlayer = null;
 			for (int i = 0;i<level.getNumEntity();i++){
-				Entity player = level.getEntityAt(i);
-				if (player instanceof Player && level.freeLine(xPos,yPos,player.getX(),player.getY())){
-					invoke(rangedAttack.invoke(atan2(player.getY()-yPos,player.getX()-xPos)));
+				if (level.getEntityAt(i) instanceof Player){
+					Entity player = level.getEntityAt(i);
+					if (level.freeLine(xPos,yPos,player.getX(),player.getY())){
+						if (targetPlayer == null ||
+							(this.getUUID().getLeastSignificantBits()^player.getUUID().getLeastSignificantBits()) <
+							(this.getUUID().getLeastSignificantBits()^targetPlayer.getUUID().getLeastSignificantBits())
+						){
+							targetPlayer = player;
+						}
+					}
 				}
+			}
+			if (targetPlayer != null){
+				invoke(rangedAttack.invoke(atan2(targetPlayer.getY()-yPos,targetPlayer.getX()-xPos)));
 			}
 		}
 	}
