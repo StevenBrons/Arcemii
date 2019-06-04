@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,8 @@ import com.debernardi.archemii.R;
 import java.util.ArrayList;
 
 import client.controller.ClientGameHandler;
+import shared.abilities.Ability;
+import shared.abilities.*;
 import shared.entities.Player;
 import shared.general.Party;
 import shared.messages.LeavePartyMessage;
@@ -25,6 +28,10 @@ public class LobbyActivity extends AppCompatActivity {
 
 	private TextView gamePin;
 	private TextView txtPlayers;
+	private Ability abilities[] = {new Heal(), new Melee(), new Move(), new Range()};
+	private String ability_names[] = {"heal", "melee", "move", "range"};
+	//contains ID of the slots the ith ability is assigned to
+	private int assigned_to_slot[] = {0, 0, 0, 0};
 
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -149,5 +156,32 @@ public class LobbyActivity extends AppCompatActivity {
 					ClientGameHandler.handler.sendMessage(new LeavePartyMessage());
 				}
 			}).create().show();
+	}
+
+	/**
+	 * Handles pressing of one of the ability buttons.
+	 * When pressed, the next ability that has not been used by one of the other slots is used.
+	 * @param view
+	 * @author Robert Koprinkov
+	 * */
+	public void onChangeAbility(View view) {
+		Log.e("changing ability", view.getId() + "");
+		int id = view.getId();
+		int nextab = 0;
+		for(int i=0; i<abilities.length; i++){
+			if(assigned_to_slot[i]==id){
+				nextab = (i+1)%abilities.length;
+				assigned_to_slot[i] = 0;
+				break;
+			}
+		}
+		Log.e("nextab", nextab + "");
+		while(assigned_to_slot[nextab]!=0){
+			Log.e("slot", assigned_to_slot[nextab] + " " + nextab);
+			nextab = (nextab+1)%assigned_to_slot.length;
+		}
+		//we have an unassigned ability
+		assigned_to_slot[nextab] = id;
+		((Button)view).setText(ability_names[nextab]);
 	}
 }
