@@ -38,6 +38,15 @@ public class SettingsActivity extends AppCompatActivity {
 		SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPreferences.getString(getString(R.string.sharedpref_username), "-");
 		currentUsername.setText(username);
+
+		//Set the sound button to the correct value
+		Button btnSound = findViewById(R.id.btnSound);
+		if(getSharedPreferences("audioprefs", MODE_PRIVATE).contains("muted")){
+			btnSound.setText(R.string.audio_muted);
+		}
+		else{
+			btnSound.setText(R.string.audio_unmuted);
+		}
 	}
 
 	/**
@@ -80,6 +89,25 @@ public class SettingsActivity extends AppCompatActivity {
 
 			ClientGameHandler.handler.sendPlayerInfoMessage();
 		}
+	}
+
+	/**
+	 * Toggles between a muted and unmuted state and save this in the shared prefs
+	 * @param view
+	 * @author Thijs van Loenhout
+	 */
+    public void onClickMute(View view) {
+		TextView v = findViewById(R.id.btnSound);
+		SharedPreferences prefs = getSharedPreferences("audioprefs", MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		if(prefs.contains("muted")){
+			editor.remove("muted");
+			v.setText(R.string.audio_unmuted);
+		} else {
+			editor.putBoolean("muted", true);
+			v.setText(R.string.audio_muted);
+		}
+		editor.apply();
 	}
 
 }

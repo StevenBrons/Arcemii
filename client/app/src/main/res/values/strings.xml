@@ -25,4 +25,6 @@
     <string name="set_servermode">Servermode:</string>
     <string name="ability_button">Click for the next ability</string>
     <string name="ability_tutorial">tap slots above to get the next available ability</string>
+    <string name="audio_unmuted">music</string>
+    <string name="audio_muted">muted</string>
 </resources>
