@@ -20,4 +20,9 @@ public class Finish extends Tile {
 				Tile.WIDTH*x+Tile.WIDTH/2,-Tile.HEIGHT*y+Tile.HEIGHT/2,0.5,0.5,1));
 		return result;
 	}
+
+	@Override
+	public boolean isSolid() {
+		return false;
+	}
 }

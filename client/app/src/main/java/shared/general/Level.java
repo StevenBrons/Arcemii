@@ -15,11 +15,13 @@ public class Level extends Message {
 
   private Tile[][] tiles;
   private ArrayList<Entity> entities;
+  private ArrayList<Entity> newEntities;
   private transient ArrayList<Object> updates = new ArrayList<>();
 
   public Level (Tile[][] tiles, ArrayList<Entity> entities) {
     this.tiles = tiles;
     this.entities = entities;
+    this.newEntities = new ArrayList<>();
   }
 
   public int getWidth(){
@@ -54,6 +56,7 @@ public class Level extends Message {
     for (Entity e : entities) {
       e.executeAll(this);
     }
+    entities.addAll(newEntities);
   }
 
   /**
@@ -69,7 +72,7 @@ public class Level extends Message {
 
 
   public void addEntity(Entity e) {
-    entities.add(e);
+    newEntities.add(e);
     e.setChanged(true);
   }
 
@@ -124,6 +127,40 @@ public class Level extends Message {
         return;
       }
     }
-    addEntity(updateEntity);
+    entities.add(updateEntity);
+
+  }
+
+  public void removeDead(){
+    for (int i = entities.size()-1;i>=0;i--){
+      if (entities.get(i).isDead()){
+        entities.remove(i);
+      }
+    }
+  }
+
+
+  /**
+   * @param sx The start x position
+   * @param sy The start y position
+   * @param ex The end x position
+   * @param ey The end y position
+   * @return True when an entity can move in a straight line from start to end;
+   * @author Jelmer Firet
+   */
+  public boolean freeLine(double sx, double sy, double ex, double ey){
+    if (getTileAt((int)sx,(int)sy).isSolid()) return false;
+    if (getTileAt((int)ex,(int)ey).isSolid()) return false;
+    for (int x = (int)Math.min(sx,ex)+1;x <= (int)Math.max(sx,ex);x++){
+      double frac = ((double)x-sx)/(ex-sx);
+      int y = (int)(sy+frac*(ey-sy));
+      if (getTileAt(x,y).isSolid()) return false;
+    }
+    for (int y = (int)Math.min(sy,ey)+1;y <= (int)Math.max(sy,ey);y++){
+      double frac = ((double)y-sy)/(ey-sy);
+      int x = (int)(sx+frac*(ex-sx));
+      if (getTileAt(x,y).isSolid()) return false;
+    }
+    return true;
   }
 }
