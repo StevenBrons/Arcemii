@@ -32,7 +32,7 @@ public class Slime extends Entity {
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem;
-		if (xVel*xVel+yVel*yVel > 5){
+		if (xVel*xVel+yVel*yVel > 0.005){
 			renderItem = new RenderItem("slime/redSlimeJump",
 					(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}

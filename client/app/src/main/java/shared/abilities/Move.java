@@ -24,6 +24,7 @@ public class Move extends Ability{
     double dy = Math.sin(direction) * SPEED;
     if (level.freeLine(x,y,x+dx,y+dy)){
       self.setPos(x + dx,y + dy);
+      self.setVel(dx,dy);
     }
     return true;
   }

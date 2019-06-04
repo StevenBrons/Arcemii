@@ -106,10 +106,10 @@ public class GameView extends View {
         }
         this.level = level;
         Player player = ClientGameHandler.handler.getPlayer();
-        int minX = -1+((int)(Tile.WIDTH*player.getX())-screen.getWidth()/2)/Tile.WIDTH;
-        int maxX =  1+((int)(Tile.WIDTH*player.getX())+screen.getWidth()/2)/Tile.WIDTH;
-        int minY = -1+((int)(Tile.HEIGHT*player.getY())-screen.getHeight()/2)/Tile.HEIGHT;
-        int maxY =  1+((int)(Tile.HEIGHT*player.getY())+screen.getHeight()/2)/Tile.HEIGHT;
+        int minX = -2+((int)(Tile.WIDTH*player.getX())-screen.getWidth()/2)/Tile.WIDTH;
+        int maxX =  2+((int)(Tile.WIDTH*player.getX())+screen.getWidth()/2)/Tile.WIDTH;
+        int minY = -2+((int)(Tile.HEIGHT*player.getY())-screen.getHeight()/2)/Tile.HEIGHT;
+        int maxY =  2+((int)(Tile.HEIGHT*player.getY())+screen.getHeight()/2)/Tile.HEIGHT;
         renderItemLock.lock();
         renderItems.clear();
         for (int idx = 0;idx<level.getNumEntity();idx++){
