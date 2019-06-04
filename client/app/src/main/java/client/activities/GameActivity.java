@@ -121,6 +121,10 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 
     }
 
+    /**
+    * handler to load and start music on start of activity
+    * @author Thijs van Loenhout
+    */
     @Override
     protected void onStart() {
         super.onStart();
@@ -130,6 +134,10 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
         audio.setLooping(true);
     }
 
+    /**
+     * handler to pause music when activity is paused
+     * @author Thijs van Loenhout
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -137,6 +145,11 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
             audio.pause();
     }
 
+
+    /**
+     * handler to stop and release music when activity stops
+     * @author Thijs van Loenhout
+     */
     @Override
     protected void onStop() {
         super.onStop();
