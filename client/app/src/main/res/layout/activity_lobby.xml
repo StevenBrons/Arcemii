@@ -1,17 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="client.activities.LobbyActivity">
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+    tools:context="client.activities.LobbyActivity"
+    android:background="@color/background">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_height="match_parent"
-        android:background="@color/background">
+        android:layout_width="0dp"
+        android:id="@+id/abilitylayout"
+        android:layout_weight="1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent">
+        <Button
+            android:id="@+id/ability1"
+            android:textColor="@android:color/background_light"
+            android:onClick="onChangeAbility"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/button"
+            android:text="@string/ability_button"
+            />
+
+        <Button
+            android:id="@+id/ability2"
+            android:textColor="@android:color/background_light"
+            android:onClick="onChangeAbility"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/ability_button"
+            />
+
+        <Button
+            android:id="@+id/ability3"
+            android:onClick="onChangeAbility"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textColor="@android:color/background_light"
+            android:textSize="24sp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/ability_button"
+            />
+        <TextView
+            android:id="@+id/abilityDescription"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/ability_tutorial"
+            />
+    </LinearLayout>
+    <android.support.constraint.ConstraintLayout
+        app:layout_constraintLeft_toRightOf="@id/abilitylayout"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        >
 
         <Button
             android:id="@+id/btnStartGame"
@@ -25,7 +81,7 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.889"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -55,7 +111,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.753"
+            app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,7 +119,7 @@
             android:id="@+id/playersTxtView"
             android:layout_width="276dp"
             android:layout_height="214dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
@@ -78,11 +134,12 @@
             android:textAlignment="textStart"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/btnStartGame"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.946"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.879" />
 
+
     </android.support.constraint.ConstraintLayout>
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
