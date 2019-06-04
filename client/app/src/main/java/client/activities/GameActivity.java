@@ -1,6 +1,7 @@
 package client.activities;
 
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +22,10 @@ import shared.abilities.Ability;
 import shared.entities.Player;
 import shared.general.Level;
 
-public class GameActivity extends AppCompatActivity implements JoystickView.JoystickListener {
+public class GameActivity extends AppCompatActivity implements JoystickView.JoystickListener, MediaPlayer.OnCompletionListener {
 
     private GameView view;
+    private static MediaPlayer audio;
 
     /**
      * Makes a new GameView view in the activity and starts the refresh loop
@@ -117,5 +119,32 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
             player.move = false;
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        audio = MediaPlayer.create(this,R.raw.game);
+        audio.start();
+        //audioIntro.setOnCompletionListener(this);
+        audio.setLooping(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(audio.isPlaying())
+            audio.pause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        audio.release();
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        audio.start();
     }
 }
