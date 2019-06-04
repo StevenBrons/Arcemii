@@ -12,7 +12,8 @@
         <activity android:name="client.activities.GameActivity"
             android:screenOrientation="landscape" />
         <activity android:name="client.activities.LobbyActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
         <activity android:name="client.activities.JoinPartyActivity" />
         <activity android:name="client.activities.SettingsActivity" />
         <activity android:name="client.activities.MainActivity">

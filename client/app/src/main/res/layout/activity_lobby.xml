@@ -15,45 +15,120 @@
         android:layout_weight="1"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent">
-        <Button
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="vertical"
             android:id="@+id/ability1"
-            android:textColor="@android:color/background_light"
             android:onClick="onChangeAbility"
-            android:textSize="24sp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/button"
-            android:text="@string/ability_button"
-            />
-
-        <Button
+            android:background="@color/button"
+            >
+                <TextView
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:text="@string/ability_button"
+                    android:fontFamily="@font/lunchds"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:id="@+id/ability_name1"
+                    />
+                    <TextView
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/lunchds"
+                        android:gravity="center"
+                        android:textColor="@android:color/background_light"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/ability_description1"
+                        />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="vertical"
             android:id="@+id/ability2"
-            android:textColor="@android:color/background_light"
             android:onClick="onChangeAbility"
-            android:textSize="24sp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/ability_button"
-            />
-
-        <Button
+            android:background="@color/colorPrimary"
+            >
+            <TextView
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:fontFamily="@font/lunchds"
+                android:layout_width="match_parent"
+                android:text="@string/ability_button"
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:id="@+id/ability_name2"
+                />
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/lunchds"
+                android:textColor="@android:color/background_light"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/ability_description2"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="vertical"
             android:id="@+id/ability3"
             android:onClick="onChangeAbility"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
             android:layout_weight="1"
-            android:backgroundTint="@color/colorAccent"
-            android:text="@string/ability_button"
-            />
+            android:background="@color/colorAccent"
+            >
+            <TextView
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:fontFamily="@font/lunchds"
+                android:layout_width="match_parent"
+                android:text="@string/ability_button"
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:id="@+id/ability_name3"
+                />
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/lunchds"
+                android:textColor="@android:color/background_light"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/ability_description3"
+                />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/abilityDescription"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:fontFamily="@font/lunchds"
             android:layout_weight="1"
             android:textAlignment="center"
             android:layout_gravity="center"
@@ -61,85 +136,51 @@
             android:text="@string/ability_tutorial"
             />
     </LinearLayout>
-    <android.support.constraint.ConstraintLayout
-        app:layout_constraintLeft_toRightOf="@id/abilitylayout"
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
         >
 
+        <TextView
+            android:id="@+id/game_pin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/game_pin"
+            android:textAlignment="center"
+            android:fontFamily="@font/lunchds"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/playersTxtView"
+            android:layout_width="276dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/lunchds"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="18sp"
+             />
         <Button
             android:id="@+id/btnStartGame"
-            android:layout_width="233dp"
+            android:layout_gravity="center"
+            android:layout_width="276dp"
+            android:fontFamily="@font/lunchds"
             android:layout_height="54dp"
-            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/button"
             android:onClick="onStartGame"
             android:text="@string/start_game"
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/lobbyGamePin"
-            android:layout_width="94dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/empty_game_pin"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.924"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="138dp"
-            android:layout_height="41dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/game_pin"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/playersTxtView"
-            android:layout_width="276dp"
-            android:layout_height="214dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnStartGame"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.879" />
+             />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </LinearLayout>
