@@ -36,13 +36,18 @@ public class Arrow extends Entity{
 		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem = new RenderItem("arrowHorizontal",
 				(int)(Tile.WIDTH*xPos),-(int)(Tile.HEIGHT*yPos),0.5,0.5,2);
-		renderItem.setRotation(180.0f/(float)Math.PI*(float)Math.atan2((float)yVel,(float) xVel));
+		renderItem.setRotation(180.0f/(float)Math.PI*(float)Math.atan2((float)-yVel,(float) xVel));
 		result.add(renderItem);
 		return result;
 	}
 
 	@Override
 	public void invokeAll(Level level) {
+		this.actions.clear();
+		invoke(this.move.invoke(Math.atan2(yVel,xVel)));
+		if (!this.move.isPossible(level,this)){
+			this.destroy();
+		}
 	}
 
 

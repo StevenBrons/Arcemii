@@ -49,6 +49,15 @@ public class Slime extends Entity {
 
 	@Override
 	public void invokeAll(Level level) {
+		this.actions.clear();
+		for (int i = 0;i<level.getNumEntity();i++){
+			if (level.getEntityAt(i) instanceof Player){
+				Entity player = level.getEntityAt(i);
+				if (level.freeLine(xPos,yPos,player.getX(),player.getY())){
+					invoke(this.move.invoke(Math.atan2(player.getY()-yPos,player.getX()-xPos)));
+				}
+			}
+		}
 	}
 
 }

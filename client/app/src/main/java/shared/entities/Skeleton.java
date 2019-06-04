@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
+import shared.abilities.Range;
 import shared.general.Level;
 import shared.tiles.Tile;
+
+import static java.lang.Math.atan2;
 
 /**
  * Class that handles actions and rendering of a Skeleton
@@ -13,6 +16,7 @@ import shared.tiles.Tile;
  */
 public class Skeleton extends Entity {
 	private boolean shooting;
+	private Range rangedAttack = new Range();
 
 	/**
 	 * Constructs a new skeleton
@@ -63,7 +67,15 @@ public class Skeleton extends Entity {
 
 	@Override
 	public void invokeAll(Level level) {
-		invoke(this.move.invoke(1));
+		this.actions.clear();
+		if (rangedAttack.available()){
+			for (int i = 0;i<level.getNumEntity();i++){
+				Entity player = level.getEntityAt(i);
+				if (player instanceof Player && level.freeLine(xPos,yPos,player.getX(),player.getY())){
+					invoke(rangedAttack.invoke(atan2(player.getY()-yPos,player.getX()-xPos)));
+				}
+			}
+		}
 	}
 
 
