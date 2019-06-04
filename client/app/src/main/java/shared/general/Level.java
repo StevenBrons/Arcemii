@@ -57,7 +57,6 @@ public class Level extends Message {
       e.executeAll(this);
     }
     entities.addAll(newEntities);
-    System.out.println(entities.size());
   }
 
   /**
@@ -130,6 +129,14 @@ public class Level extends Message {
     }
     entities.add(updateEntity);
 
+  }
+
+  public void removeDead(){
+    for (int i = entities.size()-1;i>=0;i--){
+      if (entities.get(i).isDead()){
+        entities.remove(i);
+      }
+    }
   }
 
 

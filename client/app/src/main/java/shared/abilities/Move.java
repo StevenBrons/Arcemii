@@ -22,7 +22,6 @@ public class Move extends Ability{
 
     double dx = Math.cos(direction) * SPEED;
     double dy = Math.sin(direction) * SPEED;
-    //TODO
     if (level.freeLine(x,y,x+dx,y+dy)){
       self.setPos(x + dx,y + dy);
     }
@@ -34,5 +33,14 @@ public class Move extends Ability{
   @Override
   public String toString() {
     return "move(" + direction + ")";
+  }
+
+  public boolean isPossible(Level level, Entity self){
+    double x = self.getX();
+    double y = self.getY();
+
+    double dx = Math.cos(direction) * SPEED;
+    double dy = Math.sin(direction) * SPEED;
+    return level.freeLine(x, y, x + dx, y + dy);
   }
 }

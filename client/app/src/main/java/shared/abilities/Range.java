@@ -23,7 +23,7 @@ public class Range extends Ability {
 	@Override
 	public boolean execute(Level level, Entity self) {
 		double dx = Math.cos(direction)*0.1;
-		double dy = Math.cos(direction)*0.1;
+		double dy = Math.sin(direction)*0.1;
 		level.addEntity(new Arrow(self.getX()+dx,self.getY()+dy,dx,dy));
 		return true;
 	}
