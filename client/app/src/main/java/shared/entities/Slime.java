@@ -3,6 +3,7 @@ package shared.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.abilities.Melee;
 import shared.entities.Entity;
 import client.view.RenderItem;
 import shared.general.Level;
@@ -13,6 +14,9 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Slime extends Entity {
+
+	Melee melee = new Melee();
+
 	/**
 	 * Constructs a new slime
 	 * @param x x position of the bottom of the slime (game pixels)
@@ -21,6 +25,7 @@ public class Slime extends Entity {
 	 */
 	public Slime(double x,double y){
 		super(x,y);
+		maxhealth = health = 20;
 	}
 
 
@@ -50,13 +55,25 @@ public class Slime extends Entity {
 	@Override
 	public void invokeAll(Level level) {
 		this.actions.clear();
+		Entity targetPlayer = null;
 		for (int i = 0;i<level.getNumEntity();i++){
 			if (level.getEntityAt(i) instanceof Player){
 				Entity player = level.getEntityAt(i);
 				if (level.freeLine(xPos,yPos,player.getX(),player.getY())){
-					invoke(this.move.invoke(Math.atan2(player.getY()-yPos,player.getX()-xPos)));
+					if (targetPlayer == null ||
+						(this.getUUID().getLeastSignificantBits()^player.getUUID().getLeastSignificantBits()) <
+						(this.getUUID().getLeastSignificantBits()^targetPlayer.getUUID().getLeastSignificantBits())
+					){
+						targetPlayer = player;
+					}
 				}
 			}
+		}
+		if (targetPlayer != null){
+			invoke(this.move.invoke(Math.atan2(targetPlayer.getY()-yPos,targetPlayer.getX()-xPos)));
+		}
+		if (this.melee.available(level,this)){
+			invoke(this.melee.invoke(true,5));
 		}
 	}
 

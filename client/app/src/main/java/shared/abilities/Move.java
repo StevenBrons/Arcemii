@@ -36,7 +36,8 @@ public class Move extends Ability{
     return "move(" + direction + ")";
   }
 
-  public boolean isPossible(Level level, Entity self){
+  @Override
+  public boolean available(Level level, Entity self){
     double x = self.getX();
     double y = self.getY();
 

@@ -13,6 +13,7 @@
         android:layout_height="42dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="60dp"
+        android:fontFamily="@font/lunchds"
         android:layout_marginEnd="8dp"
         android:text="@string/set_servermode"
         android:textColor="#CC252525"
@@ -41,11 +42,12 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="121dp"
+        android:layout_width="130dp"
         android:layout_height="39dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/lunchds"
         android:text="@string/set_username"
         android:textColor="#CC252525"
         android:textSize="24sp"
@@ -58,6 +60,7 @@
     <EditText
         android:id="@+id/newUsername"
         android:layout_width="260dp"
+        android:fontFamily="@font/lunchds"
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="92dp"
@@ -77,6 +80,7 @@
     <Button
         android:id="@+id/btnServermode"
         android:layout_width="170dp"
+        android:fontFamily="@font/lunchds"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -112,6 +116,7 @@
         android:id="@+id/saveButton2"
         android:layout_width="271dp"
         android:layout_height="51dp"
+        android:fontFamily="@font/lunchds"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -129,6 +134,7 @@
         android:layout_width="172dp"
         android:layout_height="39dp"
         android:layout_marginStart="16dp"
+        android:fontFamily="@font/lunchds"
         android:layout_marginTop="48dp"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/textView2"
