@@ -50,7 +50,7 @@ public class LobbyActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lobby);
 
-		gamePin = findViewById(R.id.lobbyGamePin);
+		gamePin = findViewById(R.id.game_pin);
 		txtPlayers = findViewById(R.id.playersTxtView);
 
 		ClientGameHandler.handler.setLobbyActivity(this);
@@ -136,7 +136,7 @@ public class LobbyActivity extends AppCompatActivity {
 				}
 
 				txtPlayers.setText(players);
-				gamePin.setText("" + party.getPartyId());
+				gamePin.setText("Game PIN: " + party.getPartyId());
 			}
 		});
 	}
