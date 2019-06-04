@@ -45,6 +45,9 @@ public class Arrow extends Entity{
 	public void invokeAll(Level level) {
 		this.actions.clear();
 		invoke(this.move.invoke(Math.atan2(yVel,xVel)));
+		if (!this.move.isPossible(level,this)){
+			this.destroy();
+		}
 	}
 
 

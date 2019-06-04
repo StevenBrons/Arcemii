@@ -87,6 +87,7 @@ public class Party extends Message {
 			curLevel.invoke();
 			curLevel.execute();
 			ArrayList<Entity> changes = curLevel.getChanges();
+			curLevel.removeDead();
 			levelLock.unlock();
 			sendPlayers(new GameUpdateMessage(changes));
 		} else {
