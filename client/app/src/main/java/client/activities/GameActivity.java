@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 
     private GameView view;
     private static MediaPlayer audio;
+    private static boolean muted;
 
     /**
      * Makes a new GameView view in the activity and starts the refresh loop
@@ -35,7 +36,7 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        muted = getSharedPreferences("audioprefs", MODE_PRIVATE).contains("muted");
         view = new GameView(this);
         Texture.init(getAssets());
         FrameLayout frame = new FrameLayout(this);
@@ -129,8 +130,8 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
     protected void onStart() {
         super.onStart();
         audio = MediaPlayer.create(this,R.raw.game);
-        audio.start();
-        //audioIntro.setOnCompletionListener(this);
+        if(!muted)
+            audio.start();
         audio.setLooping(true);
     }
 
@@ -145,6 +146,16 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
             audio.pause();
     }
 
+    /**
+     *
+     *
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!muted)
+                audio.start();
+    }
 
     /**
      * handler to stop and release music when activity stops
