@@ -43,6 +43,8 @@ public class Arrow extends Entity{
 
 	@Override
 	public void invokeAll(Level level) {
+		this.actions.clear();
+		invoke(this.move.invoke(Math.atan2(yVel,xVel)));
 	}
 
 

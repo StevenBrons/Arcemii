@@ -23,7 +23,9 @@ public class Move extends Ability{
     double dx = Math.cos(direction) * SPEED;
     double dy = Math.sin(direction) * SPEED;
     //TODO
-    self.setPos(x + dx,y + dy);
+    if (level.freeLine(x,y,x+dx,y+dy)){
+      self.setPos(x + dx,y + dy);
+    }
     return true;
   }
   @Override
