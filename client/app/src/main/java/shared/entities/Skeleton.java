@@ -69,7 +69,7 @@ public class Skeleton extends Entity {
 	@Override
 	public void invokeAll(Level level) {
 		this.actions.clear();
-		if (rangedAttack.available()){
+		if (rangedAttack.available(level,this)){
 			Entity targetPlayer = null;
 			for (int i = 0;i<level.getNumEntity();i++){
 				if (level.getEntityAt(i) instanceof Player){

@@ -3,6 +3,7 @@ package shared.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.abilities.Melee;
 import shared.entities.Entity;
 import client.view.RenderItem;
 import shared.general.Level;
@@ -13,6 +14,9 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Slime extends Entity {
+
+	Melee melee = new Melee();
+
 	/**
 	 * Constructs a new slime
 	 * @param x x position of the bottom of the slime (game pixels)
@@ -67,6 +71,9 @@ public class Slime extends Entity {
 		}
 		if (targetPlayer != null){
 			invoke(this.move.invoke(Math.atan2(targetPlayer.getY()-yPos,targetPlayer.getX()-xPos)));
+		}
+		if (this.melee.available(level,this)){
+			invoke(this.melee.invoke(true,5));
 		}
 	}
 

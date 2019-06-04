@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import client.view.RenderItem;
+import shared.abilities.Melee;
 import shared.general.Level;
 import shared.tiles.Tile;
 
@@ -12,6 +13,8 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Arrow extends Entity{
+
+	Melee melee = new Melee();
 
 	/**
 	 * Initialises an arrow
@@ -44,10 +47,21 @@ public class Arrow extends Entity{
 	@Override
 	public void invokeAll(Level level) {
 		this.actions.clear();
-		invoke(this.move.invoke(Math.atan2(yVel,xVel)));
-		if (!this.move.isPossible(level,this)){
+		boolean intersects = false;
+		for (int i = 0;i<level.getNumEntity();i++){
+			Entity entity = level.getEntityAt(i);
+			if (this.intersects(entity) && this != entity){
+				intersects = true;
+			}
+		}
+		if (intersects && this.melee.available(level,this)){
+			invoke(this.melee.invoke(true,2));
 			this.destroy();
 		}
+		if (!this.move.available(level,this)){
+			this.destroy();
+		}
+		invoke(this.move.invoke(Math.atan2(yVel,xVel)));
 	}
 
 

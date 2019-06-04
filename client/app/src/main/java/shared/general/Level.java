@@ -17,11 +17,21 @@ public class Level extends Message {
   private ArrayList<Entity> entities;
   private ArrayList<Entity> newEntities;
   private transient ArrayList<Object> updates = new ArrayList<>();
+  private double spawnX = 0,spawnY = 0;
 
   public Level (Tile[][] tiles, ArrayList<Entity> entities) {
     this.tiles = tiles;
     this.entities = entities;
     this.newEntities = new ArrayList<>();
+
+    for (int x = 0; x < tiles.length; x++) {
+      for (int y = 0; y < tiles[x].length; y++) {
+        if (tiles[x][y] instanceof Start) {
+          spawnX = x + 0.5;
+          spawnY = y - 0.5;
+        }
+      }
+    }
   }
 
   public int getWidth(){
@@ -89,18 +99,6 @@ public class Level extends Message {
   }
 
   public synchronized void spawnPlayer(Player player) {
-    double spawnX = 0;
-    double spawnY = 0;
-
-    for (int x = 0; x < tiles.length; x++) {
-      for (int y = 0; y < tiles[x].length; y++) {
-        if (tiles[x][y] instanceof Start) {
-          spawnX = x + 0.5;
-          spawnY = y - 0.5;
-        }
-      }
-    }
-
     player.setPos(spawnX,spawnY);
     entities.add(player);
   }
@@ -133,8 +131,18 @@ public class Level extends Message {
 
   public void removeDead(){
     for (int i = entities.size()-1;i>=0;i--){
-      if (entities.get(i).isDead()){
+      if (entities.get(i).isDead() && !(entities.get(i) instanceof Player)){
         entities.remove(i);
+      }
+    }
+  }
+
+  public void respawnDeadPlayers(){
+    for (int i = entities.size()-1;i>=0;i--){
+      if (entities.get(i).isDead() && entities.get(i) instanceof Player){
+        entities.get(i).setPos(spawnX,spawnY);
+        entities.get(i).heal(10000);
+        entities.get(i).setChanged(true);
       }
     }
   }

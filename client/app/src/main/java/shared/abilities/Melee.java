@@ -1,21 +1,43 @@
 package shared.abilities;
 
 import shared.entities.Entity;
+import shared.entities.Player;
 import shared.general.Level;
 
 public class Melee extends Ability {
 
 	private static final String name = "melee";
+	private long cooldown = System.currentTimeMillis();
+	private boolean attackPlayer = false;
+	private int damage;
 
 	@Override
 	public boolean execute(Level level, Entity self) {
-		// TODO: Implement melee ability.
+		for (int i = 0;i<level.getNumEntity();i++){
+			Entity entity = level.getEntityAt(i);
+			if (!entity.intersects(self) || entity == self){
+				continue;
+			}
+			if (entity instanceof Player && attackPlayer){
+				entity.damage(damage);
+			}
+			if (!(entity instanceof Player) && !attackPlayer){
+				entity.damage(damage);
+			}
+		}
 		return false;
 	}
 
+	public Ability invoke(boolean attackPlayer,int damage) {
+		this.attackPlayer = attackPlayer;
+		this.damage = damage;
+		this.cooldown = System.currentTimeMillis()+1000;
+		return this;
+	}
+
 	@Override
-	public Ability invoke(double direction) {
-		return null;
+	public boolean available(Level level, Entity self){
+		return (System.currentTimeMillis() > cooldown);
 	}
 	@Override
 	public String getName(){return name;}
