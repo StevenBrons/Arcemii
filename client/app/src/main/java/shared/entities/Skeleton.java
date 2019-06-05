@@ -61,7 +61,6 @@ public class Skeleton extends Entity {
 
 	@Override
 	public void invokeAll(Level level) {
-		this.actions.clear();
 		double averagePlayerX = 0.0;
 		double averagePlayerY = 0.0;
 		int numVisiblePlayer = 0;
