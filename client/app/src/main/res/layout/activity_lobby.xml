@@ -167,18 +167,17 @@
             android:textAlignment="center"
             android:textSize="18sp"
              />
+
         <Button
             android:id="@+id/btnStartGame"
-            android:layout_gravity="center"
             android:layout_width="276dp"
-            android:fontFamily="@font/lunchds_font"
             android:layout_height="54dp"
+            android:layout_gravity="center"
             android:backgroundTint="@color/button"
-            android:onClick="onStartGame"
-            android:text="@string/start_game"
+            android:fontFamily="@font/lunchds_font"
+            android:onClick="onButtonPressed"
             android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-             />
+            android:textSize="24sp" />
 
 
     </LinearLayout>

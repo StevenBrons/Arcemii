@@ -20,23 +20,26 @@ import shared.abilities.*;
 import shared.entities.Player;
 import shared.general.Party;
 import shared.messages.LeavePartyMessage;
+import shared.messages.ReadyMessage;
 import shared.messages.StartGameMessage;
 
 public class LobbyActivity extends AppCompatActivity {
 
 	private Button btnStartGame;
+	private boolean ready;
 
 	private TextView gamePin;
 	private TextView txtPlayers;
+
 	private Ability abilities[] = {new Heal(), new Melee(), new Move(), new Range()};
 	private String ability_names[] = {"heal", "melee", "move", "range"};
 	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "idk lol", "range attack"};
+
 	//contains ID of the slots the ith ability is assigned to
 	private int assigned_to_slot[] = {0, 0, 0, 0};
 	private int ability_slots[] = {R.id.ability1, R.id.ability2, R.id.ability3};
 	private int ability_title_ids[] = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
 	private int ability_description_ids[] = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
-
 
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -64,8 +67,8 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * If the client is the master show the buttons and make them clickable.
-	 * If not fade the buttons and make them not clickable.
+	 * If the client is the master the button will show text to start the game.
+	 * If the client is not master the button will show text to get ready.
 	 * @author Bram Pulles
 	 */
 	private void toggleButton(){
@@ -73,25 +76,41 @@ public class LobbyActivity extends AppCompatActivity {
 			@Override
 			public void run() {
 				if(btnStartGame != null) {
-					if (isMaster()) {
-						setButton(1, true);
-					} else {
-						setButton(0.5f, false);
-					}
+					setButton(isMaster());
 				}
 			}
 		});
 	}
 
 	/**
-	 * Set the buttons to the specified values.
-	 * @param alpha the transparency between 0 and 1 where 0 is fully transparent.
-	 * @param clickable if the buttons are clickable.
+	 * Set the button to the correct text according to if the client is master or not.
+	 * @param isMaster
 	 * @author Bram Pulles
 	 */
-	private void setButton(float alpha, boolean clickable){
-		btnStartGame.setAlpha(alpha);
-		btnStartGame.setClickable(clickable);
+	private void setButton(boolean isMaster){
+		if(isMaster){
+			btnStartGame.setText(R.string.start_game);
+		}else{
+			setReadyTextOnButton();
+		}
+	}
+
+	/**
+	 * Set the ready text on the button accordingly.
+	 * @author Bram Pulles
+	 */
+	private void setReadyTextOnButton(){
+		// TODO: Change to strings used from R.
+		btnStartGame.setText((ready)? "Ready!" : "Not Ready");
+	}
+
+	/**
+	 * When the ready button is pressed this function will update the ready button.
+	 * @author Bram Pulles
+	 */
+	private void readyPressed(){
+		ready = !ready;
+		setReadyTextOnButton();
 	}
 
 	/**
@@ -110,9 +129,12 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @param v
 	 * @author Bram Pulles and Jelmer Firet
 	 */
-	public void onStartGame(View v){
+	public void onButtonPressed(View v){
 		if(isMaster()){
 			ClientGameHandler.sendMessage(new StartGameMessage());
+		}else{
+			readyPressed();
+			ClientGameHandler.sendMessage(new ReadyMessage(ready));
 		}
 	}
 
@@ -167,7 +189,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @param id
 	 * */
 
-	int getAbilitySlot(int id){
+	private int getAbilitySlot(int id){
 		for(int i=0; i<ability_slots.length; i++){
 			if(ability_slots[i]==id)
 				return i;
