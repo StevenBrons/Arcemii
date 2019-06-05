@@ -9,6 +9,7 @@ import shared.messages.JoinPartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
 import shared.messages.PlayerInfoMessage;
+import shared.messages.ReadyMessage;
 
 public class ServerGameHandler {
 
@@ -102,7 +103,13 @@ public class ServerGameHandler {
 			case "ActionMessage":
 				actionMessage((ActionMessage) m,player);
 				break;
+			case "ReadyMessage":
+				readyMessage((ReadyMessage)m, player);
 		}
+	}
+
+	private void readyMessage(ReadyMessage m, Player player){
+		player.setReady(m.isReady());
 	}
 
 	private void actionMessage(ActionMessage m, Player player) {
@@ -122,11 +129,13 @@ public class ServerGameHandler {
 	}
 
 	/**
-	 * Remove the player from his party.
+	 * Remove the player from his party and put him in an empty one.
+	 * Set the player to non ready.
 	 * @param player
 	 * @author Bram Pulles
 	 */
 	private void leavePartyMessage(Player player){
+		player.setReady(false);
 		leaveParty(player);
 		createParty(player);
 	}
@@ -165,9 +174,17 @@ public class ServerGameHandler {
 		}
 	}
 
+	/**
+	 * Set the master to ready and start a game for the given party if everyone is ready.
+	 * @param player
+	 * @author Bram Pulles
+	 */
 	private void startGameMessage(Player player) {
+		// Set the master to ready.
+		player.setReady(true);
+
 		for (Party party : parties) {
-			if (party.containsPlayer(player)) {
+			if (party.containsPlayer(player) && party.everyoneReady()) {
 				party.startGame();
 				return;
 			}

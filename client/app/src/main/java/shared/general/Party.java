@@ -102,5 +102,16 @@ public class Party extends Message {
 		}
 	}
 
+	/**
+	 * @return if everyone from the party is ready.
+	 */
+	public boolean everyoneReady(){
+		for(Player player : players){
+			if(!player.isReady())
+				return false;
+		}
+		return true;
+	}
+
 
 }
