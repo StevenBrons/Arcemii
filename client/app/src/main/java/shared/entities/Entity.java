@@ -71,6 +71,7 @@ public abstract class Entity implements Serializable {
         for (Ability a : actions) {
             a.execute(level,this);
         }
+        actions.clear();
     }
 
     /**

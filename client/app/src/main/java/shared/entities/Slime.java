@@ -56,7 +56,6 @@ public class Slime extends Entity {
 
 	@Override
 	public void invokeAll(Level level) {
-		this.actions.clear();
 		Entity targetPlayer = null;
 		for (int i = 0;i<level.getNumEntity();i++){
 			if (level.getEntityAt(i) instanceof Player){

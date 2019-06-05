@@ -2,8 +2,10 @@ package shared.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import client.view.RenderItem;
+import shared.abilities.Teleport;
 import shared.general.Level;
 import shared.tiles.Tile;
 
@@ -12,6 +14,8 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Boss extends Entity {
+	private Teleport teleport = new Teleport();
+
 	/**
 	 * Initialises the boss mob
 	 * @param x the x position of the feet of the Boss (game pixels)
@@ -32,6 +36,25 @@ public class Boss extends Entity {
 
 	@Override
 	public void invokeAll(Level level) {
+		Entity targetPlayer = null;
+		for (int i = 0;i<level.getNumEntity();i++){
+			if (level.getEntityAt(i) instanceof Player){
+				Entity player = level.getEntityAt(i);
+				if (level.freeLine(xPos,yPos,player.getX(),player.getY())){
+					if (targetPlayer == null ||
+							(this.getUUID().getLeastSignificantBits()^player.getUUID().getLeastSignificantBits()) <
+							(this.getUUID().getLeastSignificantBits()^targetPlayer.getUUID().getLeastSignificantBits())
+					){
+						targetPlayer = player;
+					}
+				}
+			}
+		}
+		if (teleport.available(level,this) && targetPlayer != null){
+			Random rand = new Random();
+			double direction = (rand.nextDouble()*2.0-1.0)*Math.PI;
+			invoke(teleport.invoke(direction));
+		}
 	}
 
 }

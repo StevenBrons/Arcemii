@@ -49,7 +49,6 @@ public class Arrow extends Entity{
 
 	@Override
 	public void invokeAll(Level level) {
-		this.actions.clear();
 		boolean intersects = false;
 		for (int i = 0;i<level.getNumEntity();i++){
 			Entity entity = level.getEntityAt(i);
