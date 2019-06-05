@@ -11,7 +11,8 @@
     >
 
     <LinearLayout
-        android:layout_margin="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_margin="10dp"
         android:orientation="vertical"
         android:id="@+id/ability1"
         android:onClick="onChangeAbility"
@@ -30,7 +31,6 @@
             android:layout_weight="2"
             android:layout_width="match_parent"
             android:text="@string/ability_button"
-            android:fontFamily="@font/dpcomic"
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:layout_gravity="center"
@@ -41,7 +41,6 @@
             />
         <TextView
             android:layout_gravity="center"
-            android:fontFamily="@font/dpcomic"
             android:gravity="center"
             android:textColor="@android:color/background_light"
             android:textAlignment="center"
@@ -56,7 +55,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
         android:orientation="vertical"
         android:id="@+id/ability2"
         android:onClick="onChangeAbility"
@@ -72,7 +72,6 @@
         <TextView
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:fontFamily="@font/dpcomic"
             android:layout_width="match_parent"
             android:text="@string/ability_button"
             android:textColor="@android:color/background_light"
@@ -87,7 +86,6 @@
             android:text="second"
             android:layout_gravity="center"
             android:gravity="center"
-            android:fontFamily="@font/dpcomic"
             android:textColor="@android:color/background_light"
             android:textAlignment="center"
             android:textSize="12sp"
@@ -100,7 +98,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
         android:orientation="vertical"
         android:id="@+id/ability3"
         android:onClick="onChangeAbility"
@@ -116,7 +115,6 @@
         <TextView
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:fontFamily="@font/dpcomic"
             android:layout_width="match_parent"
             android:text="@string/ability_button"
             android:textColor="@android:color/background_light"
@@ -131,7 +129,6 @@
             android:text="third"
             android:layout_gravity="center"
             android:gravity="center"
-            android:fontFamily="@font/dpcomic"
             android:textColor="@android:color/background_light"
             android:textAlignment="center"
             android:textSize="12sp"
@@ -144,23 +141,25 @@
     </LinearLayout>
 
     <TextView
+        android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/abilityDescription"
-        android:fontFamily="@font/dpcomic"
         android:textAlignment="center"
         android:gravity="center"
         android:text="@string/ability_tutorial"
         android:layout_column="0"
         android:layout_row="4"
+        android:textSize="18sp"
         android:layout_gravity="fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
     <TextView
+        android:layout_marginTop="20dp"
         android:id="@+id/game_pin"
         android:text="@string/game_pin"
         android:textAlignment="center"
-        android:fontFamily="@font/lunchds_font"
         android:gravity="center"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -168,19 +167,19 @@
         android:layout_row="0"
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:layout_marginRight="30dp"
         />
 
     <TextView
+        android:layout_margin="10dp"
         android:id="@+id/playersTxtView"
-        android:fontFamily="@font/dpcomic"
         android:padding="10dp"
         android:lineSpacingExtra="10dp"
         android:background="@drawable/rounded_corner"
         android:backgroundTint="@color/colorPrimary"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:layout_column="1"
         android:layout_row="1"
         android:layout_rowSpan="3"
@@ -191,9 +190,10 @@
         />
 
     <Button
+        android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/btnStartGame"
         android:backgroundTint="@color/button"
-        android:fontFamily="@font/dpcomic"
         android:onClick="onButtonPressed"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
