@@ -20,6 +20,8 @@ public class Player extends Entity {
 	private int color;
 
 	//server only
+	private transient boolean ready = false;
+
 	private transient boolean unique = true;
 	private transient InetAddress ip;
 	private transient ObjectInputStream input;
@@ -171,6 +173,23 @@ public class Player extends Entity {
 	 */
 	public InetAddress getIp(){
 		return ip;
+	}
+
+	/**
+	 * Set if the player is ready in the lobby.
+	 * @param ready
+	 * @author Bram Pulles
+	 */
+	public void setReady(boolean ready){
+		this.ready = ready;
+	}
+
+	/**
+	 * @return if this player is ready in the lobby.
+	 * @author Bram Pulles
+	 */
+	public boolean isReady(){
+		return ready;
 	}
 
 	/**
