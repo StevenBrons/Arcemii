@@ -31,12 +31,12 @@ public class LobbyActivity extends AppCompatActivity {
 	private TextView gamePin;
 	private TextView txtPlayers;
 
-	private Ability abilities[] = {new Heal(), new Melee(), new Move(), new Range()};
-	private String ability_names[] = {"heal", "melee", "move", "range"};
-	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "idk lol", "range attack"};
+	private Ability abilities[] = {new Heal(), new Melee(), new Range()};
+	private String ability_names[] = {"heal", "melee", "range"};
+	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "range attack"};
 
 	//contains ID of the slots the ith ability is assigned to
-	private int assigned_to_slot[] = {0, 0, 0, 0};
+	private int assigned_to_slot[] = {0, 0, 0};
 	private int ability_slots[] = {R.id.ability1, R.id.ability2, R.id.ability3};
 	private int ability_title_ids[] = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
 	private int ability_description_ids[] = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
@@ -130,7 +130,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void onButtonPressed(View v){
-		if(getAbilities().size() == ability_slots.length) {
+		if(getAbilities().size() >= ability_slots.length) {
 
 			// First send a message with the abilities of the player.
 			Player player = ClientGameHandler.handler.getPlayer();
@@ -160,6 +160,7 @@ public class LobbyActivity extends AppCompatActivity {
 	private ArrayList<Ability> getAbilities(){
 		// Make it such that the order is preserved.
 		ArrayList<Ability> abilities = new ArrayList<>();
+		abilities.add(new Move());
 
 		for(int i = 0; i < assigned_to_slot.length; i++){
 			if(assigned_to_slot[i] != 0){
