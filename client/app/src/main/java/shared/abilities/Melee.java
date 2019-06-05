@@ -15,21 +15,16 @@ public class Melee extends Ability {
 	public boolean execute(Level level, Entity self) {
 		for (int i = 0;i<level.getNumEntity();i++){
 			Entity entity = level.getEntityAt(i);
-			if (!entity.intersects(self) || entity == self){
-				continue;
-			}
-			if (entity instanceof Player && attackPlayer){
-				entity.damage(damage);
-			}
-			if (!(entity instanceof Player) && !attackPlayer){
-				entity.damage(damage);
-			}
+			if (!entity.intersects(self) || entity == self)continue;
+			if (entity instanceof Player && !attackPlayer)continue;
+			if (!(entity instanceof Player) && attackPlayer)continue;
+			entity.damage(damage);
 		}
 		return false;
 	}
 
-	public Ability invoke(boolean attackPlayer,int damage) {
-		this.attackPlayer = attackPlayer;
+	public Ability invoke(boolean damagePlayer,int damage) {
+		this.attackPlayer = damagePlayer;
 		this.damage = damage;
 		this.cooldown = System.currentTimeMillis()+1000;
 		return this;
