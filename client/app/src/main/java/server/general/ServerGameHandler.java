@@ -126,6 +126,9 @@ public class ServerGameHandler {
 		if(m.getName().length() > 0) {
 			player.setName(m.getName());
 		}
+		if(m.getAbilities().size() > 0){
+			player.setAbilities(m.getAbilities());
+		}
 	}
 
 	/**
