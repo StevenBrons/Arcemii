@@ -143,9 +143,9 @@ public class Player extends Entity {
 	}
 
 	public synchronized void invokeMove() {
-	  if (move) {
-      invoke(((Move)abilities.get(0)).invoke(direction));
-    }
+		if (move) {
+			invoke(((Move)abilities.get(0)).invoke(direction));
+		}
 	}
 
 	public synchronized void setAbilities(ArrayList<Ability> abilities) {
