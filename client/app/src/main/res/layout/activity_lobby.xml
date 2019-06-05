@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         >
         <TextView
+            android:fontFamily="@font/dpcomic"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:layout_width="match_parent"
@@ -40,6 +41,7 @@
             android:padding="5dp"
             />
         <TextView
+            android:fontFamily="@font/dpcomic"
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@android:color/background_light"
@@ -70,6 +72,7 @@
         android:layout_height="wrap_content"
         >
         <TextView
+            android:fontFamily="@font/dpcomic"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:layout_width="match_parent"
@@ -83,6 +86,7 @@
             android:padding="5dp"
             />
         <TextView
+            android:fontFamily="@font/dpcomic"
             android:text="second"
             android:layout_gravity="center"
             android:gravity="center"
@@ -113,6 +117,7 @@
         android:layout_gravity="fill"
         >
         <TextView
+            android:fontFamily="@font/dpcomic"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:layout_width="match_parent"
@@ -126,6 +131,7 @@
             android:padding="5dp"
             />
         <TextView
+            android:fontFamily="@font/dpcomic"
             android:text="third"
             android:layout_gravity="center"
             android:gravity="center"
@@ -141,6 +147,7 @@
     </LinearLayout>
 
     <TextView
+        android:fontFamily="@font/dpcomic"
         android:layout_margin="10dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/abilityDescription"
@@ -169,9 +176,11 @@
         android:layout_gravity="fill_horizontal"
         android:layout_margin="10dp"
         android:layout_marginRight="30dp"
+        android:fontFamily="@font/dpcomic"
         />
 
     <TextView
+        android:fontFamily="@font/dpcomic"
         android:layout_margin="10dp"
         android:id="@+id/playersTxtView"
         android:padding="10dp"
@@ -190,6 +199,7 @@
         />
 
     <Button
+        android:fontFamily="@font/dpcomic"
         android:layout_margin="10dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/btnStartGame"
