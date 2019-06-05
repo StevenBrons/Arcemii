@@ -67,6 +67,7 @@ public abstract class Entity implements Serializable {
 	}
 
     public void executeAll(Level level) {
+        this.resetAttributes();
         for (Ability a : actions) {
             a.execute(level,this);
         }
@@ -110,6 +111,13 @@ public abstract class Entity implements Serializable {
         this.xVel = x;
         this.yVel = y;
         setChanged(true);
+    }
+
+    public void resetAttributes(){
+        if (this.xVel > 0.01 || this.yVel > 0.01){
+            setChanged(true);
+        }
+        this.xVel = 0.0;this.yVel = 0.0;
     }
 
     public boolean isChanged() {
