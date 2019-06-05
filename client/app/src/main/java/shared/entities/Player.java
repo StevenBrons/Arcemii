@@ -36,7 +36,7 @@ public class Player extends Entity {
 		this.input = input;
 		this.output = output;
 		this.ip = ip;
-
+		maxhealth = health = 50;
 	}
 
 	/**
