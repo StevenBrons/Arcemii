@@ -13,7 +13,7 @@ import shared.messages.PlayerInfoMessage;
 public class ServerGameHandler {
 
 	private ArrayList<Party> parties = new ArrayList<>();
-	public static final int TICKSPEED = 100;
+	public static final int TICKSPEED = 25;
 
 	private boolean running;
 
@@ -51,7 +51,7 @@ public class ServerGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	public void addPlayer(final Player player) {
-		System.out.println("A new player has joined: " + player.getName());
+		Console.log(ConsoleTag.CONNECTION, "has joined.", player);
 
 		// Put the player in an initial party.
 		createParty(player);
@@ -67,7 +67,7 @@ public class ServerGameHandler {
 					}
 				}
 				leaveParty(player);
-				System.out.println("A player has been removed: " + player.getName());
+				Console.log(ConsoleTag.CONNECTION, "has left.", player);
 			}
 		}).start();
 
@@ -81,7 +81,8 @@ public class ServerGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	private void handlePlayerInput(Message m, Player player) {
-		Console.log(ConsoleTag.CONNECTION,m,player);
+		Console.log(ConsoleTag.CONNECTION, m.toString(), player);
+
 		switch (m.getType()) {
 			case "CreatePartyMessage":
 				createPartyMessage(player);

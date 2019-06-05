@@ -13,7 +13,9 @@ public class Console {
 			@Override
 			public void run() {
 			Scanner scanner = new Scanner(System.in);
-			System.out.print("Type 'help' for a list of commands.\n> ");
+
+			System.out.println("Type 'help' for a list of commands. (Log mode is automatically enabled.)");
+			log = true;
 
 			while (scanner.hasNextLine()) {
 				switch (scanner.next()) {
@@ -35,21 +37,23 @@ public class Console {
 		thread.start();
 	}
 
-	public static void log(ConsoleTag tag,String message, Player player) {
+	public static void log(ConsoleTag tag, String message){
+		if(log){
+			System.out.println("server/" + tag + ": " + message);
+		}
+	}
+
+	public static void log(ConsoleTag tag, String message, Player player) {
 		if (log) {
 			System.out.println(player.toString() + "/" + tag.toString() + ": " + message);
 		}
 	}
 
-	public static void log(ConsoleTag tag,Object message, Player player) {
-		log(tag,message.toString(),player);
-	}
-
-	private void stop(){
+	private static void stop(){
 		System.exit(0);
 	}
 
-	private void help(){
+	private static void help(){
 		System.out.println("------ Available commands: ------");
 		System.out.println("help");
 		System.out.println("stop");
