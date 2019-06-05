@@ -30,7 +30,7 @@
             android:layout_weight="2"
             android:layout_width="match_parent"
             android:text="@string/ability_button"
-            android:fontFamily="@font/lunchds_font"
+            android:fontFamily="@font/dpcomic"
             android:textColor="@android:color/background_light"
             android:textSize="24sp"
             android:layout_gravity="center"
@@ -41,7 +41,7 @@
             />
         <TextView
             android:layout_gravity="center"
-            android:fontFamily="@font/lunchds_font"
+            android:fontFamily="@font/dpcomic"
             android:gravity="center"
             android:textColor="@android:color/background_light"
             android:textAlignment="center"
@@ -72,7 +72,7 @@
         <TextView
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:fontFamily="@font/lunchds_font"
+            android:fontFamily="@font/dpcomic"
             android:layout_width="match_parent"
             android:text="@string/ability_button"
             android:textColor="@android:color/background_light"
@@ -87,7 +87,7 @@
             android:text="second"
             android:layout_gravity="center"
             android:gravity="center"
-            android:fontFamily="@font/lunchds_font"
+            android:fontFamily="@font/dpcomic"
             android:textColor="@android:color/background_light"
             android:textAlignment="center"
             android:textSize="12sp"
@@ -116,7 +116,7 @@
         <TextView
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:fontFamily="@font/lunchds_font"
+            android:fontFamily="@font/dpcomic"
             android:layout_width="match_parent"
             android:text="@string/ability_button"
             android:textColor="@android:color/background_light"
@@ -131,7 +131,7 @@
             android:text="third"
             android:layout_gravity="center"
             android:gravity="center"
-            android:fontFamily="@font/lunchds_font"
+            android:fontFamily="@font/dpcomic"
             android:textColor="@android:color/background_light"
             android:textAlignment="center"
             android:textSize="12sp"
@@ -145,7 +145,7 @@
 
     <TextView
         android:id="@+id/abilityDescription"
-        android:fontFamily="@font/lunchds_font"
+        android:fontFamily="@font/dpcomic"
         android:textAlignment="center"
         android:gravity="center"
         android:text="@string/ability_tutorial"
@@ -174,7 +174,7 @@
 
     <TextView
         android:id="@+id/playersTxtView"
-        android:fontFamily="@font/lunchds_font"
+        android:fontFamily="@font/dpcomic"
         android:padding="10dp"
         android:lineSpacingExtra="10dp"
         android:background="@drawable/rounded_corner"
@@ -193,7 +193,7 @@
     <Button
         android:id="@+id/btnStartGame"
         android:backgroundTint="@color/button"
-        android:fontFamily="@font/lunchds_font"
+        android:fontFamily="@font/dpcomic"
         android:onClick="onButtonPressed"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
