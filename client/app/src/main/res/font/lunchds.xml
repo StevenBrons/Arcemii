@@ -3,6 +3,6 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/lunchds" />
+        android:font="@font/lunchds_font" />
 
 </font-family>
