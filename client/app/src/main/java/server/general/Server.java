@@ -26,7 +26,7 @@ public class Server {
 	 * @author Bram Pulles and Steven Bronsveld
 	 */
 	public Server(final ServerGameHandler gameHandler) {
-		System.out.println("Starting server...");
+		Console.log(ConsoleTag.CONNECTION, "Starting server...");
 		running = true;
 		this.gameHandler = gameHandler;
 
@@ -35,7 +35,7 @@ public class Server {
 			public void run() {
 				try {
 					serverSocket = new ServerSocket(PORT);
-					System.out.println("Server is running at port " + PORT + ".");
+					Console.log(ConsoleTag.CONNECTION, "Server is running at port " + PORT + ".");
 
 					starting = false;
 					while (isRunning()) {
