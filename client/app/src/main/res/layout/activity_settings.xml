@@ -60,7 +60,6 @@
     <EditText
         android:id="@+id/newUsername"
         android:layout_width="260dp"
-        android:fontFamily="@font/dpcomic"
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="92dp"
