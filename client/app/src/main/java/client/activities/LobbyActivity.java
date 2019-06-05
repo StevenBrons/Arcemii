@@ -158,7 +158,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	private ArrayList<Ability> getAbilities(){
-		// Make it such that the order is preserved.
+		//TODO: Make it such that the order is preserved.
 		ArrayList<Ability> abilities = new ArrayList<>();
 		abilities.add(new Move());
 
