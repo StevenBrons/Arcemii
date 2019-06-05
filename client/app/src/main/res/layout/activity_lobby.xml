@@ -162,6 +162,8 @@
             android:layout_height="0dp"
             android:fontFamily="@font/lunchds_font"
             android:layout_weight="1"
+            android:padding="10dp"
+            android:lineSpacingExtra="10dp"
             android:background="@android:color/darker_gray"
             android:layout_gravity="center"
             android:textAlignment="center"
