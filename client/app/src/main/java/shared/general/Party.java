@@ -1,7 +1,5 @@
 package shared.general;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -90,15 +88,9 @@ public class Party extends Message {
 			ArrayList<Entity> changes = curLevel.getChanges();
 			curLevel.removeDead();
 			levelLock.unlock();
-			sendPlayers(new GameUpdateMessage(changes));
+			messageAll(new GameUpdateMessage(changes));
 		} else {
-			sendPlayers(new GameUpdateMessage(new ArrayList<Entity>()));
-		}
-	}
-
-	private void sendPlayers(Message m){
-		for (Player p : players) {
-			p.sendMessage(m);
+			messageAll(new GameUpdateMessage(new ArrayList<Entity>()));
 		}
 	}
 

@@ -24,7 +24,11 @@ public abstract class Entity implements Serializable {
 
     protected double xPos = 0, yPos = 0, xVel = 0, yVel = 0;
 
-    Entity(double x, double y) {
+    public Entity(){
+
+    }
+
+    public Entity(double x, double y) {
         this.uuid = UUID.randomUUID();
         this.xPos = x;
         this.yPos = y;

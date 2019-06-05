@@ -20,7 +20,7 @@ public class Player extends Entity {
 	private int color;
 
 	//server only
-	private transient boolean ready = false;
+	private boolean ready = false;
 
 	private transient boolean unique = true;
 	private transient InetAddress ip;
@@ -36,6 +36,7 @@ public class Player extends Entity {
 		this.input = input;
 		this.output = output;
 		this.ip = ip;
+
 	}
 
 	/**

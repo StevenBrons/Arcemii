@@ -100,8 +100,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	private void setReadyTextOnButton(){
-		// TODO: Change to strings used from R.
-		btnStartGame.setText((ready)? "Ready!" : "Not Ready");
+		btnStartGame.setText((ready)? "Not Ready" : "Ready!");
 	}
 
 	/**
@@ -153,10 +152,21 @@ public class LobbyActivity extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * Get the abilities chosen in the gui.
+	 * @return the abilities chosen.
+	 * @author Bram Pulles
+	 */
 	private ArrayList<Ability> getAbilities(){
-		//TODO: BY ROBERT
-		// Return an arraylist with the abilities which are chosen by the player.
-		return null;
+		// Make it such that the order is preserved.
+		ArrayList<Ability> abilities = new ArrayList<>();
+
+		for(int i = 0; i < assigned_to_slot.length; i++){
+			if(assigned_to_slot[i] != 0){
+				abilities.add(this.abilities[i]);
+			}
+		}
+		return abilities;
 	}
 
 	/**
@@ -175,7 +185,10 @@ public class LobbyActivity extends AppCompatActivity {
 			public void run() {
 				String players = "MASTER: ";
 				for(int i = 0; i < party.getPlayers().size(); i++){
-					players += party.getPlayers().get(i).getName() + "\n";
+					Log.d("lobby", party.getPlayers().get(i).isReady() + "");
+
+					players += party.getPlayers().get(i).getName() +
+						((party.getPlayers().get(i).isReady())? " is ready" : "") + "\n";
 				}
 
 				txtPlayers.setText(players);
