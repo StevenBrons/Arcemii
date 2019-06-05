@@ -82,7 +82,7 @@ public class ServerGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	private void handlePlayerInput(Message m, Player player) {
-		Console.log(ConsoleTag.CONNECTION, m.toString(), player);
+//		Console.log(ConsoleTag.CONNECTION, m.toString(), player);
 
 		switch (m.getType()) {
 			case "CreatePartyMessage":
@@ -127,6 +127,7 @@ public class ServerGameHandler {
 			player.setName(m.getName());
 		}
 		if(m.getAbilities().size() > 0){
+			Console.log(ConsoleTag.CONNECTION, "Abilities received.", player);
 			player.setAbilities(m.getAbilities());
 		}
 	}

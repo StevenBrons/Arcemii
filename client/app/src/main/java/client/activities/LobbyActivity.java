@@ -1,7 +1,6 @@
 package client.activities;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import shared.abilities.*;
 import shared.entities.Player;
 import shared.general.Party;
 import shared.messages.LeavePartyMessage;
+import shared.messages.PlayerInfoMessage;
 import shared.messages.ReadyMessage;
 import shared.messages.StartGameMessage;
 
@@ -125,17 +125,38 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Start a random game if the client is the master.
+	 * If the player has chosen an ability for all the ability slots, then
+	 * start a random game if the client is the master else sent a ready message.
 	 * @param v
-	 * @author Bram Pulles and Jelmer Firet
+	 * @author Bram Pulles
 	 */
 	public void onButtonPressed(View v){
-		if(isMaster()){
-			ClientGameHandler.sendMessage(new StartGameMessage());
+		if(getAbilities().size() == ability_slots.length) {
+
+			// First send a message with the abilities of the player.
+			Player player = ClientGameHandler.handler.getPlayer();
+			player.setAbilities(getAbilities());
+			ClientGameHandler.sendMessage(new PlayerInfoMessage(player));
+
+			if (isMaster()) {
+				ClientGameHandler.sendMessage(new StartGameMessage());
+			} else {
+				readyPressed();
+				ClientGameHandler.sendMessage(new ReadyMessage(ready));
+			}
 		}else{
-			readyPressed();
-			ClientGameHandler.sendMessage(new ReadyMessage(ready));
+			new AlertDialog.Builder(this)
+				.setTitle("Abilities")
+				.setMessage("Please choose all your abilities.")
+				.setPositiveButton(android.R.string.ok, null)
+				.create().show();
 		}
+	}
+
+	private ArrayList<Ability> getAbilities(){
+		//TODO: BY ROBERT
+		// Return an arraylist with the abilities which are chosen by the player.
+		return null;
 	}
 
 	/**
@@ -187,8 +208,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * Returns an integers [0, 2]: the ability slot to which this ID belongs. Returns -1 if this ID was not found.
 	 * @author Robert Koprinkov
 	 * @param id
-	 * */
-
+	 */
 	private int getAbilitySlot(int id){
 		for(int i=0; i<ability_slots.length; i++){
 			if(ability_slots[i]==id)
@@ -202,7 +222,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * When pressed, the next ability that has not been used by one of the other slots is used.
 	 * @param view
 	 * @author Robert Koprinkov
-	 * */
+	 */
 	public void onChangeAbility(View view) {
 		int id = view.getId();
 		int ability_slot = getAbilitySlot(id);
