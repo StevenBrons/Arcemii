@@ -110,6 +110,13 @@ public class ServerGameHandler {
 
 	private void readyMessage(ReadyMessage m, Player player){
 		player.setReady(m.isReady());
+		Console.log(ConsoleTag.CONNECTION, "ready: " + player.getName(), player);
+
+		for(Party party : parties){
+			if(party.containsPlayer(player)){
+				party.messageAll(party);
+			}
+		}
 	}
 
 	private void actionMessage(ActionMessage m, Player player) {
@@ -123,11 +130,12 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void playerInfoMessage(PlayerInfoMessage m, Player player){
+		Console.log(ConsoleTag.CONNECTION, "Player info message received.", player);
+
 		if(m.getName().length() > 0) {
 			player.setName(m.getName());
 		}
-		if(m.getAbilities().size() > 0){
-			Console.log(ConsoleTag.CONNECTION, "Abilities received.", player);
+		if(m.getAbilities().size() > 0) {
 			player.setAbilities(m.getAbilities());
 		}
 	}
@@ -193,6 +201,9 @@ public class ServerGameHandler {
 				return;
 			}
 		}
+
+		// If not everyone was ready
+		player.setReady(false);
 	}
 
 	/**
