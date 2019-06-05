@@ -130,7 +130,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void onButtonPressed(View v){
-		if(getAbilities().size() >= ability_slots.length) {
+		if(getAbilities().size() >= ability_slots.length+1) {
 
 			// First send a message with the abilities of the player.
 			Player player = ClientGameHandler.handler.getPlayer();
