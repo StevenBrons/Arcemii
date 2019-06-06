@@ -30,6 +30,7 @@ public class Move implements Ability{
 		}
 		return true;
 	}
+
 	@Override
 	public String getName(){
 		return "Move";

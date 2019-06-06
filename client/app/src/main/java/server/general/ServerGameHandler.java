@@ -53,7 +53,8 @@ public class ServerGameHandler {
 	 * Make a new thread to receive messages from the new client.
 	 * Send a message to the client with the client information.
 	 * @param player
-	 * @author Steven Bronsveld and Bram Pulles
+	 * @author Steven Bronsveld
+	 * @author Bram Pulles
 	 */
 	public void addPlayer(final Player player) {
 		Console.log(ConsoleTag.CONNECTION, "has joined.", player);
@@ -82,7 +83,8 @@ public class ServerGameHandler {
 	 * Handles the message send by a certain client.
 	 * @param m message.
 	 * @param player
-	 * @author Steven Bronsveld and Bram Pulles
+	 * @author Steven Bronsveld
+	 * @author Bram Pulles
 	 */
 	private void handlePlayerInput(Message m, Player player) {
 		Console.log(ConsoleTag.CONNECTION, m.toString(), player);

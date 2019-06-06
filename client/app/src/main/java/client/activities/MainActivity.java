@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
 	/**
 	 * Initialize the client game handler.
 	 * @param savedInstanceState
-	 * @author Bram Pulles and Steven Bronsveld
+	 * @author Bram Pulles
+	 * @author Steven Bronsveld
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
