@@ -40,9 +40,6 @@ public class Player extends Entity {
 		this.output = output;
 		this.ip = ip;
 		this.move = new Move(0.2);
-		abilities.add(new Heal());
-		abilities.add(new Arrow());
-		abilities.add(new Melee());
 		maxhealth = health = 50;
 	}
 
@@ -142,8 +139,8 @@ public class Player extends Entity {
 		if (ability instanceof Melee) {
 			super.invoke(((Melee) ability).invoke(false,5));
 		}
-		if (ability instanceof Range) {
-			super.invoke(((Range) ability).invoke(direction,false));
+		if (ability instanceof Arrow) {
+			super.invoke(((Arrow) ability).invoke(direction,false));
 		}
 		if (ability instanceof Heal) {
 			super.invoke(((Heal) ability).invoke(10));
