@@ -14,8 +14,7 @@ public class Console {
 			public void run() {
 			Scanner scanner = new Scanner(System.in);
 
-			System.out.println("Type 'help' for a list of commands. (Log mode is automatically enabled.)");
-			log = true;
+			System.out.println("Type 'help' for a list of commands.");
 
 			while (scanner.hasNextLine()) {
 				switch (scanner.next()) {

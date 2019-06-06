@@ -154,7 +154,7 @@ public class Level extends Message {
    * @param sy The start y position
    * @param ex The end x position
    * @param ey The end y position
-   * @return True when an entity can move in a straight line from start to end;
+   * @return True when an entity can doMove in a straight line from start to end;
    * @author Jelmer Firet
    */
   public boolean freeLine(double sx, double sy, double ex, double ey){

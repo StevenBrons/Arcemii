@@ -42,7 +42,7 @@ public class Move implements Ability{
 
 	@Override
 	public String toString() {
-		return "move(" + direction + ")";
+		return "Move(" + direction + ")";
 	}
 
 	@Override
