@@ -47,14 +47,4 @@ public class Move implements Ability{
 	public String toString() {
 		return "Move(" + direction + ")";
 	}
-
-	@Override
-	public boolean available(Level level, Entity self){
-		double x = self.getX();
-		double y = self.getY();
-
-		double dx = Math.cos(direction) * speed;
-		double dy = Math.sin(direction) * speed;
-		return level.freeLine(x, y, x + dx, y + dy);
-	}
 }
