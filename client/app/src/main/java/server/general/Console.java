@@ -6,7 +6,7 @@ import shared.entities.Player;
 
 public class Console {
 
-	private static boolean log = false;
+	private static boolean log;
 
 	/**
 	 * Handles console input using the default input stream. A new thread is stared that handles all input.
@@ -20,6 +20,7 @@ public class Console {
 			Scanner scanner = new Scanner(System.in);
 
 			System.out.println("Type 'help' for a list of commands.");
+			log = true;
 
 			while (scanner.hasNextLine()) {
 				switch (scanner.next()) {
