@@ -34,4 +34,8 @@ public class PlayerInfoMessage extends Message {
 		return abilities;
 	}
 
+	@Override
+	public String toString() {
+		return "playerInfo(" + name + "," + abilities + ")";
+	}
 }
