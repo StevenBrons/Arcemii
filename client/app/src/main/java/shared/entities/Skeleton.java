@@ -28,7 +28,7 @@ public class Skeleton extends Entity {
 	public Skeleton(double x,double y){
 		super(x,y);
 		this.move = new Move(0.02);
-		maxhealth = health = 10;
+		maxhealth = health = 5;
 	}
 
 	/**

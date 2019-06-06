@@ -35,7 +35,12 @@ public class Arrow implements Ability {
 	}
 
 	@Override
-	public String getDescription(){
+	public String getDescription() {
 		return "Shoot an arrow with your bow!";
+	}
+
+	@Override
+	public String toString() {
+		return "Range(" + direction + "," + damagePlayer + ")";
 	}
 }

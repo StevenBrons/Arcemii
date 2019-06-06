@@ -22,7 +22,7 @@ public class Arrow extends Entity{
 	 * @param x the x position of the center of the arrow (tiles)
 	 * @param y the y position of the center of the arrow (tiles)
 	 * @param dx the velocity in the x direction (tiles)
-	 * @param dy the velocity in the y direction (tiles)
+	 * @param dy thZie de bijlage + cijfers. Wil je die svp toevoegen?e velocity in the y direction (tiles)
 	 * @author Jelmer Firet
 	 */
 	public Arrow(double x,double y, double dx, double dy, boolean damagePlayer){

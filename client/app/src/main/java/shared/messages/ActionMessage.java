@@ -11,7 +11,11 @@ public class ActionMessage extends Message {
   ArrayList<Ability> actions;
 
   public ActionMessage(ArrayList<Ability> actions) {
-    this.actions = new ArrayList<>(actions);
+    if (actions == null) {
+      this.actions = new ArrayList<>();
+    } else {
+      this.actions = new ArrayList<>(actions);
+    }
   }
 
   public ArrayList<Ability> getActions() {

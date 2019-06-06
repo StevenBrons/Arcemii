@@ -81,7 +81,7 @@ public class ServerGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	private void handlePlayerInput(Message m, Player player) {
-//		Console.log(ConsoleTag.CONNECTION, m.toString(), player);
+		Console.log(ConsoleTag.CONNECTION, m.toString(), player);
 
 		switch (m.getType()) {
 			case "CreatePartyMessage":
