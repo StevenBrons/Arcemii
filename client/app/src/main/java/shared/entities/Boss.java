@@ -16,10 +16,13 @@ import shared.tiles.Tile;
  * @author Jelmer Firet
  */
 public class Boss extends Entity {
-	private Teleport teleport = new Teleport();
-	private Spawn spawn = new Spawn();
-	private Explosion explosion = new Explosion();
+
 	private long cooldown = System.currentTimeMillis();
+
+	private transient Teleport teleport = new Teleport();
+	private transient Spawn spawn = new Spawn();
+	private transient Explosion explosion = new Explosion();
+
 
 	/**
 	 * Initialises the boss mob
