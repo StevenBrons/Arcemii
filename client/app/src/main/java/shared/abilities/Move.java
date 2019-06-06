@@ -5,6 +5,8 @@ import shared.general.Level;
 
 public class Move implements Ability{
 
+	public static final long serialVersionUID = 1L;
+
 	private double speed;
 	private double direction;
 
