@@ -1,13 +1,10 @@
 package shared.abilities;
 
-import android.util.Log;
-
-import shared.entities.Arrow;
 import shared.entities.Entity;
-import shared.entities.Skeleton;
 import shared.general.Level;
 
-public class Range extends Ability {
+public class Arrow implements Ability {
+
 	private double direction;
 	private boolean damagePlayer;
 	private long cooldown = System.currentTimeMillis();
@@ -23,19 +20,24 @@ public class Range extends Ability {
 		return System.currentTimeMillis() > cooldown;
 	}
 
-	private static final String name = "range";
-
 	@Override
 	public boolean execute(Level level, Entity self) {
 		double dx = Math.cos(direction)*0.4;
 		double dy = Math.sin(direction)*0.4;
-		level.addEntity(new Arrow(self.getX()+dx,self.getY()+dy,dx,dy,damagePlayer));
+		level.addEntity(new shared.entities.Arrow(self.getX()+dx,self.getY()+dy,dx,dy,damagePlayer));
 		cooldown = System.currentTimeMillis()+4000;
 		return true;
 	}
 
 	@Override
-	public String getName(){return name;}
+	public String getName(){
+		return "Bow and arrow";
+	}
+
+	@Override
+	public String getDescription() {
+		return "Shoot an arrow with your bow!";
+	}
 
 	@Override
 	public String toString() {
