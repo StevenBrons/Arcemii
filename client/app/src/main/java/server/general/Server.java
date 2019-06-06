@@ -80,15 +80,19 @@ public class Server {
 	 * Check if this ip address is already in use by another player in the server.
 	 * If so then this other player will be set to not unique and consequently
 	 * be removed from the server.
+	 * This will not be done for emulators.
 	 * @param ip
 	 */
 	private void checkUniqueness(InetAddress ip){
 		ArrayList<Party> parties = gameHandler.getParties();
 		for(Party party : parties){
 			for(Player player : party.getPlayers()){
-				if(player.getIp().equals(ip)){
-					//TODO: Remove this when the server is online. This is only for the emulators.
-					//player.setNotUnique();
+				try{
+					if(!player.getIp().equals(InetAddress.getLoopbackAddress()) && player.getIp().equals(ip)){
+						player.setNotUnique();
+					}
+				}catch(Exception e){
+					e.printStackTrace();
 				}
 			}
 		}

@@ -35,94 +35,94 @@ import shared.tiles.Wall;
  */
 
 public class GameView extends View {
-    public static Lock renderItemLock = new ReentrantLock();
-    Bitmap screen;
-    Canvas temporary;
-    Rect src;
-    Rect des;
-    private List<RenderItem> renderItems = new ArrayList<>();
-    private Level level;
+	public static Lock renderItemLock = new ReentrantLock();
+	Bitmap screen;
+	Canvas temporary;
+	Rect src;
+	Rect des;
+	private List<RenderItem> renderItems = new ArrayList<>();
+	private Level level;
 
-    /**
-     * Constructs objects used for drawing to prevent them from being constructed every tick
-     * @author Jelmer Firet
-     */
-    public void init(){
-        int width = getWidth();
-        int height = getHeight();
-        screen = Bitmap.createBitmap(width/4,height/4,
-                Bitmap.Config.ARGB_8888);
-        temporary = new Canvas(screen);
-        src = new Rect(0,0,width/4,height/4);
-        des = new Rect(0,0,width,height);
-    }
+	/**
+	 * Constructs objects used for drawing to prevent them from being constructed every tick
+	 * @author Jelmer Firet
+	 */
+	public void init(){
+		int width = getWidth();
+		int height = getHeight();
+		screen = Bitmap.createBitmap(width/4,height/4,
+			Bitmap.Config.ARGB_8888);
+		temporary = new Canvas(screen);
+		src = new Rect(0,0,width/4,height/4);
+		des = new Rect(0,0,width,height);
+	}
 
-    /**
-     * Construct a new GameView
-     * TODO: Remove test drawing
-     * @param context context to pass to View constructor
-     * @author Jelmer Firet
-     */
-    public GameView(Context context) {
-        super(context);
-    }
+	/**
+	 * Construct a new GameView
+	 * TODO: Remove test drawing
+	 * @param context context to pass to View constructor
+	 * @author Jelmer Firet
+	 */
+	public GameView(Context context) {
+		super(context);
+	}
 
-    /**
-     * Draws the level and all entities to the screen
-     * @param canvas The Canvas to draw the level and entities on.
-     */
-    @Override
-    public void onDraw(Canvas canvas){
-        if (screen == null) {
-            this.init();
-            return;
-        }
-        if (level == null) {
-            Paint paint = new Paint();
-            paint.setTextSize(80);
-            canvas.drawText("Loading...",100,100,paint);
-            return;
-        }
+	/**
+	 * Draws the level and all entities to the screen
+	 * @param canvas The Canvas to draw the level and entities on.
+	 */
+	@Override
+	public void onDraw(Canvas canvas){
+		if (screen == null) {
+			this.init();
+			return;
+		}
+		if (level == null) {
+			Paint paint = new Paint();
+			paint.setTextSize(80);
+			canvas.drawText("Loading...",100,100,paint);
+			return;
+		}
 
-        canvas.drawColor(Color.BLACK);
-        Player player = ClientGameHandler.handler.getPlayer();
-        int offsetX = (getWidth()/8-(int)(Tile.WIDTH*player.getX()));
-        int offsetY = (getHeight()/8+(int)(Tile.HEIGHT*player.getY()));
-        renderItemLock.lock();
-        for (RenderItem object:renderItems){
-            object.renderTo(temporary,offsetX,offsetY);
-        }
-        renderItemLock.unlock();
-        canvas.drawBitmap(screen,src, des,new Paint());
-    }
+		canvas.drawColor(Color.BLACK);
+		Player player = ClientGameHandler.handler.getPlayer();
+		int offsetX = (getWidth()/8-(int)(Tile.WIDTH*player.getX()));
+		int offsetY = (getHeight()/8+(int)(Tile.HEIGHT*player.getY()));
+		renderItemLock.lock();
+		for (RenderItem object:renderItems){
+			object.renderTo(temporary,offsetX,offsetY);
+		}
+		renderItemLock.unlock();
+		canvas.drawBitmap(screen,src, des,new Paint());
+	}
 
-    /**
-     * Update the RenderItems to draw the new Level instead of an older one
-     * @param level The level to draw
-     */
-    public void updateLevel(Level level){
-        if (screen == null) {
-            return;
-        }
-        this.level = level;
-        Player player = ClientGameHandler.handler.getPlayer();
-        int minX = -2+((int)(Tile.WIDTH*player.getX())-screen.getWidth()/2)/Tile.WIDTH;
-        int maxX =  2+((int)(Tile.WIDTH*player.getX())+screen.getWidth()/2)/Tile.WIDTH;
-        int minY = -2+((int)(Tile.HEIGHT*player.getY())-screen.getHeight()/2)/Tile.HEIGHT;
-        int maxY =  2+((int)(Tile.HEIGHT*player.getY())+screen.getHeight()/2)/Tile.HEIGHT;
-        renderItemLock.lock();
-        renderItems.clear();
-        for (int idx = 0;idx<level.getNumEntity();idx++){
-            renderItems.addAll(level.getEntityAt(idx).getRenderItem());
-        }
+	/**
+	 * Update the RenderItems to draw the new Level instead of an older one
+	 * @param level The level to draw
+	 */
+	public void updateLevel(Level level){
+		if (screen == null) {
+			return;
+		}
+		this.level = level;
+		Player player = ClientGameHandler.handler.getPlayer();
+		int minX = -2+((int)(Tile.WIDTH*player.getX())-screen.getWidth()/2)/Tile.WIDTH;
+		int maxX =  2+((int)(Tile.WIDTH*player.getX())+screen.getWidth()/2)/Tile.WIDTH;
+		int minY = -2+((int)(Tile.HEIGHT*player.getY())-screen.getHeight()/2)/Tile.HEIGHT;
+		int maxY =  2+((int)(Tile.HEIGHT*player.getY())+screen.getHeight()/2)/Tile.HEIGHT;
+		renderItemLock.lock();
+		renderItems.clear();
+		for (int idx = 0;idx<level.getNumEntity();idx++){
+			renderItems.addAll(level.getEntityAt(idx).getRenderItem());
+		}
 
-        for (int tileX = minX;tileX<=maxX;tileX++){
-            for (int tileY = minY;tileY<=maxY;tileY++){
-                renderItems.addAll(level.getTileAt(tileX,tileY)
-                        .getRenderItem(tileX,tileY));
-            }
-        }
-        Collections.sort(renderItems);
-        renderItemLock.unlock();
-    }
+		for (int tileX = minX;tileX<=maxX;tileX++){
+			for (int tileY = minY;tileY<=maxY;tileY++){
+				renderItems.addAll(level.getTileAt(tileX,tileY)
+					.getRenderItem(tileX,tileY));
+			}
+		}
+		Collections.sort(renderItems);
+		renderItemLock.unlock();
+	}
 }

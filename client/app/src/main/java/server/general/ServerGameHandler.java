@@ -9,6 +9,7 @@ import shared.messages.JoinPartyMessage;
 import shared.messages.Message;
 import shared.messages.PartyJoinedMessage;
 import shared.messages.PlayerInfoMessage;
+import shared.messages.ReadyMessage;
 
 public class ServerGameHandler {
 
@@ -81,7 +82,7 @@ public class ServerGameHandler {
 	 * @author Steven Bronsveld and Bram Pulles
 	 */
 	private void handlePlayerInput(Message m, Player player) {
-		Console.log(ConsoleTag.CONNECTION, m.toString(), player);
+//		Console.log(ConsoleTag.CONNECTION, m.toString(), player);
 
 		switch (m.getType()) {
 			case "CreatePartyMessage":
@@ -102,6 +103,19 @@ public class ServerGameHandler {
 			case "ActionMessage":
 				actionMessage((ActionMessage) m,player);
 				break;
+			case "ReadyMessage":
+				readyMessage((ReadyMessage)m, player);
+		}
+	}
+
+	private void readyMessage(ReadyMessage m, Player player){
+		player.setReady(m.isReady());
+		Console.log(ConsoleTag.CONNECTION, "ready: " + player.getName(), player);
+
+		for(Party party : parties){
+			if(party.containsPlayer(player)){
+				party.messageAll(party);
+			}
 		}
 	}
 
@@ -116,17 +130,24 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void playerInfoMessage(PlayerInfoMessage m, Player player){
+		Console.log(ConsoleTag.CONNECTION, "Player info message received.", player);
+
 		if(m.getName().length() > 0) {
 			player.setName(m.getName());
+		}
+		if(m.getAbilities().size() > 0) {
+			player.setAbilities(m.getAbilities());
 		}
 	}
 
 	/**
-	 * Remove the player from his party.
+	 * Remove the player from his party and put him in an empty one.
+	 * Set the player to non ready.
 	 * @param player
 	 * @author Bram Pulles
 	 */
 	private void leavePartyMessage(Player player){
+		player.setReady(false);
 		leaveParty(player);
 		createParty(player);
 	}
@@ -165,13 +186,24 @@ public class ServerGameHandler {
 		}
 	}
 
+	/**
+	 * Set the master to ready and start a game for the given party if everyone is ready.
+	 * @param player
+	 * @author Bram Pulles
+	 */
 	private void startGameMessage(Player player) {
+		// Set the master to ready.
+		player.setReady(true);
+
 		for (Party party : parties) {
-			if (party.containsPlayer(player)) {
+			if (party.containsPlayer(player) && party.everyoneReady()) {
 				party.startGame();
 				return;
 			}
 		}
+
+		// If not everyone was ready
+		player.setReady(false);
 	}
 
 	/**

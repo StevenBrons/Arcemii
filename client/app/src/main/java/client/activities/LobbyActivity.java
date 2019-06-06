@@ -1,7 +1,6 @@
 package client.activities;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,23 +19,27 @@ import shared.abilities.*;
 import shared.entities.Player;
 import shared.general.Party;
 import shared.messages.LeavePartyMessage;
+import shared.messages.PlayerInfoMessage;
+import shared.messages.ReadyMessage;
 import shared.messages.StartGameMessage;
 
 public class LobbyActivity extends AppCompatActivity {
 
 	private Button btnStartGame;
+	private boolean ready;
 
 	private TextView gamePin;
 	private TextView txtPlayers;
+
 	private Ability abilities[] = {new Heal(), new Melee(), new Range()};
-	private String ability_names[] = {"heal", "melee", "move", "range"};
-	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "idk lol", "range attack"};
+	private String ability_names[] = {"heal", "melee", "range"};
+	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "range attack"};
+
 	//contains ID of the slots the ith ability is assigned to
-	private int assigned_to_slot[] = {0, 0, 0, 0};
+	private int assigned_to_slot[] = {0, 0, 0};
 	private int ability_slots[] = {R.id.ability1, R.id.ability2, R.id.ability3};
 	private int ability_title_ids[] = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
 	private int ability_description_ids[] = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
-
 
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -64,8 +67,8 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * If the client is the master show the buttons and make them clickable.
-	 * If not fade the buttons and make them not clickable.
+	 * If the client is the master the button will show text to start the game.
+	 * If the client is not master the button will show text to get ready.
 	 * @author Bram Pulles
 	 */
 	private void toggleButton(){
@@ -73,25 +76,40 @@ public class LobbyActivity extends AppCompatActivity {
 			@Override
 			public void run() {
 				if(btnStartGame != null) {
-					if (isMaster()) {
-						setButton(1, true);
-					} else {
-						setButton(0.5f, false);
-					}
+					setButton(isMaster());
 				}
 			}
 		});
 	}
 
 	/**
-	 * Set the buttons to the specified values.
-	 * @param alpha the transparency between 0 and 1 where 0 is fully transparent.
-	 * @param clickable if the buttons are clickable.
+	 * Set the button to the correct text according to if the client is master or not.
+	 * @param isMaster
 	 * @author Bram Pulles
 	 */
-	private void setButton(float alpha, boolean clickable){
-		btnStartGame.setAlpha(alpha);
-		btnStartGame.setClickable(clickable);
+	private void setButton(boolean isMaster){
+		if(isMaster){
+			btnStartGame.setText(R.string.start_game);
+		}else{
+			setReadyTextOnButton();
+		}
+	}
+
+	/**
+	 * Set the ready text on the button accordingly.
+	 * @author Bram Pulles
+	 */
+	private void setReadyTextOnButton(){
+		btnStartGame.setText((ready)? "Not Ready" : "Ready!");
+	}
+
+	/**
+	 * When the ready button is pressed this function will update the ready button.
+	 * @author Bram Pulles
+	 */
+	private void readyPressed(){
+		ready = !ready;
+		setReadyTextOnButton();
 	}
 
 	/**
@@ -106,14 +124,50 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Start a random game if the client is the master.
+	 * If the player has chosen an ability for all the ability slots, then
+	 * start a random game if the client is the master else sent a ready message.
 	 * @param v
-	 * @author Bram Pulles and Jelmer Firet
+	 * @author Bram Pulles
 	 */
-	public void onStartGame(View v){
-		if(isMaster()){
-			ClientGameHandler.sendMessage(new StartGameMessage());
+	public void onButtonPressed(View v){
+		if(getAbilities().size() >= ability_slots.length+1) {
+
+			// First send a message with the abilities of the player.
+			Player player = ClientGameHandler.handler.getPlayer();
+			player.setAbilities(getAbilities());
+			ClientGameHandler.sendMessage(new PlayerInfoMessage(player));
+
+			if (isMaster()) {
+				ClientGameHandler.sendMessage(new StartGameMessage());
+			} else {
+				readyPressed();
+				ClientGameHandler.sendMessage(new ReadyMessage(ready));
+			}
+		}else{
+			new AlertDialog.Builder(this)
+				.setTitle("Abilities")
+				.setMessage("Please choose all your abilities.")
+				.setPositiveButton(android.R.string.ok, null)
+				.create().show();
 		}
+	}
+
+	/**
+	 * Get the abilities chosen in the gui.
+	 * @return the abilities chosen.
+	 * @author Bram Pulles
+	 */
+	private ArrayList<Ability> getAbilities(){
+		//TODO: Make it such that the order is preserved.
+		ArrayList<Ability> abilities = new ArrayList<>();
+		abilities.add(new Move(0.05));
+
+		for(int i = 0; i < assigned_to_slot.length; i++){
+			if(assigned_to_slot[i] != 0){
+				abilities.add(this.abilities[i]);
+			}
+		}
+		return abilities;
 	}
 
 	/**
@@ -132,7 +186,10 @@ public class LobbyActivity extends AppCompatActivity {
 			public void run() {
 				String players = "MASTER: ";
 				for(int i = 0; i < party.getPlayers().size(); i++){
-					players += party.getPlayers().get(i).getName() + "\n";
+					Log.d("lobby", party.getPlayers().get(i).isReady() + "");
+
+					players += party.getPlayers().get(i).getName() +
+						((party.getPlayers().get(i).isReady())? " is ready" : "") + "\n";
 				}
 
 				txtPlayers.setText(players);
@@ -165,9 +222,8 @@ public class LobbyActivity extends AppCompatActivity {
 	 * Returns an integers [0, 2]: the ability slot to which this ID belongs. Returns -1 if this ID was not found.
 	 * @author Robert Koprinkov
 	 * @param id
-	 * */
-
-	int getAbilitySlot(int id){
+	 */
+	private int getAbilitySlot(int id){
 		for(int i=0; i<ability_slots.length; i++){
 			if(ability_slots[i]==id)
 				return i;
@@ -180,7 +236,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 * When pressed, the next ability that has not been used by one of the other slots is used.
 	 * @param view
 	 * @author Robert Koprinkov
-	 * */
+	 */
 	public void onChangeAbility(View view) {
 		int id = view.getId();
 		int ability_slot = getAbilitySlot(id);

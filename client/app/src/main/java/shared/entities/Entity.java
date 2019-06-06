@@ -24,12 +24,16 @@ public abstract class Entity implements Serializable {
 
     protected double xPos = 0, yPos = 0, xVel = 0, yVel = 0;
 
-    Entity(double x, double y) {
+    public Entity(){
+
+    }
+
+    public Entity(double x, double y) {
         this.uuid = UUID.randomUUID();
         this.xPos = x;
         this.yPos = y;
 
-        this.move = new Move();
+        this.move = new Move(0.05);
         abilities.add(move);
     }
 
@@ -63,9 +67,11 @@ public abstract class Entity implements Serializable {
 	}
 
     public void executeAll(Level level) {
+        this.resetAttributes();
         for (Ability a : actions) {
             a.execute(level,this);
         }
+        actions.clear();
     }
 
     /**
@@ -106,6 +112,13 @@ public abstract class Entity implements Serializable {
         this.xVel = x;
         this.yVel = y;
         setChanged(true);
+    }
+
+    public void resetAttributes(){
+        if (this.xVel > 0.01 || this.yVel > 0.01){
+            setChanged(true);
+        }
+        this.xVel = 0.0;this.yVel = 0.0;
     }
 
     public boolean isChanged() {

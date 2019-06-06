@@ -23,6 +23,8 @@ public class Player extends Entity {
 	private int color;
 
 	//server only
+	private boolean ready = false;
+
 	private transient boolean unique = true;
 	private transient InetAddress ip;
 	private transient ObjectInputStream input;
@@ -40,6 +42,7 @@ public class Player extends Entity {
 		abilities.add(new Heal());
 		abilities.add(new Range());
 		abilities.add(new Melee());
+		maxhealth = health = 50;
 	}
 
 	/**
@@ -80,7 +83,7 @@ public class Player extends Entity {
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
 		String textureName;
-		if (xVel*xVel+yVel*yVel>0.005){
+		if (xVel*xVel+yVel*yVel>0.0001){
 			switch (color) {
 				case 0: textureName = "player/playerBlueWalking";break;
 				case 1: textureName = "player/playerGreenWalking";break;
@@ -192,6 +195,23 @@ public class Player extends Entity {
 	 */
 	public InetAddress getIp(){
 		return ip;
+	}
+
+	/**
+	 * Set if the player is ready in the lobby.
+	 * @param ready
+	 * @author Bram Pulles
+	 */
+	public void setReady(boolean ready){
+		this.ready = ready;
+	}
+
+	/**
+	 * @return if this player is ready in the lobby.
+	 * @author Bram Pulles
+	 */
+	public boolean isReady(){
+		return ready;
 	}
 
 	/**
