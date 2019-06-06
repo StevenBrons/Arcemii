@@ -13,6 +13,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import server.general.ArcemiiServer;
+import server.general.Server;
 import shared.messages.Message;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -23,7 +24,6 @@ public class Connection {
 
   // For emulators ip: 10.0.2.2
   private String hostName = "10.0.2.2";
-  private final int PORT = 26194;
   private boolean isConnected = false;
   private boolean isStarting = true;
 
@@ -82,7 +82,7 @@ public class Connection {
 
     try {
       clientSocket = new Socket();
-      clientSocket.connect(new InetSocketAddress(hostName, PORT), 100);
+      clientSocket.connect(new InetSocketAddress(hostName, Server.PORT), 100);
       output = new ObjectOutputStream(clientSocket.getOutputStream());
       input = new ObjectInputStream(clientSocket.getInputStream());
 
