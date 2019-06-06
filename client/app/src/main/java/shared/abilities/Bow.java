@@ -12,6 +12,7 @@ public class Bow implements Ability {
 	public Ability invoke(double direction,boolean damagePlayer) {
 		this.direction = direction;
 		this.damagePlayer = damagePlayer;
+		cooldown = System.currentTimeMillis()+200;
 		return this;
 	}
 
@@ -25,7 +26,6 @@ public class Bow implements Ability {
 		double dx = Math.cos(direction)*0.4;
 		double dy = Math.sin(direction)*0.4;
 		level.addEntity(new shared.entities.Arrow(self.getX()+dx,self.getY()+dy,dx,dy,damagePlayer));
-		cooldown = System.currentTimeMillis()+4000;
 		return true;
 	}
 

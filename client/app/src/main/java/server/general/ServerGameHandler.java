@@ -275,7 +275,7 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	public ArrayList<Party> getParties(){
-		ArrayList<Party> result = new ArrayList<>();
+		ArrayList<Party> result = new ArrayList<>(parties.size());
 		synchronized (parties){
 			Collections.copy(result, parties);
 		}

@@ -15,6 +15,7 @@ public class Spawn implements Ability {
 
 	public Ability invoke(double direction){
 		this.direction = direction;
+		cooldown = System.currentTimeMillis()+10000;
 		return this;
 	}
 
@@ -41,7 +42,6 @@ public class Spawn implements Ability {
 		double dy = Math.sin(direction)*dist;
 		if (level.freeLine(x,y,x+dx,y+dy))
 			level.addEntity(new Slime(x+dx,y+dy));;
-		cooldown = System.currentTimeMillis()+10000;
 		return false;
 	}
 }
