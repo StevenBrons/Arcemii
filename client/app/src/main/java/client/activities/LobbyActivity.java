@@ -31,15 +31,13 @@ public class LobbyActivity extends AppCompatActivity {
 	private TextView gamePin;
 	private TextView txtPlayers;
 
-	private Ability abilities[] = {new Heal(), new Melee(), new Arrow()};
-	private String ability_names[] = {"heal", "melee", "range"};
-	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "range attack"};
+	private Ability[] abilities = {new Heal(), new Melee(), new Arrow()};
 
 	//contains ID of the slots the ith ability is assigned to
-	private int assigned_to_slot[] = {0, 0, 0};
-	private int ability_slots[] = {R.id.ability1, R.id.ability2, R.id.ability3};
-	private int ability_title_ids[] = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
-	private int ability_description_ids[] = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
+	private int[] assigned_to_slot = {0, 0, 0};
+	private int[] ability_slots = {R.id.ability1, R.id.ability2, R.id.ability3};
+	private int[] ability_title_ids = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
+	private int[] ability_description_ids = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
 
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -250,12 +248,11 @@ public class LobbyActivity extends AppCompatActivity {
 		}
 		Log.e("nextab", nextab + "");
 		while(assigned_to_slot[nextab]!=0){
-			Log.e("slot", assigned_to_slot[nextab] + " " + nextab);
 			nextab = (nextab+1)%assigned_to_slot.length;
 		}
 		//we have an unassigned ability
 		assigned_to_slot[nextab] = id;
-		((TextView)findViewById(ability_title_ids[ability_slot])).setText(ability_names[nextab]);
-		((TextView)findViewById(ability_description_ids[ability_slot])).setText(ability_descriptions[nextab]);
+		((TextView)findViewById(ability_title_ids[ability_slot])).setText(abilities[nextab].getName());
+		((TextView)findViewById(ability_description_ids[ability_slot])).setText(abilities[nextab].getDescription());
 	}
 }
