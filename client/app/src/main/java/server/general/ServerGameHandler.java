@@ -275,10 +275,6 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	public ArrayList<Party> getParties(){
-		ArrayList<Party> result;
-		synchronized (parties){
-			result = new ArrayList<>(parties);
-		}
-		return result;
+		return new ArrayList<>(parties);
 	}
 }
