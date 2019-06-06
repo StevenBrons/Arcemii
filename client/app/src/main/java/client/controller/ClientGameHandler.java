@@ -226,6 +226,7 @@ public class ClientGameHandler {
 		player.setAbilities(abilities);
 		player.setActions(new ArrayList<Ability>());
 		player.direction = direction;
+		gameActivity.updateHealth(player.getHealth());
 	}
 
 	/**

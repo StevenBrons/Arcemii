@@ -35,6 +35,9 @@ public class Explosion implements Ability {
 	}
 
 	@Override
+	public String getId(){return "explosion";}
+
+	@Override
 	public boolean execute(Level level, Entity self) {
 		double x = self.getX();
 		double y = self.getY();
