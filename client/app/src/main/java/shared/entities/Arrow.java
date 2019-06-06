@@ -62,7 +62,7 @@ public class Arrow extends Entity{
 			invoke(this.melee.invoke(damagePlayer,2));
 			this.destroy();
 		}
-		if (!this.move.available(level,this)){
+		if (level.getTileAt((int)xPos,(int)yPos).isSolid()){
 			this.destroy();
 		}
 		invoke(this.move.invoke(Math.atan2(yVel,xVel)));
