@@ -5,6 +5,7 @@ import java.util.List;
 
 import client.view.RenderItem;
 import shared.abilities.Melee;
+import shared.abilities.Move;
 import shared.general.Level;
 import shared.tiles.Tile;
 
@@ -26,6 +27,7 @@ public class Arrow extends Entity{
 	 */
 	public Arrow(double x,double y, double dx, double dy){
 		super(x,y);
+		this.move = new Move(0.1);
 		this.xVel = dx;
 		this.yVel = dy;
 	}
