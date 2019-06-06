@@ -48,4 +48,9 @@ public class Teleport implements Ability {
 		cooldown = System.currentTimeMillis()+3000;
 		return false;
 	}
+
+	@Override
+	public String toString(){
+		return "Teleport(" + direction + ")";
+	}
 }

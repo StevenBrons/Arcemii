@@ -23,7 +23,7 @@ public class Connection {
 
 	// Jelmers server ip: 213.124.165.68
 	// For emulators ip: 10.0.2.2
-	private String hostName = "213.124.165.68";
+	private String hostName = "10.0.2.2";
 	private final int PORT = 26194;
 	private boolean isConnected = false;
 	private boolean isStarting = true;
