@@ -7,12 +7,14 @@
     android:layout_height="match_parent"
     android:background="#00000000">
 
-    z<ImageButton
+    z
+
+    <ImageButton
         android:id="@+id/AbilityButtonMiddle"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginBottom="75dp"
+        android:layout_width="57dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginBottom="112dp"
         android:background="@android:color/transparent"
         android:contentDescription="@null"
         android:onClick="onAbilityMiddle"
@@ -23,9 +25,10 @@
 
     <ImageButton
         android:id="@+id/AbilityButtonBottom"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="100dp"
+        android:layout_width="56dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="16dp"
         android:background="@android:color/transparent"
         android:contentDescription="@null"
         android:onClick="onAbilityBottom"
@@ -35,16 +38,17 @@
         app:srcCompat="@drawable/abilityplaceholder" />
 
     <client.view.JoystickView
-        android:layout_width="145dp"
-        android:layout_height="151dp"
+        android:layout_width="171dp"
+        android:layout_height="181dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/AbilityButtonUpper"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="100dp"
+        android:layout_width="52dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="144dp"
         android:background="@android:color/transparent"
         android:contentDescription="@null"
         android:onClick="onAbilityUpper"
