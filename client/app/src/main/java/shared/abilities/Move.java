@@ -5,7 +5,7 @@ import shared.general.Level;
 
 public class Move implements Ability{
 
-	private double speed = 0.05;
+	private double speed;
 	private double direction;
 
 	public Move(double speed){

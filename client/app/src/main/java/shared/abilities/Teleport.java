@@ -28,6 +28,11 @@ public class Teleport implements Ability {
 	}
 
 	@Override
+	public String getId(){
+		return "teleport";
+	}
+
+	@Override
 	public boolean available(Level level, Entity self){
 		return cooldown < System.currentTimeMillis();
 	}
