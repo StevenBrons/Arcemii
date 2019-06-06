@@ -5,6 +5,8 @@ import shared.general.Level;
 
 public class Bow implements Ability {
 
+	public static final long serialVersionUID = 1L;
+
 	private double direction;
 	private boolean damagePlayer;
 	private long cooldown = System.currentTimeMillis();

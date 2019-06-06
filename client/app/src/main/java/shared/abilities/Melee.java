@@ -6,6 +6,8 @@ import shared.general.Level;
 
 public class Melee implements Ability {
 
+	public static final long serialVersionUID = 1L;
+
 	private long cooldown = System.currentTimeMillis();
 	private boolean attackPlayer = false;
 	private int damage;
