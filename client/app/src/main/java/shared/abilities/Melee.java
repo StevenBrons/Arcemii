@@ -36,11 +36,14 @@ public class Melee implements Ability {
 
 	@Override
 	public String getName(){
-		return "Melee";
+		return "melee";
 	}
 
 	@Override
 	public String getDescription(){
 		return "Slay your enemy with your bare hands.";
 	}
+
+	@Override
+	public String getId(){return "Melee";}
 }

@@ -28,4 +28,6 @@ public interface Ability extends Serializable {
 	default String getDescription(){
 		return "This ability has no description yet.";
 	}
+
+	default String getId(){return "No_Id";}
 }

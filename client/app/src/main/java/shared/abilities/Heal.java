@@ -19,11 +19,14 @@ public class Heal implements Ability {
 	}
 	@Override
 	public String getName(){
-		return "Heal";
+		return "heal";
 	}
 
 	@Override
 	public String getDescription(){
 		return "Heal all of your friends!";
 	}
+
+	@Override
+	public String getId(){return "Heal";}
 }
