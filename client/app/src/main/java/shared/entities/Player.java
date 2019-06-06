@@ -24,13 +24,14 @@ public class Player extends Entity {
 	private String name = "Player#" + (int)(Math.random()*99999);
 	private int color;
 
-	//server only
 	private boolean ready = false;
 
+	//server only
 	private transient boolean unique = true;
 	private transient InetAddress ip;
 	private transient ObjectInputStream input;
 	private transient ObjectOutputStream output;
+
 
 	//client only
 	public static transient double direction = 0;
@@ -41,10 +42,7 @@ public class Player extends Entity {
 		this.input = input;
 		this.output = output;
 		this.ip = ip;
-		this.move = new Move(0.2);
-		abilities.add(new Heal());
-		abilities.add(new Bow());
-		abilities.add(new Melee());
+		this.abilities.add(new Move(0.1));
 		maxhealth = health = 50;
 	}
 

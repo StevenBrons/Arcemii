@@ -16,8 +16,12 @@ import static java.lang.Math.atan2;
  * @author Jelmer Firet
  */
 public class Skeleton extends Entity {
+
 	private long shootingStart = System.currentTimeMillis()-5000;
-	private Bow rangedAttack = new Bow();
+
+	//server
+	private transient Bow rangedAttack = new Bow();
+	private transient Move move;
 
 	/**
 	 * Constructs a new skeleton
@@ -27,7 +31,7 @@ public class Skeleton extends Entity {
 	 */
 	public Skeleton(double x,double y){
 		super(x,y);
-		this.move = new Move(0.02);
+		this.move = new Move(0.2);
 		maxhealth = health = 5;
 	}
 

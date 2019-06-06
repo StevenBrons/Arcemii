@@ -20,10 +20,17 @@ public class Party extends Message {
 	private List<Player> players = Collections.synchronizedList(new ArrayList<>());
 	public transient boolean inLobby = true;
 
+	/**
+	 * Creates a new party
+	 */
 	public Party() {
 		partyId = (int)(Math.random()*99999);
 	}
 
+	/**
+	 * Add a player to the party
+	 * @param player The player that will be added
+	 */
 	public void addPlayer(Player player) {
 		if (!players.contains(player)) {
 			players.add(player);
@@ -36,13 +43,17 @@ public class Party extends Message {
 	 * @param player
 	 * @author Bram Pulles
 	 */
-	public void removePlayer(Player player){
+	public void removePlayer(Player player) {
 		if(players.contains(player)){
 			players.remove(player);
 		}
 		messageAll(this);
 	}
 
+	/**
+	 * Send a message to all players (clients) that are in this party
+	 * @param message The message to send, should not be null
+	 */
 	public void messageAll(Message message) {
 		synchronized (players) {
 			for (Player p : players) {
@@ -51,6 +62,10 @@ public class Party extends Message {
 		}
 	}
 
+	/**
+	 *
+	 * @return The party Id
+	 */
 	public int getPartyId() {
 		return partyId;
 	}

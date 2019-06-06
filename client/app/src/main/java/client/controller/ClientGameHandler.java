@@ -61,7 +61,7 @@ public class ClientGameHandler {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				int TICKSPEED = ServerGameHandler.TICKSPEED;
+				int TICKSPEED = ServerGameHandler.TICKSPEED / 10;
 				while (true) {
 					long start = System.currentTimeMillis();
 
@@ -69,8 +69,10 @@ public class ClientGameHandler {
 						gameActivity.draw(level);
 						synchronized (player){
 							player.invokeMove();
-							ActionMessage msg = new ActionMessage(player.getActions());
-							sendMessage(msg);
+							if (player.getActions().size() > 0) {
+								ActionMessage msg = new ActionMessage(player.getActions());
+								sendMessage(msg);
+							}
 							player.clearActions();
 						}
 					}
@@ -214,14 +216,21 @@ public class ClientGameHandler {
 		}
 	}
 
+	/**
+	 * Transfer certain transient properties from the old player to the new player
+	 * @param p The new player
+	 */
 	private void transferTransientPlayer(Player p) {
-		synchronized (player){
+		synchronized (player) {
 			ArrayList<Ability> abilities = player.getAbilities();
-			p.setAbilities(abilities);
-			p.setActions(new ArrayList<>());
-			p.direction = player.direction;
+			double direction = player.direction;
 			player = p;
-			gameActivity.updateHealth(player.getHealth());
+			player.setAbilities(abilities);
+			player.setActions(new ArrayList<>());
+			player.direction = direction;
+			if (gameActivity != null) {
+				gameActivity.updateHealth(player.getHealth());
+			}
 		}
 	}
 
