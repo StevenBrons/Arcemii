@@ -109,9 +109,11 @@ public class Party extends Message {
 	 * @author Bram Pulles
 	 */
 	public boolean everyoneReady(){
-		for(Player player : players){
-			if(!player.isReady())
-				return false;
+		synchronized (players) {
+			for (Player player : players) {
+				if (!player.isReady())
+					return false;
+			}
 		}
 		return true;
 	}

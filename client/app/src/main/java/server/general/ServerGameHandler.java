@@ -241,9 +241,7 @@ public class ServerGameHandler {
 	private Party createParty(Player player){
 		Party party = new Party();
 		party.addPlayer(player);
-		synchronized (parties){
-			parties.add(party);
-		}
+		parties.add(party);
 		return party;
 	}
 
@@ -279,7 +277,7 @@ public class ServerGameHandler {
 	public ArrayList<Party> getParties(){
 		ArrayList<Party> result = new ArrayList<>();
 		synchronized (parties){
-			Collections.copy(result,parties);
+			Collections.copy(result, parties);
 		}
 		return result;
 	}
