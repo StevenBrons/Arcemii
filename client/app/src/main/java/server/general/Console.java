@@ -14,8 +14,6 @@ public class Console {
 	 * @author Bram Pulles
 	 */
 	public Console() {
-		System.out.println("Type 'help' for a list of commands.");
-
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
