@@ -1,6 +1,7 @@
 package server.general;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import shared.entities.Player;
 import shared.general.Party;
@@ -30,8 +31,10 @@ public class ServerGameHandler {
 			public void run() {
 				while (isRunning()) {
 					long start = System.currentTimeMillis();
-					for (Party p : parties) {
-						p.update();
+					synchronized (parties){
+						for (Party p : parties) {
+							p.update();
+						}
 					}
 
 					long timeTook = System.currentTimeMillis() - start;
@@ -116,10 +119,11 @@ public class ServerGameHandler {
 	private void readyMessage(ReadyMessage m, Player player){
 		player.setReady(m.isReady());
 		Console.log(ConsoleTag.CONNECTION, "ready: " + player.getName(), player);
-
-		for(Party party : parties){
-			if(party.containsPlayer(player)){
-				party.messageAll(party);
+		synchronized (parties){
+			for(Party party : parties){
+				if(party.containsPlayer(player)){
+					party.messageAll(party);
+				}
 			}
 		}
 	}
@@ -164,12 +168,14 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void leaveParty(Player player){
-		for(int i = parties.size() -1; i >= 0; i--) {
-			Party party = parties.get(i);
-			if (party.containsPlayer(player)) {
-				party.removePlayer(player);
-				if(party.isEmpty())
-					parties.remove(party);
+		synchronized (parties){
+			for(int i = parties.size() -1; i >= 0; i--) {
+				Party party = parties.get(i);
+				if (party.containsPlayer(player)) {
+					party.removePlayer(player);
+					if(party.isEmpty())
+						parties.remove(party);
+				}
 			}
 		}
 	}
@@ -181,12 +187,14 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void joinPartyMessage(JoinPartyMessage m, Player player){
-		for(Party party : parties){
-			if(party.getPartyId() == m.getPartyId()){
-				leaveParty(player);
+		synchronized (parties){
+			for(Party party : parties){
+				if(party.getPartyId() == m.getPartyId()){
+					leaveParty(player);
 
-				party.addPlayer(player);
-				player.sendMessage(new PartyJoinedMessage());
+					party.addPlayer(player);
+					player.sendMessage(new PartyJoinedMessage());
+				}
 			}
 		}
 	}
@@ -200,10 +208,12 @@ public class ServerGameHandler {
 		// Set the master to ready.
 		player.setReady(true);
 
-		for (Party party : parties) {
-			if (party.containsPlayer(player) && party.everyoneReady()) {
-				party.startGame();
-				return;
+		synchronized (parties){
+			for (Party party : parties) {
+				if (party.containsPlayer(player) && party.everyoneReady()) {
+					party.startGame();
+					return;
+				}
 			}
 		}
 
@@ -230,7 +240,9 @@ public class ServerGameHandler {
 	private Party createParty(Player player){
 		Party party = new Party();
 		party.addPlayer(player);
-		parties.add(party);
+		synchronized (parties){
+			parties.add(party);
+		}
 		return party;
 	}
 
@@ -241,10 +253,11 @@ public class ServerGameHandler {
 	 */
 	public synchronized void stop(){
 		running = false;
-
-		for(Party party : parties){
-			for(Player player : party.getPlayers()){
-				player.stop();
+		synchronized (parties){
+			for(Party party : parties){
+				for(Player player : party.getPlayers()){
+					player.stop();
+				}
 			}
 		}
 	}
@@ -262,7 +275,10 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	public ArrayList<Party> getParties(){
-		return parties;
+		ArrayList<Party> result = new ArrayList<>();
+		synchronized (parties){
+			Collections.copy(result,parties);
+		}
+		return result;
 	}
-
 }

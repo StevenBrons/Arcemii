@@ -26,4 +26,7 @@ public class Heal implements Ability {
 	public String getDescription(){
 		return "Heal all of your friends!";
 	}
+
+	@Override
+	public String getId(){return "heal";}
 }

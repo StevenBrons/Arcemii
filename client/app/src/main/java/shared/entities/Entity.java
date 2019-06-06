@@ -59,11 +59,17 @@ public abstract class Entity implements Serializable {
     public void heal(int amount){
     	assert health+amount > health: "Integer overflow of health";
     	health = Math.min(maxhealth,health+amount);
+    	setChanged(true);
 	}
+
+	public int getHealth(){
+        return health;
+    }
 
 	public void damage(int amount){
 		assert health-amount < health: "Integer overflow of health";
 		health -= amount;
+		setChanged(true);
 	}
 
     public void executeAll(Level level) {
