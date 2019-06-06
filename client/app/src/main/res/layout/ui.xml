@@ -35,8 +35,8 @@
         app:srcCompat="@drawable/abilityplaceholder" />
 
     <client.view.JoystickView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="145dp"
+        android:layout_height="151dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

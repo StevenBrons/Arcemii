@@ -5,7 +5,7 @@ import shared.general.Level;
 
 public class Move extends Ability{
 
-  private static final String name = "move";
+  private static final String name = "doMove";
 
   private double speed = 0.05;
   private double direction;
@@ -37,7 +37,7 @@ public class Move extends Ability{
 
   @Override
   public String toString() {
-    return "move(" + direction + ")";
+    return "doMove(" + direction + ")";
   }
 
   @Override

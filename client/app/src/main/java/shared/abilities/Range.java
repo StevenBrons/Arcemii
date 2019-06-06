@@ -1,5 +1,7 @@
 package shared.abilities;
 
+import android.util.Log;
+
 import shared.entities.Arrow;
 import shared.entities.Entity;
 import shared.entities.Skeleton;
@@ -34,4 +36,9 @@ public class Range extends Ability {
 
 	@Override
 	public String getName(){return name;}
+
+	@Override
+	public String toString() {
+		return "Range(" + direction + "," + damagePlayer + ")";
+	}
 }
