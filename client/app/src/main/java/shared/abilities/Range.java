@@ -7,9 +7,14 @@ import shared.general.Level;
 public class Range extends Ability {
 	private double direction;
 	private long cooldown = System.currentTimeMillis()+5000;
+	private boolean hitplayer;
 
-	public Ability invoke(double direction) {
+	public Range () {
+	}
+
+	public Ability invoke(double direction,boolean hitplayer) {
 		this.direction = direction;
+		this.hitplayer = hitplayer;
 		cooldown = System.currentTimeMillis()+5000;
 		return this;
 	}
@@ -25,7 +30,7 @@ public class Range extends Ability {
 	public boolean execute(Level level, Entity self) {
 		double dx = Math.cos(direction)*0.4;
 		double dy = Math.sin(direction)*0.4;
-		level.addEntity(new Arrow(self.getX()+dx,self.getY()+dy,dx,dy));
+		level.addEntity(new Arrow(self.getX()+dx,self.getY()+dy,dx,dy,hitplayer));
 		return true;
 	}
 

@@ -15,6 +15,7 @@ import shared.tiles.Tile;
 public class Arrow extends Entity{
 
 	Melee melee = new Melee();
+	boolean hitplayer;
 
 	/**
 	 * Initialises an arrow
@@ -24,10 +25,11 @@ public class Arrow extends Entity{
 	 * @param dy the velocity in the y direction (tiles)
 	 * @author Jelmer Firet
 	 */
-	public Arrow(double x,double y, double dx, double dy){
+	public Arrow(double x,double y, double dx, double dy,boolean hitplayer){
 		super(x,y);
 		this.xVel = dx;
 		this.yVel = dy;
+		this.hitplayer = hitplayer;
 	}
 
 	/**
@@ -55,7 +57,7 @@ public class Arrow extends Entity{
 			}
 		}
 		if (intersects && this.melee.available(level,this)){
-			invoke(this.melee.invoke(true,2));
+			invoke(this.melee.invoke(hitplayer,2));
 			this.destroy();
 		}
 		if (!this.move.available(level,this)){
