@@ -56,6 +56,7 @@ public class ServerGameHandler {
 
 		// Put the player in an initial party.
 		createParty(player);
+		player.sendMessage(new PlayerInfoMessage(player));
 
 		new Thread(new Runnable() {
 			@Override
@@ -71,8 +72,6 @@ public class ServerGameHandler {
 				Console.log(ConsoleTag.CONNECTION, "has left.", player);
 			}
 		}).start();
-
-		player.sendMessage(new PlayerInfoMessage(player));
 	}
 
 	/**

@@ -4,7 +4,7 @@ import shared.entities.Entity;
 import shared.entities.Slime;
 import shared.general.Level;
 
-public class Spawn extends Ability {
+public class Spawn implements Ability {
 	private double direction;
 	private static final double dist = 3.0;
 	private long cooldown = System.currentTimeMillis();
@@ -20,7 +20,12 @@ public class Spawn extends Ability {
 
 	@Override
 	public String getName() {
-		return "spawn";
+		return "Spawn";
+	}
+
+	@Override
+	public String getDescription(){
+		return "Spawn your own minion army!";
 	}
 
 	@Override

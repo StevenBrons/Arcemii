@@ -4,7 +4,7 @@ import shared.entities.Entity;
 import shared.entities.Slime;
 import shared.general.Level;
 
-public class Explosion extends Ability {
+public class Explosion implements Ability {
 	private double direction;
 	private static final double dist = 3.0;
 	private static final double range = 2.5;
@@ -20,8 +20,13 @@ public class Explosion extends Ability {
 	}
 
 	@Override
-	public String getName() {
-		return "explosion";
+	public String getName(){
+		return "Explosion";
+	}
+
+	@Override
+	public String getDescription(){
+		return "Explode your enemies with a blast!";
 	}
 
 	@Override

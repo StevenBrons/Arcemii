@@ -31,7 +31,7 @@ public class LobbyActivity extends AppCompatActivity {
 	private TextView gamePin;
 	private TextView txtPlayers;
 
-	private Ability abilities[] = {new Heal(), new Melee(), new Range()};
+	private Ability abilities[] = {new Heal(), new Melee(), new Arrow()};
 	private String ability_names[] = {"heal", "melee", "range"};
 	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "range attack"};
 
