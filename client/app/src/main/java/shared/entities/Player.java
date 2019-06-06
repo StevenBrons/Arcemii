@@ -180,6 +180,11 @@ public class Player extends Entity {
 	public synchronized void setAbilities(ArrayList<Ability> abilities) {
 		this.abilities = abilities;
 	}
+	/**
+	 * @author Robert Koprinkov
+	 * @return ArrayList of abilities this player has
+	 * */
+	public synchronized ArrayList<Ability> getAbilities(){return this.abilities;}
 
   public synchronized void clearActions() {
 		if (actions != null) {

@@ -35,6 +35,11 @@ public class Move implements Ability{
 	}
 
 	@Override
+	public int getTimeout() {
+		return 0;
+	}
+
+	@Override
 	public String getName(){
 		return "Move";
 	}

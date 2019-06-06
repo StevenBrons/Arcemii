@@ -16,6 +16,11 @@ public class Heal implements Ability {
 		return false;
 	}
 
+	@Override
+	public int getTimeout() {
+		return 3000;
+	}
+
 	public Ability invoke(int amount) {
 		this.healAmount = amount;
 		cooldown = System.currentTimeMillis()+3000;

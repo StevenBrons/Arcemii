@@ -47,4 +47,9 @@ public class Spawn implements Ability {
 			level.addEntity(new Slime(x+dx,y+dy));;
 		return false;
 	}
+
+	@Override
+	public int getTimeout() {
+		return 0;
+	}
 }

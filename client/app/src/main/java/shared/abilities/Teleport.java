@@ -53,6 +53,11 @@ public class Teleport implements Ability {
 	}
 
 	@Override
+	public int getTimeout() {
+		return 3000;
+	}
+
+	@Override
 	public String toString(){
 		return "Teleport(" + direction + ")";
 	}

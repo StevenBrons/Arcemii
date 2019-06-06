@@ -24,6 +24,11 @@ public class Melee implements Ability {
 		return false;
 	}
 
+	@Override
+	public int getTimeout() {
+		return 0;
+	}
+
 	public Ability invoke(boolean damagePlayer,int damage) {
 		this.attackPlayer = damagePlayer;
 		this.damage = damage;

@@ -57,4 +57,9 @@ public class Explosion implements Ability {
 			}
 		return false;
 	}
+
+	@Override
+	public int getTimeout() {
+		return 0;
+	}
 }

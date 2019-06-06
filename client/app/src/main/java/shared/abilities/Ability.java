@@ -11,6 +11,12 @@ public interface Ability extends Serializable {
 
 	boolean execute(Level level, Entity self);
 
+	/*
+	* @return length of cooldown of ability
+	* @author Robert Koprinkov
+	* */
+	int getTimeout();
+
 	default boolean available(Level level, Entity self){
 		return true;
 	}

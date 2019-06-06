@@ -33,6 +33,11 @@ public class Bow implements Ability {
 	}
 
 	@Override
+	public int getTimeout() {
+		return 200;
+	}
+
+	@Override
 	public String getName(){
 		return "Bow and Arrow";
 	}

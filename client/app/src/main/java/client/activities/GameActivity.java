@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -84,24 +85,72 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
         }
     }
 
+    /**
+     * Handles clicks on this ability button, fading the button until it is available
+     * @author Robert Koprinkov
+     * */
     public void onAbilityBottom(View view){
         Player player = ClientGameHandler.handler.getPlayer();
         synchronized (player){
+            ((ImageButton)findViewById(R.id.AbilityButtonBottom)).setAlpha((float) 0.6);
             player.invokeBottom();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(player.getAbilities().get(1).getTimeout());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    findViewById(R.id.AbilityButtonBottom).setAlpha(1);
+                }
+            }).start();
         }
     }
 
+    /**
+     * Handles clicks on this ability button, fading the button until it is available
+     * @author Robert Koprinkov
+     * */
     public void onAbilityMiddle(View view){
         Player player = ClientGameHandler.handler.getPlayer();
         synchronized (player){
+            ((ImageButton)findViewById(R.id.AbilityButtonMiddle)).setAlpha((float) 0.6);
             player.invokeMiddle();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(player.getAbilities().get(2).getTimeout());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    findViewById(R.id.AbilityButtonMiddle).setAlpha(1);
+                }
+            }).start();
         }
     }
 
+    /**
+     * Handles clicks on this ability button, fading the button until it is available
+     * @author Robert Koprinkov
+     * */
     public void onAbilityUpper(View view){
         Player player = ClientGameHandler.handler.getPlayer();
         synchronized (player){
+            ((ImageButton)findViewById(R.id.AbilityButtonUpper)).setAlpha((float) 0.6);
             player.invokeUpper();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(player.getAbilities().get(3).getTimeout());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    findViewById(R.id.AbilityButtonUpper).setAlpha(1);
+                }
+            }).start();
         }
     }
 
