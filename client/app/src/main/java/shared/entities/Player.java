@@ -39,7 +39,7 @@ public class Player extends Entity {
 		this.input = input;
 		this.output = output;
 		this.ip = ip;
-		this.move = new Move(0.2);
+		this.move = new Move(0.8);
 		abilities.add(new Heal());
 		abilities.add(new Bow());
 		abilities.add(new Melee());

@@ -18,11 +18,18 @@ public class Party extends Message {
 	private ArrayList<Player> players;
 	public transient boolean inLobby = true;
 
+	/**
+	 * Creates a new party
+	 */
 	public Party() {
 		partyId = (int)(Math.random()*99999);
 		players = new ArrayList<>();
 	}
 
+	/**
+	 * Add a player to the party
+	 * @param player The player that will be added
+	 */
 	public void addPlayer(Player player) {
 		if (!players.contains(player)) {
 			players.add(player);
@@ -35,19 +42,27 @@ public class Party extends Message {
 	 * @param player
 	 * @author Bram Pulles
 	 */
-	public void removePlayer(Player player){
+	public void removePlayer(Player player) {
 		if(players.contains(player)){
 			players.remove(player);
 		}
 		messageAll(this);
 	}
 
+	/**
+	 * Send a message to all players (clients) that are in this party
+	 * @param message The message to send, should not be null
+	 */
 	public void messageAll(Message message) {
 		for (Player p : players) {
 			p.sendMessage(message);
 		}
 	}
 
+	/**
+	 *
+	 * @return The party Id
+	 */
 	public int getPartyId() {
 		return partyId;
 	}

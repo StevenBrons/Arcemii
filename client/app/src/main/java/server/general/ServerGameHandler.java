@@ -14,7 +14,7 @@ import shared.messages.ReadyMessage;
 public class ServerGameHandler {
 
 	private ArrayList<Party> parties = new ArrayList<>();
-	public static final int TICKSPEED = 10;
+	public static final int TICKSPEED = 50;
 
 	private boolean running;
 
