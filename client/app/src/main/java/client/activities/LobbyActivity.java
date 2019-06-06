@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.debernardi.archemii.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import client.controller.ClientGameHandler;
 import shared.abilities.Ability;
@@ -31,15 +32,15 @@ public class LobbyActivity extends AppCompatActivity {
 	private TextView gamePin;
 	private TextView txtPlayers;
 
-	private Ability[] abilities = {new Heal(), new Melee(), new Bow()};
+	private Ability[] abilities = {new Heal(), new Melee(), new Bow(), new Teleport()};
 
 	//contains ID of the slots the ith ability is assigned to
-	private int[] assigned_to_slot = {0, 0, 0};
+	private int[] assigned_to_slot = {0, 0, 0, 0};
 	private int[] ability_slots = {R.id.ability1, R.id.ability2, R.id.ability3};
 	private int[] ability_title_ids = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
 	private int[] ability_description_ids = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
 
-	private ArrayList<Player> players = new ArrayList<>();
+	private List<Player> players = new ArrayList<>();
 
 	/**
 	 * This method also sets this activity available in the client game handler.
