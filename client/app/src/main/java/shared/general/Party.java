@@ -24,7 +24,7 @@ public class Party extends Message {
 	 * Creates a new party
 	 */
 	public Party() {
-		partyId = (int)(Math.random()*99999);
+		partyId = (int)((Math.random()*8999) + 1000);
 	}
 
 	/**
@@ -33,6 +33,7 @@ public class Party extends Message {
 	 */
 	public void addPlayer(Player player) {
 		if (!players.contains(player)) {
+			player.setColor(players.size() % 4);
 			players.add(player);
 		}
 		messageAll(this);
