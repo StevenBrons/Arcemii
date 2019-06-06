@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -6,6 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/ourTextViewStyle</item>
+        <item name="buttonStyle">@style/ourButtonStyle</item>
+        <item name="editTextStyle">@style/ourEditTextStyle</item>
+
     </style>
 
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
@@ -13,6 +17,27 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- Custom TextView -->
+    <style name="ourTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/dpcomic</item>
+    </style>
+
+    <!-- Custom Button -->
+    <style name="ourButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@font/dpcomic</item>
+    </style>
+
+    <style name="ourEditTextStyle" parent="android:Widget.EditText">
+        <item name="android:fontFamily">@font/dpcomic</item>
+    </style>
+
+    <!-- Custom EditText theme-->
+    <style name="EditThemeNoAccent">
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
     </style>
 
 </resources>

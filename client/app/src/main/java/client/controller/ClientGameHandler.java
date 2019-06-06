@@ -269,9 +269,7 @@ public class ClientGameHandler {
 		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPrefs.getString("username", "-");
 
-		Player player = new Player(-1,-1,-1);
 		player.setName(username);
-
 		sendMessage(new PlayerInfoMessage(player));
 	}
 
