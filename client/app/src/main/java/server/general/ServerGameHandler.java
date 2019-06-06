@@ -276,9 +276,7 @@ public class ServerGameHandler {
 	 */
 	public List<Party> getParties(){
 		List<Party> result = new ArrayList<>();
-		synchronized (parties){
-			Collections.copy(result, parties);
-		}
+		Collections.copy(result, parties);
 		return result;
 	}
 }
