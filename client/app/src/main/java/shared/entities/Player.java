@@ -14,6 +14,7 @@ import shared.abilities.Heal;
 import shared.abilities.Melee;
 import shared.abilities.Move;
 import shared.abilities.Bow;
+import shared.abilities.Teleport;
 import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
@@ -153,6 +154,9 @@ public class Player extends Entity {
 		if (ability instanceof Move) {
 			super.invoke(((Move) ability).invoke(direction));
 		}
+		if(ability instanceof Teleport){
+			super.invoke(((Teleport)ability).invoke(direction));
+		}
 	}
 
 	public synchronized void invokeBottom() {
@@ -170,7 +174,7 @@ public class Player extends Entity {
 	public synchronized void invokeMove() {
 	  if (doMove) {
 			invokePlayerAbility((abilities.get(0)));
-    }
+	  }
 	}
 
 	public synchronized void setAbilities(ArrayList<Ability> abilities) {
