@@ -5,6 +5,9 @@ import shared.entities.Slime;
 import shared.general.Level;
 
 public class Explosion implements Ability {
+
+	public static final long serialVersionUID = 1L;
+
 	private double direction;
 	private static final double dist = 3.0;
 	private static final double range = 2.5;
