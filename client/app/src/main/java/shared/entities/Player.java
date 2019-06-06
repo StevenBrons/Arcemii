@@ -12,7 +12,7 @@ import shared.abilities.Ability;
 import shared.abilities.Heal;
 import shared.abilities.Melee;
 import shared.abilities.Move;
-import shared.abilities.Range;
+import shared.abilities.Arrow;
 import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
@@ -41,7 +41,7 @@ public class Player extends Entity {
 		this.ip = ip;
 		this.move = new Move(0.2);
 		abilities.add(new Heal());
-		abilities.add(new Range());
+		abilities.add(new Arrow());
 		abilities.add(new Melee());
 		maxhealth = health = 50;
 	}
