@@ -107,7 +107,7 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 
 
     public void updateHealth(int number){
-        TextView tv1 = (TextView) findViewById(R.id.textView3);
+        TextView tv1 = findViewById(R.id.textView3);
         String w = "" + number;
         tv1.setText(w);
     }
