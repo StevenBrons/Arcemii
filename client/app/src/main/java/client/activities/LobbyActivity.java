@@ -116,10 +116,11 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	private boolean isMaster(){
-		return players != null &&
-					players.size() > 0 &&
-					players.get(0) != null &&
-					players.get(0).equals(ClientGameHandler.handler.getPlayer());
+		Player player = ClientGameHandler.handler.getPlayer();
+		synchronized (player){
+			return players != null && players.size() > 0 &&
+					players.get(0) != null && players.get(0).equals(player);
+		}
 	}
 
 	/**
@@ -133,7 +134,9 @@ public class LobbyActivity extends AppCompatActivity {
 
 			// First send a message with the abilities of the player.
 			Player player = ClientGameHandler.handler.getPlayer();
-			player.setAbilities(getAbilities());
+			synchronized (player){
+				player.setAbilities(getAbilities());
+			}
 			ClientGameHandler.sendMessage(new PlayerInfoMessage(player));
 
 			if (isMaster()) {

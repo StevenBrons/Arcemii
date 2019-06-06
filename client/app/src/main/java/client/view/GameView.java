@@ -86,8 +86,11 @@ public class GameView extends View {
 
 		canvas.drawColor(Color.BLACK);
 		Player player = ClientGameHandler.handler.getPlayer();
-		int offsetX = (getWidth()/8-(int)(Tile.WIDTH*player.getX()));
-		int offsetY = (getHeight()/8+(int)(Tile.HEIGHT*player.getY()));
+		int offsetX,offsetY;
+		synchronized (player){
+			offsetX = (getWidth()/8-(int)(Tile.WIDTH*player.getX()));
+			offsetY = (getHeight()/8+(int)(Tile.HEIGHT*player.getY()));
+		}
 		renderItemLock.lock();
 		for (RenderItem object:renderItems){
 			object.renderTo(temporary,offsetX,offsetY);
@@ -106,10 +109,13 @@ public class GameView extends View {
 		}
 		this.level = level;
 		Player player = ClientGameHandler.handler.getPlayer();
-		int minX = -2+((int)(Tile.WIDTH*player.getX())-screen.getWidth()/2)/Tile.WIDTH;
-		int maxX =  2+((int)(Tile.WIDTH*player.getX())+screen.getWidth()/2)/Tile.WIDTH;
-		int minY = -2+((int)(Tile.HEIGHT*player.getY())-screen.getHeight()/2)/Tile.HEIGHT;
-		int maxY =  2+((int)(Tile.HEIGHT*player.getY())+screen.getHeight()/2)/Tile.HEIGHT;
+		int minX,maxX,minY,maxY;
+		synchronized (player){
+			minX = -2+((int)(Tile.WIDTH*player.getX())-screen.getWidth()/2)/Tile.WIDTH;
+			maxX =  2+((int)(Tile.WIDTH*player.getX())+screen.getWidth()/2)/Tile.WIDTH;
+			minY = -2+((int)(Tile.HEIGHT*player.getY())-screen.getHeight()/2)/Tile.HEIGHT;
+			maxY =  2+((int)(Tile.HEIGHT*player.getY())+screen.getHeight()/2)/Tile.HEIGHT;
+		}
 		renderItemLock.lock();
 		renderItems.clear();
 		for (int idx = 0;idx<level.getNumEntity();idx++){

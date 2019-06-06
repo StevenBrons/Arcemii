@@ -44,7 +44,10 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
         LayoutInflater factory = LayoutInflater.from(this);
         View UI = factory.inflate(R.layout.ui, null);
         Player me = ClientGameHandler.handler.getPlayer();
-        ArrayList<Ability> myAbilities = me.getAbilities();
+        ArrayList<Ability> myAbilities;
+        synchronized (me){
+            myAbilities = me.getAbilities();
+        }
         frame.addView(UI);
         setContentView(frame);
 
@@ -82,15 +85,24 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
     }
 
     public void onAbilityBottom(View view){
-        ClientGameHandler.handler.getPlayer().invokeBottom();
+        Player player = ClientGameHandler.handler.getPlayer();
+        synchronized (player){
+            player.invokeBottom();
+        }
     }
 
     public void onAbilityMiddle(View view){
-        ClientGameHandler.handler.getPlayer().invokeMiddle();
+        Player player = ClientGameHandler.handler.getPlayer();
+        synchronized (player){
+            player.invokeMiddle();
+        }
     }
 
     public void onAbilityUpper(View view){
-        ClientGameHandler.handler.getPlayer().invokeUpper();
+        Player player = ClientGameHandler.handler.getPlayer();
+        synchronized (player){
+            player.invokeUpper();
+        }
     }
 
 
@@ -106,10 +118,14 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
         double range = 0.2;
         double angle = -Math.atan2(yPercent,xPercent);
         if (Math.pow(xPercent,2) + Math.pow(yPercent,2) > Math.pow(range,2)) {
-            player.direction = angle;
-            player.doMove = true;
+            synchronized (player){
+                player.direction = angle;
+                player.doMove = true;
+            }
         } else {
-            player.doMove = false;
+            synchronized (player){
+                player.doMove = false;
+            }
         }
 
     }
