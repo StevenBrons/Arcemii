@@ -19,16 +19,17 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <!-- Custom TextView -->
+    <!-- Custom TextView style -->
     <style name="ourTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/dpcomic</item>
     </style>
 
-    <!-- Custom Button -->
+    <!-- Custom Button style-->
     <style name="ourButtonStyle" parent="android:Widget.Holo.Button">
         <item name="android:fontFamily">@font/dpcomic</item>
     </style>
 
+    <!-- Custom EditText style-->
     <style name="ourEditTextStyle" parent="android:Widget.EditText">
         <item name="android:fontFamily">@font/dpcomic</item>
     </style>
