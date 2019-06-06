@@ -154,15 +154,17 @@ public class LobbyActivity extends AppCompatActivity {
 	 * Get the abilities chosen in the gui.
 	 * @return the abilities chosen.
 	 * @author Bram Pulles
+	 * @author Robert Koprinkov
 	 */
 	private ArrayList<Ability> getAbilities(){
-		//TODO: Make it such that the order is preserved.
 		ArrayList<Ability> abilities = new ArrayList<>();
 		abilities.add(new Move(0.05));
-
-		for(int i = 0; i < assigned_to_slot.length; i++){
-			if(assigned_to_slot[i] != 0){
-				abilities.add(this.abilities[i]);
+		for(int i=0; i<ability_slots.length; i++){
+			for(int j=0; j<assigned_to_slot.length; j++){
+				if(assigned_to_slot[j]==ability_slots[i]){
+					//the ability the ith slot holds
+					abilities.add(this.abilities[j]);
+				}
 			}
 		}
 		return abilities;
