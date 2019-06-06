@@ -51,7 +51,7 @@ public class Skeleton extends Entity {
 			renderItem = new RenderItem("skeleton/skeletonShooting",
 					(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}
-		else if (xVel*xVel+yVel*yVel>0.005){
+		else if (xVel*xVel+yVel*yVel>0.0001){
 			renderItem = new RenderItem("skeleton/skeletonWalking",
 					(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}

@@ -33,7 +33,7 @@ public abstract class Entity implements Serializable {
         this.xPos = x;
         this.yPos = y;
 
-        this.move = new Move();
+        this.move = new Move(0.05);
         abilities.add(move);
     }
 

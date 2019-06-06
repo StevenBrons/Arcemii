@@ -160,7 +160,7 @@ public class LobbyActivity extends AppCompatActivity {
 	private ArrayList<Ability> getAbilities(){
 		//TODO: Make it such that the order is preserved.
 		ArrayList<Ability> abilities = new ArrayList<>();
-		abilities.add(new Move());
+		abilities.add(new Move(0.05));
 
 		for(int i = 0; i < assigned_to_slot.length; i++){
 			if(assigned_to_slot[i] != 0){
