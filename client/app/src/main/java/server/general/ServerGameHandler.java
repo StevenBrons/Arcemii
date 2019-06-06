@@ -275,10 +275,10 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	public ArrayList<Party> getParties(){
-		ArrayList<Party> result = new ArrayList<>(parties.size());
 		synchronized (parties){
+			ArrayList<Party> result = new ArrayList<>(parties.size());
 			Collections.copy(result, parties);
+			return result;
 		}
-		return result;
 	}
 }
