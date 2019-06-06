@@ -224,7 +224,6 @@ public class ClientGameHandler {
 		synchronized (player) {
 			ArrayList<Ability> abilities = player.getAbilities();
 			double direction = player.direction;
-
 			player = p;
 			player.setAbilities(abilities);
 			player.setActions(new ArrayList<>());
@@ -277,7 +276,7 @@ public class ClientGameHandler {
 		player = m.getPlayer();
 		synchronized (player){
 			player.setAbilities(m.getAbilities());
-			player.setActions(new ArrayList<Ability>());
+			player.setActions(new ArrayList<>());
 		}
 		sendPlayerInfoMessage();
 	}

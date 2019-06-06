@@ -17,7 +17,7 @@ public class Party extends Message {
 	private Lock levelLock = new ReentrantLock();
 	private transient Level curLevel;
 	private int partyId;
-	private List<Player> players;
+	private List<Player> players = Collections.synchronizedList(new ArrayList<>());
 	public transient boolean inLobby = true;
 
 	/**
@@ -25,7 +25,6 @@ public class Party extends Message {
 	 */
 	public Party() {
 		partyId = (int)(Math.random()*99999);
-		players = Collections.synchronizedList(new ArrayList<>());
 	}
 
 	/**
