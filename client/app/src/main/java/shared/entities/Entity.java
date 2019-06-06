@@ -61,6 +61,10 @@ public abstract class Entity implements Serializable {
     	health = Math.min(maxhealth,health+amount);
 	}
 
+	public int getHealth(){
+        return health;
+    }
+
 	public void damage(int amount){
 		assert health-amount < health: "Integer overflow of health";
 		health -= amount;

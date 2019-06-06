@@ -1,5 +1,6 @@
 package client.activities;
 
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.debernardi.archemii.R;
 
@@ -43,33 +45,31 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
         View UI = factory.inflate(R.layout.ui, null);
         Player me = ClientGameHandler.handler.getPlayer();
         ArrayList<Ability> myAbilities = me.getAbilities();
-        final ImageButton ability1 = findViewById(R.id.AbilityButtonBottom);
-        final ImageButton ability2 = findViewById(R.id.AbilityButtonMiddle);
-        final ImageButton ability3 = findViewById(R.id.AbilityButtonUpper);
         frame.addView(UI);
         setContentView(frame);
 
         String uri = "@drawable/";
 
-//        String temp = uri + myAbilities.get(1).getName();
-//        int imageResource = getResources().getIdentifier(temp, null, getPackageName());
-//        Drawable res = getResources().getDrawable(imageResource);
-//        ability1.setImageDrawable(res);
-//
-//        temp = uri + myAbilities.get(2).getName();
-//        imageResource = getResources().getIdentifier(temp, null, getPackageName());
-//        res = getResources().getDrawable(imageResource);
-//        ability2.setImageDrawable(res);
-//
-//        temp = uri + myAbilities.get(3).getName();
-//        imageResource = getResources().getIdentifier(temp, null, getPackageName());
-//        res = getResources().getDrawable(imageResource);
-//        ability3.setImageDrawable(res);
+        final ImageButton ability1 = findViewById(R.id.AbilityButtonBottom);
+        final ImageButton ability2 = findViewById(R.id.AbilityButtonMiddle);
+        final ImageButton ability3 = findViewById(R.id.AbilityButtonUpper);
+
+        String temp = uri + myAbilities.get(1).getId();
+        int imageResource = getResources().getIdentifier(temp, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+        ability1.setImageDrawable(res);
+
+        temp = uri + myAbilities.get(2).getId();
+        imageResource = getResources().getIdentifier(temp, null, getPackageName());
+        res = getResources().getDrawable(imageResource);
+        ability2.setImageDrawable(res);
+
+        temp = uri + myAbilities.get(3).getId();
+        imageResource = getResources().getIdentifier(temp, null, getPackageName());
+        res = getResources().getDrawable(imageResource);
+        ability3.setImageDrawable(res);
 
 
-//        ability1.setImageResource(R.drawable.heal);
-//        ability2.setImageResource(R.drawable.melee);
-//        ability3.setImageResource(R.drawable.range);
 
         ClientGameHandler.handler.setGameActivity(this);
     }
@@ -91,6 +91,13 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 
     public void onAbilityUpper(View view){
         ClientGameHandler.handler.getPlayer().invokeUpper();
+    }
+
+
+    public void updateHealth(int number){
+        TextView tv1 = (TextView) findViewById(R.id.textView3);
+        String w = "" + number;
+        tv1.setText(w);
     }
 
     @Override

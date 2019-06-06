@@ -31,7 +31,7 @@ public class Bow implements Ability {
 
 	@Override
 	public String getName(){
-		return "Bow and arrow";
+		return "Bow and Arrow";
 	}
 
 	@Override
@@ -43,4 +43,7 @@ public class Bow implements Ability {
 	public String toString() {
 		return "Range(" + direction + "," + damagePlayer + ")";
 	}
+
+	@Override
+	public String getId(){return "range";}
 }
