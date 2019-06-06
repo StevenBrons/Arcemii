@@ -5,7 +5,7 @@ import java.util.List;
 
 import client.view.RenderItem;
 import shared.abilities.Move;
-import shared.abilities.Arrow;
+import shared.abilities.Bow;
 import shared.general.Level;
 import shared.tiles.Tile;
 
@@ -17,7 +17,7 @@ import static java.lang.Math.atan2;
  */
 public class Skeleton extends Entity {
 	private long shootingStart = System.currentTimeMillis()-5000;
-	private Arrow rangedAttack = new Arrow();
+	private Bow rangedAttack = new Bow();
 
 	/**
 	 * Constructs a new skeleton

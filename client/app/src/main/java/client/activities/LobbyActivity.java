@@ -31,7 +31,7 @@ public class LobbyActivity extends AppCompatActivity {
 	private TextView gamePin;
 	private TextView txtPlayers;
 
-	private Ability[] abilities = {new Heal(), new Melee(), new Arrow()};
+	private Ability[] abilities = {new Heal(), new Melee(), new Bow()};
 
 	//contains ID of the slots the ith ability is assigned to
 	private int[] assigned_to_slot = {0, 0, 0};

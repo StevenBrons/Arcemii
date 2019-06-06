@@ -3,7 +3,7 @@ package shared.abilities;
 import shared.entities.Entity;
 import shared.general.Level;
 
-public class Arrow implements Ability {
+public class Bow implements Ability {
 
 	private double direction;
 	private boolean damagePlayer;

@@ -12,7 +12,7 @@ import shared.abilities.Ability;
 import shared.abilities.Heal;
 import shared.abilities.Melee;
 import shared.abilities.Move;
-import shared.abilities.Arrow;
+import shared.abilities.Bow;
 import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
@@ -139,8 +139,8 @@ public class Player extends Entity {
 		if (ability instanceof Melee) {
 			super.invoke(((Melee) ability).invoke(false,5));
 		}
-		if (ability instanceof Arrow) {
-			super.invoke(((Arrow) ability).invoke(direction,false));
+		if (ability instanceof Bow) {
+			super.invoke(((Bow) ability).invoke(direction,false));
 		}
 		if (ability instanceof Heal) {
 			super.invoke(((Heal) ability).invoke(10));
