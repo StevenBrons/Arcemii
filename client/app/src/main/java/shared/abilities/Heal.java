@@ -3,9 +3,8 @@ package shared.abilities;
 import shared.entities.Entity;
 import shared.general.Level;
 
-public class Heal extends Ability {
+public class Heal implements Ability {
 
-	private static final String name = "heal";
 	private int healAmount = 0;
 
 	@Override
@@ -19,5 +18,12 @@ public class Heal extends Ability {
 		return this;
 	}
 	@Override
-	public String getName(){return name;}
+	public String getName(){
+		return "Heal";
+	}
+
+	@Override
+	public String getDescription(){
+		return "Heal all of your friends!";
+	}
 }
