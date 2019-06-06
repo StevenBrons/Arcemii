@@ -3,7 +3,7 @@ package shared.abilities;
 import shared.entities.Entity;
 import shared.general.Level;
 
-public class Teleport extends Ability {
+public class Teleport implements Ability {
 	private double direction;
 	private static final double dist = 6.0;
 	private long cooldown = System.currentTimeMillis();
@@ -19,7 +19,12 @@ public class Teleport extends Ability {
 
 	@Override
 	public String getName() {
-		return "teleport";
+		return "Teleport";
+	}
+
+	@Override
+	public String getDescription(){
+		return "Teleport to any location you want!";
 	}
 
 	@Override

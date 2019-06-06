@@ -4,9 +4,8 @@ import shared.entities.Entity;
 import shared.entities.Player;
 import shared.general.Level;
 
-public class Melee extends Ability {
+public class Melee implements Ability {
 
-	private static final String name = "melee";
 	private long cooldown = System.currentTimeMillis();
 	private boolean attackPlayer = false;
 	private int damage;
@@ -34,6 +33,14 @@ public class Melee extends Ability {
 	public boolean available(Level level, Entity self){
 		return (System.currentTimeMillis() > cooldown);
 	}
+
 	@Override
-	public String getName(){return name;}
+	public String getName(){
+		return "Melee";
+	}
+
+	@Override
+	public String getDescription(){
+		return "Slay your enemy with your bare hands.";
+	}
 }
