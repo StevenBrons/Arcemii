@@ -16,6 +16,7 @@ public class Explosion implements Ability {
 
 	public Ability invoke(double direction){
 		this.direction = direction;
+		cooldown = System.currentTimeMillis()+5000;
 		return this;
 	}
 
@@ -51,7 +52,6 @@ public class Explosion implements Ability {
 					entity.damage(5);
 				}
 			}
-		cooldown = System.currentTimeMillis()+5000;
 		return false;
 	}
 }

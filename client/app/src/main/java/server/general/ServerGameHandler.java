@@ -2,6 +2,7 @@ package server.general;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import shared.entities.Player;
 import shared.general.Party;
@@ -14,7 +15,7 @@ import shared.messages.ReadyMessage;
 
 public class ServerGameHandler {
 
-	private ArrayList<Party> parties = new ArrayList<>();
+	private List<Party> parties = Collections.synchronizedList(new ArrayList<>());
 	public static final int TICKSPEED = 50;
 
 	private boolean running;
@@ -240,9 +241,7 @@ public class ServerGameHandler {
 	private Party createParty(Player player){
 		Party party = new Party();
 		party.addPlayer(player);
-		synchronized (parties){
-			parties.add(party);
-		}
+		parties.add(party);
 		return party;
 	}
 
@@ -253,6 +252,7 @@ public class ServerGameHandler {
 	 */
 	public synchronized void stop(){
 		running = false;
+
 		synchronized (parties){
 			for(Party party : parties){
 				for(Player player : party.getPlayers()){
@@ -275,9 +275,9 @@ public class ServerGameHandler {
 	 * @author Bram Pulles
 	 */
 	public ArrayList<Party> getParties(){
-		ArrayList<Party> result = new ArrayList<>();
+		ArrayList<Party> result = new ArrayList<>(parties.size());
 		synchronized (parties){
-			Collections.copy(result,parties);
+			Collections.copy(result, parties);
 		}
 		return result;
 	}

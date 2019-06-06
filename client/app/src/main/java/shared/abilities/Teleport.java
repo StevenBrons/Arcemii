@@ -14,6 +14,7 @@ public class Teleport implements Ability {
 
 	public Ability invoke(double direction){
 		this.direction = direction;
+		cooldown = System.currentTimeMillis()+3000;
 		return this;
 	}
 
@@ -40,7 +41,6 @@ public class Teleport implements Ability {
 		double dy = Math.sin(direction)*dist;
 		if (!level.getTileAt((int)(self.getX()+dx),(int)(self.getY()+dy)).isSolid())
 			self.setPos(x+dx,y+dy);
-		cooldown = System.currentTimeMillis()+3000;
 		return false;
 	}
 }
