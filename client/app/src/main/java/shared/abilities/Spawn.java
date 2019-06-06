@@ -1,14 +1,15 @@
 package shared.abilities;
 
 import shared.entities.Entity;
+import shared.entities.Slime;
 import shared.general.Level;
 
-public class Teleport extends Ability {
+public class Spawn extends Ability {
 	private double direction;
-	private static final double dist = 6.0;
+	private static final double dist = 3.0;
 	private long cooldown = System.currentTimeMillis();
 
-	public Teleport(){
+	public Spawn(){
 		super();
 	}
 
@@ -19,7 +20,7 @@ public class Teleport extends Ability {
 
 	@Override
 	public String getName() {
-		return "teleport";
+		return "spawn";
 	}
 
 	@Override
@@ -33,9 +34,9 @@ public class Teleport extends Ability {
 		double y = self.getY();
 		double dx = Math.cos(direction)*dist;
 		double dy = Math.sin(direction)*dist;
-		if (!level.getTileAt((int)(self.getX()+dx),(int)(self.getY()+dy)).isSolid())
-			self.setPos(x+dx,y+dy);
-		cooldown = System.currentTimeMillis()+3000;
+		if (level.freeLine(x,y,x+dx,y+dy))
+			level.addEntity(new Slime(x+dx,y+dy));;
+		cooldown = System.currentTimeMillis()+10000;
 		return false;
 	}
 }
