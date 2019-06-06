@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shared.abilities.Melee;
+import shared.abilities.Move;
 import shared.entities.Entity;
 import client.view.RenderItem;
 import shared.general.Level;
@@ -25,6 +26,7 @@ public class Slime extends Entity {
 	 */
 	public Slime(double x,double y){
 		super(x,y);
+		this.move = new Move(0.03);
 		maxhealth = health = 20;
 	}
 
@@ -37,7 +39,7 @@ public class Slime extends Entity {
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
 		RenderItem renderItem;
-		if (xVel*xVel+yVel*yVel > 0.005){
+		if (xVel*xVel+yVel*yVel > 0.0001){
 			renderItem = new RenderItem("slime/redSlimeJump",
 					(int)(Tile.WIDTH*xPos), -(int)(Tile.HEIGHT*yPos),0.5,1.0,2);
 		}
@@ -54,7 +56,6 @@ public class Slime extends Entity {
 
 	@Override
 	public void invokeAll(Level level) {
-		this.actions.clear();
 		Entity targetPlayer = null;
 		for (int i = 0;i<level.getNumEntity();i++){
 			if (level.getEntityAt(i) instanceof Player){

@@ -67,6 +67,7 @@ public class Level extends Message {
       e.executeAll(this);
     }
     entities.addAll(newEntities);
+    newEntities.clear();
   }
 
   /**
