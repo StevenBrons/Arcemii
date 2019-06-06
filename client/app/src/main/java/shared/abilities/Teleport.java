@@ -4,6 +4,9 @@ import shared.entities.Entity;
 import shared.general.Level;
 
 public class Teleport implements Ability {
+
+	public static final long serialVersionUID = 1L;
+
 	private double direction;
 	private static final double dist = 6.0;
 	private long cooldown = System.currentTimeMillis();

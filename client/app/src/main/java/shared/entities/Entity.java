@@ -13,8 +13,7 @@ import shared.tiles.Tile;
 
 public abstract class Entity implements Serializable {
 
-    private UUID uuid;
-    protected transient Move move;
+    private UUID uuid = UUID.randomUUID();
     protected transient ArrayList<Ability> abilities = new ArrayList<>();
     protected transient ArrayList<Ability> actions = new ArrayList<>();
     private transient boolean changed = false;
@@ -25,16 +24,11 @@ public abstract class Entity implements Serializable {
     protected double xPos = 0, yPos = 0, xVel = 0, yVel = 0;
 
     public Entity(){
-
     }
 
     public Entity(double x, double y) {
-        this.uuid = UUID.randomUUID();
         this.xPos = x;
         this.yPos = y;
-
-        this.move = new Move(0.05);
-        abilities.add(move);
     }
 
     /**

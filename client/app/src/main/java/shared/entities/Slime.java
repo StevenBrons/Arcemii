@@ -16,7 +16,8 @@ import shared.tiles.Tile;
  */
 public class Slime extends Entity {
 
-	Melee melee = new Melee();
+	transient Melee melee = new Melee();
+	transient Move move;
 
 	/**
 	 * Constructs a new slime
@@ -26,7 +27,7 @@ public class Slime extends Entity {
 	 */
 	public Slime(double x,double y){
 		super(x,y);
-		this.move = new Move(0.03);
+		this.move = new Move(0.05);
 		maxhealth = health = 10;
 	}
 

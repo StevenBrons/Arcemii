@@ -16,7 +16,7 @@ import shared.messages.ReadyMessage;
 public class ServerGameHandler {
 
 	private List<Party> parties = Collections.synchronizedList(new ArrayList<>());
-	public static final int TICKSPEED = 10;
+	public static final int TICKSPEED = 50;
 
 	private boolean running;
 
@@ -274,9 +274,11 @@ public class ServerGameHandler {
 	 * @return a list of all the parties on the server.
 	 * @author Bram Pulles
 	 */
-	public List<Party> getParties(){
-		List<Party> result = new ArrayList<>();
-		Collections.copy(result, parties);
-		return result;
+	public ArrayList<Party> getParties(){
+		synchronized (parties){
+			ArrayList<Party> result = new ArrayList<>(parties.size());
+			Collections.copy(result, parties);
+			return result;
+		}
 	}
 }

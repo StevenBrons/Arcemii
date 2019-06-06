@@ -13,9 +13,12 @@ import shared.tiles.Tile;
  * An arrow projectile shot by e.g. a Skeleton
  * @author Jelmer Firet
  */
-public class Arrow extends Entity{
+public class Arrow extends Entity {
+
 	private boolean damagePlayer;
-	private Melee melee = new Melee();
+
+	private transient Melee melee = new Melee();
+	private transient Move move;
 
 	/**
 	 * Initialises an arrow
@@ -28,6 +31,7 @@ public class Arrow extends Entity{
 	public Arrow(double x,double y, double dx, double dy, boolean damagePlayer){
 		super(x,y);
 		this.move = new Move(0.1);
+		this.move.setBoundsCheck(false);
 		this.xVel = dx;
 		this.yVel = dy;
 		this.damagePlayer = damagePlayer;
@@ -59,7 +63,7 @@ public class Arrow extends Entity{
 			}
 		}
 		if (intersects && this.melee.available(level,this)){
-			invoke(this.melee.invoke(damagePlayer,2));
+			invoke(this.melee.invoke(damagePlayer,damagePlayer ? 2 : 5));
 			this.destroy();
 		}
 		if (level.getTileAt((int)xPos,(int)yPos).isSolid()){
