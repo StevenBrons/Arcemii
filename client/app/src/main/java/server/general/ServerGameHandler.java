@@ -18,6 +18,10 @@ public class ServerGameHandler {
 
 	private boolean running;
 
+	/**
+	 * Run server game loop, updating all parties
+	 * @author Steven Bronsveld
+	 */
 	public ServerGameHandler() {
 		running = true;
 

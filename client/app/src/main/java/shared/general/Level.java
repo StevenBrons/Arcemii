@@ -1,7 +1,5 @@
 package shared.general;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import shared.entities.Entity;
@@ -18,6 +16,7 @@ public class Level extends Message {
   private ArrayList<Entity> newEntities;
   private transient ArrayList<Object> updates = new ArrayList<>();
   private double spawnX = 0,spawnY = 0;
+
 
   public Level (Tile[][] tiles, ArrayList<Entity> entities) {
     this.tiles = tiles;
