@@ -9,7 +9,10 @@ import java.util.List;
 
 import client.view.RenderItem;
 import shared.abilities.Ability;
+import shared.abilities.Heal;
+import shared.abilities.Melee;
 import shared.abilities.Move;
+import shared.abilities.Range;
 import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
@@ -34,6 +37,9 @@ public class Player extends Entity {
 		this.input = input;
 		this.output = output;
 		this.ip = ip;
+		abilities.add(new Heal());
+		abilities.add(new Range());
+		abilities.add(new Melee());
 	}
 
 	/**
@@ -128,21 +134,36 @@ public class Player extends Entity {
 		return name;
 	}
 
+	public void invokePlayerAbility(Ability ability) {
+		if (ability instanceof Melee) {
+			super.invoke(((Melee) ability).invoke(false,5));
+		}
+		if (ability instanceof Range) {
+			super.invoke(((Range) ability).invoke(direction,false));
+		}
+		if (ability instanceof Heal) {
+			super.invoke(((Heal) ability).invoke(10));
+		}
+		if (ability instanceof Move) {
+			super.invoke(((Move) ability).invoke(direction));
+		}
+	}
+
 	public synchronized void invokeBottom() {
-		invoke(abilities.get(1));
+		invokePlayerAbility(abilities.get(1));
 	}
 
 	public synchronized void invokeMiddle() {
-		invoke(abilities.get(2));
+		invokePlayerAbility(abilities.get(2));
 	}
 
 	public synchronized void invokeUpper() {
-		invoke(abilities.get(3));
+		invokePlayerAbility(abilities.get(3));
 	}
 
 	public synchronized void invokeMove() {
 	  if (move) {
-      invoke(((Move)abilities.get(0)).invoke(direction));
+			invokePlayerAbility(((Move)abilities.get(0)));
     }
 	}
 

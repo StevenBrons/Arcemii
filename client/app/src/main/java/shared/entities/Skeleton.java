@@ -85,7 +85,7 @@ public class Skeleton extends Entity {
 				}
 			}
 			if (targetPlayer != null){
-				invoke(rangedAttack.invoke(atan2(targetPlayer.getY()-yPos,targetPlayer.getX()-xPos)));
+				invoke(rangedAttack.invoke(atan2(targetPlayer.getY()-yPos,targetPlayer.getX()-xPos),true));
 			}
 		}
 	}

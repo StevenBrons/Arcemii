@@ -28,7 +28,7 @@ public class LobbyActivity extends AppCompatActivity {
 
 	private TextView gamePin;
 	private TextView txtPlayers;
-	private Ability abilities[] = {new Heal(), new Melee(), new Move(), new Range()};
+	private Ability abilities[] = {new Heal(), new Melee(), new Range()};
 	private String ability_names[] = {"heal", "melee", "move", "range"};
 	private String ability_descriptions[] = {"Heal yourself and other players", "melee attack monsters", "idk lol", "range attack"};
 	//contains ID of the slots the ith ability is assigned to
