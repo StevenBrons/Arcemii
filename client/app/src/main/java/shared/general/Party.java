@@ -1,6 +1,8 @@
 package shared.general;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -15,7 +17,7 @@ public class Party extends Message {
 	private Lock levelLock = new ReentrantLock();
 	private transient Level curLevel;
 	private int partyId;
-	private ArrayList<Player> players;
+	private List<Player> players;
 	public transient boolean inLobby = true;
 
 	/**
@@ -23,7 +25,7 @@ public class Party extends Message {
 	 */
 	public Party() {
 		partyId = (int)(Math.random()*99999);
-		players = new ArrayList<>();
+		players = Collections.synchronizedList(new ArrayList<>());
 	}
 
 	/**
@@ -54,8 +56,10 @@ public class Party extends Message {
 	 * @param message The message to send, should not be null
 	 */
 	public void messageAll(Message message) {
-		for (Player p : players) {
-			p.sendMessage(message);
+		synchronized (players) {
+			for (Player p : players) {
+				p.sendMessage(message);
+			}
 		}
 	}
 
@@ -67,6 +71,10 @@ public class Party extends Message {
 		return partyId;
 	}
 
+	/**
+	 * @param player
+	 * @return if the party contains the player.
+	 */
 	public boolean containsPlayer(Player player){
 		return players.contains(player);
 	}
@@ -75,7 +83,7 @@ public class Party extends Message {
 		return players.size() == 0;
 	}
 
-	public ArrayList<Player> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 
@@ -85,8 +93,10 @@ public class Party extends Message {
 		Generator g = new Generator(22,22,2,2,5,3);
 		curLevel  = g.generate(6);
 
-		for (Player p : players) {
-			curLevel.spawnPlayer(p);
+		synchronized (players) {
+			for (Player p : players) {
+				curLevel.spawnPlayer(p);
+			}
 		}
 
 		messageAll(curLevel);
@@ -105,17 +115,20 @@ public class Party extends Message {
 			levelLock.unlock();
 			messageAll(new GameUpdateMessage(changes));
 		} else {
-			messageAll(new GameUpdateMessage(new ArrayList<Entity>()));
+			messageAll(new GameUpdateMessage(new ArrayList<>()));
 		}
 	}
 
 	/**
 	 * @return if everyone from the party is ready.
+	 * @author Bram Pulles
 	 */
 	public boolean everyoneReady(){
-		for(Player player : players){
-			if(!player.isReady())
-				return false;
+		synchronized (players) {
+			for (Player player : players) {
+				if (!player.isReady())
+					return false;
+			}
 		}
 		return true;
 	}

@@ -67,10 +67,12 @@ public class ClientGameHandler {
 
 					if (gameActivity != null && level != null) {
 						gameActivity.draw(level);
-						player.invokeMove();
-						if (player.getActions().size() > 0) {
-							ActionMessage msg = new ActionMessage(player.getActions());
-							sendMessage(msg);
+						synchronized (player){
+							player.invokeMove();
+							if (player.getActions().size() > 0) {
+								ActionMessage msg = new ActionMessage(player.getActions());
+								sendMessage(msg);
+							}
 							player.clearActions();
 						}
 					}
@@ -273,8 +275,10 @@ public class ClientGameHandler {
 	 */
 	public void playerInfoMessage(PlayerInfoMessage m){
 		player = m.getPlayer();
-		player.setAbilities(m.getAbilities());
-		player.setActions(new ArrayList<Ability>());
+		synchronized (player){
+			player.setAbilities(m.getAbilities());
+			player.setActions(new ArrayList<Ability>());
+		}
 		sendPlayerInfoMessage();
 	}
 
@@ -286,9 +290,10 @@ public class ClientGameHandler {
 	public void sendPlayerInfoMessage() {
 		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPrefs.getString("username", "-");
-
-		player.setName(username);
-		sendMessage(new PlayerInfoMessage(player));
+		synchronized (player){
+			player.setName(username);
+			sendMessage(new PlayerInfoMessage(player));
+		}
 	}
 
 	/**
@@ -318,4 +323,6 @@ public class ClientGameHandler {
 	public Party getParty() {
 		return party;
 	}
+
+	public Level getLevel(){return level;}
 }

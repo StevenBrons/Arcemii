@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.debernardi.archemii.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import client.controller.ClientGameHandler;
 import shared.abilities.Ability;
@@ -39,7 +40,7 @@ public class LobbyActivity extends AppCompatActivity {
 	private int[] ability_title_ids = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
 	private int[] ability_description_ids = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
 
-	private ArrayList<Player> players = new ArrayList<>();
+	private List<Player> players = new ArrayList<>();
 
 	/**
 	 * This method also sets this activity available in the client game handler.
@@ -115,10 +116,11 @@ public class LobbyActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	private boolean isMaster(){
-		return players != null &&
-					players.size() > 0 &&
-					players.get(0) != null &&
-					players.get(0).equals(ClientGameHandler.handler.getPlayer());
+		Player player = ClientGameHandler.handler.getPlayer();
+		synchronized (player){
+			return players != null && players.size() > 0 &&
+					players.get(0) != null && players.get(0).equals(player);
+		}
 	}
 
 	/**
@@ -132,7 +134,9 @@ public class LobbyActivity extends AppCompatActivity {
 
 			// First send a message with the abilities of the player.
 			Player player = ClientGameHandler.handler.getPlayer();
-			player.setAbilities(getAbilities());
+			synchronized (player){
+				player.setAbilities(getAbilities());
+			}
 			ClientGameHandler.sendMessage(new PlayerInfoMessage(player));
 
 			if (isMaster()) {
