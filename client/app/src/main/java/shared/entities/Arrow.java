@@ -31,6 +31,7 @@ public class Arrow extends Entity {
 	public Arrow(double x,double y, double dx, double dy, boolean damagePlayer){
 		super(x,y);
 		this.move = new Move(0.1);
+		this.move.setBoundsCheck(false);
 		this.xVel = dx;
 		this.yVel = dy;
 		this.damagePlayer = damagePlayer;

@@ -15,9 +15,11 @@
         <activity android:name="client.activities.LobbyActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
-        <activity android:name="client.activities.JoinPartyActivity" />
-        <activity android:name="client.activities.SettingsActivity" />
-        <activity android:name="client.activities.MainActivity">
+        <activity android:name="client.activities.JoinPartyActivity"/>
+        <activity android:name="client.activities.SettingsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="client.activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
