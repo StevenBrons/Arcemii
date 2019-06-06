@@ -49,7 +49,7 @@
             android:fontFamily="@font/dpcomic"
             android:gravity="center"
             android:padding="5dp"
-            android:text="first"
+            android:text="first ability"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             android:textSize="12sp" />
@@ -93,7 +93,7 @@
             android:fontFamily="@font/dpcomic"
             android:gravity="center"
             android:padding="5dp"
-            android:text="second"
+            android:text="second ability"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             android:textSize="12sp" />
@@ -137,7 +137,7 @@
             android:fontFamily="@font/dpcomic"
             android:gravity="center"
             android:padding="5dp"
-            android:text="third"
+            android:text="third ability"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             android:textSize="12sp" />

@@ -18,7 +18,7 @@
             android:layout_height="360dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:src="@drawable/title"
+            android:src="@drawable/titledark"
             app:layout_constraintBottom_toTopOf="@+id/btnCreateParty"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
