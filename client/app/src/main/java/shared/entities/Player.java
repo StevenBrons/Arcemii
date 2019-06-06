@@ -255,4 +255,8 @@ public class Player extends Entity {
 			e.printStackTrace();
 		}
 	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
 }

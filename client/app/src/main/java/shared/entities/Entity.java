@@ -81,7 +81,9 @@ public abstract class Entity implements Serializable {
     public abstract void invokeAll(Level level);
 
     public void invoke(Ability ability) {
-        this.actions.add(ability);
+        if (ability != null) {
+            this.actions.add(ability);
+        }
     }
 
     public double getX() {
