@@ -36,7 +36,7 @@ public class Melee implements Ability {
 
 	@Override
 	public String getName(){
-		return "melee";
+		return "Melee";
 	}
 
 	@Override
@@ -45,5 +45,5 @@ public class Melee implements Ability {
 	}
 
 	@Override
-	public String getId(){return "Melee";}
+	public String getId(){return "melee";}
 }

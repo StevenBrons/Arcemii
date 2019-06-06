@@ -19,7 +19,7 @@ public class Heal implements Ability {
 	}
 	@Override
 	public String getName(){
-		return "heal";
+		return "Heal";
 	}
 
 	@Override
@@ -28,5 +28,5 @@ public class Heal implements Ability {
 	}
 
 	@Override
-	public String getId(){return "Heal";}
+	public String getId(){return "heal";}
 }
