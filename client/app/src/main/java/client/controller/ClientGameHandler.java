@@ -108,7 +108,8 @@ public class ClientGameHandler {
 
 	/**
 	 * Listen for messages from the server.
-	 * @author Bram Pulles and Steven Bronsveld.
+	 * @author Bram Pulles
+	 * @author Steven Bronsveld
 	 */
 	public void listenForMessages() {
 		new Thread(new Runnable() {
@@ -177,7 +178,8 @@ public class ClientGameHandler {
 	/**
 	 * This method received the messages send by the server.
 	 * @param m
-	 * @author Steven Bronsveld and Bram Pulles
+	 * @author Steven Bronsveld
+	 * @author Bram Pulles
 	 */
 	public void handleInput(Message m) {
 //		Log.d(Connection.TAG, "Client receives message: " + m);
@@ -223,7 +225,8 @@ public class ClientGameHandler {
 	/**
 	 * Set the level and start the game activity.
 	 * @param level
-	 * @author Bram Pulles and Steven Bronsveld
+	 * @author Bram Pulles
+	 * @author Steven Bronsveld
 	 */
 	private void startGame(final Level level) {
 		this.level = level;
@@ -242,7 +245,8 @@ public class ClientGameHandler {
 	/**
 	 * Send the new info to the lobby activity.
 	 * @param party update party.
-	 * @author Steven Bronsveld and Bram Pulles
+	 * @author Steven Bronsveld
+	 * @author Bram Pulles
 	 */
 	private void partyMessage(Party party){
 		this.party = party;
@@ -265,7 +269,8 @@ public class ClientGameHandler {
 
 	/**
 	 * Send a message to the server with the player information.
-	 * @author Bram Pulles and Steven Bronsveld
+	 * @author Bram Pulles
+	 * @author Steven Bronsveld
 	 */
 	public void sendPlayerInfoMessage() {
 		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
