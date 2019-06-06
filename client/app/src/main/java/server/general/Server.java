@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 import shared.entities.Player;
 import shared.general.Party;
@@ -85,7 +86,7 @@ public class Server {
 	 * @param ip
 	 */
 	private void checkUniqueness(InetAddress ip){
-		ArrayList<Party> parties = gameHandler.getParties();
+		List<Party> parties = gameHandler.getParties();
 		for(Party party : parties){
 			for(Player player : party.getPlayers()){
 				try{

@@ -8,7 +8,7 @@ public class Teleport implements Ability {
 	public static final long serialVersionUID = 1L;
 
 	private double direction;
-	private static final double dist = 6.0;
+	private static final double dist = 4.0;
 	private long cooldown = System.currentTimeMillis();
 
 	public Teleport(){
@@ -32,6 +32,11 @@ public class Teleport implements Ability {
 	}
 
 	@Override
+	public String getId(){
+		return "teleport";
+	}
+
+	@Override
 	public boolean available(Level level, Entity self){
 		return cooldown < System.currentTimeMillis();
 	}
@@ -45,5 +50,10 @@ public class Teleport implements Ability {
 		if (!level.getTileAt((int)(self.getX()+dx),(int)(self.getY()+dy)).isSolid())
 			self.setPos(x+dx,y+dy);
 		return false;
+	}
+
+	@Override
+	public String toString(){
+		return "Teleport(" + direction + ")";
 	}
 }
