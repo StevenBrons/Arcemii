@@ -27,7 +27,7 @@ public class Slime extends Entity {
 	public Slime(double x,double y){
 		super(x,y);
 		this.move = new Move(0.03);
-		maxhealth = health = 20;
+		maxhealth = health = 10;
 	}
 
 

@@ -32,13 +32,14 @@ public class Player extends Entity {
 
 	//client only
 	public static transient double direction = 0;
-	public static transient boolean move = false;
+	public static transient boolean doMove = false;
 
 	public Player(InetAddress ip, ObjectInputStream input, ObjectOutputStream output) {
 		super(0,0);
 		this.input = input;
 		this.output = output;
 		this.ip = ip;
+		this.move = new Move(0.2);
 		abilities.add(new Heal());
 		abilities.add(new Range());
 		abilities.add(new Melee());
@@ -165,8 +166,8 @@ public class Player extends Entity {
 	}
 
 	public synchronized void invokeMove() {
-	  if (move) {
-			invokePlayerAbility(((Move)abilities.get(0)));
+	  if (doMove) {
+			invokePlayerAbility((abilities.get(0)));
     }
 	}
 
