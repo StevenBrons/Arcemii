@@ -7,6 +7,8 @@ import shared.general.Level;
 
 public interface Ability extends Serializable {
 
+	long serialVersionUID = 1L;
+
 	boolean execute(Level level, Entity self);
 
 	default boolean available(Level level, Entity self){

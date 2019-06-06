@@ -30,4 +30,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //Added for gif support: https://github.com/koral--/android-gif-drawable
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
 }

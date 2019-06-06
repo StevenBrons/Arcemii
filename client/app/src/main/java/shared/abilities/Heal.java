@@ -5,6 +5,8 @@ import shared.general.Level;
 
 public class Heal implements Ability {
 
+	static final long serialVersionUID = -7588980448693010399L;
+
 	private int healAmount = 0;
 	private long cooldown = System.currentTimeMillis();
 
