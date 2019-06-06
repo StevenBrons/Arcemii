@@ -13,9 +13,12 @@ import shared.tiles.Tile;
  * An arrow projectile shot by e.g. a Skeleton
  * @author Jelmer Firet
  */
-public class Arrow extends Entity{
+public class Arrow extends Entity {
+
 	private boolean damagePlayer;
-	private Melee melee = new Melee();
+
+	private transient Melee melee = new Melee();
+	private transient Move move;
 
 	/**
 	 * Initialises an arrow

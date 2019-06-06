@@ -21,7 +21,7 @@ public class Connection {
 
 	public static final String TAG = "CONNECTION";
 
-	// For emulators ip: 10.0.0.2
+	// For emulators ip: 10.0.2.2
 	private String hostName = "10.0.2.2";
 	private final int PORT = 26194;
 	private boolean isConnected = false;

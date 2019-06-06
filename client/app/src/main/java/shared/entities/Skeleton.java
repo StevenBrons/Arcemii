@@ -16,8 +16,12 @@ import static java.lang.Math.atan2;
  * @author Jelmer Firet
  */
 public class Skeleton extends Entity {
+
 	private long shootingStart = System.currentTimeMillis()-5000;
-	private Bow rangedAttack = new Bow();
+
+	//server
+	private transient Bow rangedAttack = new Bow();
+	private transient Move move;
 
 	/**
 	 * Constructs a new skeleton

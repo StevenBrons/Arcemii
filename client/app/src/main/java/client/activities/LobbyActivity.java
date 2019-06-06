@@ -158,7 +158,7 @@ public class LobbyActivity extends AppCompatActivity {
 	 */
 	private ArrayList<Ability> getAbilities(){
 		ArrayList<Ability> abilities = new ArrayList<>();
-		abilities.add(new Move(0.05));
+		abilities.add(new Move(0.1));
 		for(int i=0; i<ability_slots.length; i++){
 			for(int j=0; j<assigned_to_slot.length; j++){
 				if(assigned_to_slot[j]==ability_slots[i]){
