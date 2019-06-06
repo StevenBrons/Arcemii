@@ -1,10 +1,12 @@
 package client.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.debernardi.archemii.R;
@@ -17,9 +19,9 @@ public class JoinPartyActivity extends AppCompatActivity {
 	private EditText gamePin;
 
 	/**
-	 * This method also sets this activity available in the client game handler.
+	 * This method also sets this activity available in the client game handler. Furthermore, the keyboard is shown.
 	 * @param savedInstanceState
-	 * @author Jelmer Firet and Bram Pulles
+	 * @author Jelmer Firet, Robert Koprinkov and Bram Pulles
 	 */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,9 @@ public class JoinPartyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join_party);
 
         gamePin = findViewById(R.id.gamePinField);
-				ClientGameHandler.handler.setJoinPartyActivity(this);
+		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        ClientGameHandler.handler.setJoinPartyActivity(this);
     }
 
 	/**
