@@ -45,6 +45,7 @@ public class Console {
 	 * Log a server message with the specified tag. Is only displayed if the logging mode is true
 	 * @param tag The tag under which tag is the message logged
 	 * @param message The content of the message
+	 * @author Bram Pulles
 	 */
 	public static void log(ConsoleTag tag, Object message){
 		if(log){
@@ -64,6 +65,11 @@ public class Console {
 			System.out.println(player.toString() + "/" + tag.toString() + ": " + message);
 		}
 	}
+
+	/**
+	 * Stop the server.
+	 * @author Bram Pulles
+	 */
 	private static void stop(){
 		System.exit(0);
 	}

@@ -23,7 +23,8 @@ public class Server {
 	/**
 	 * Start a new server.
 	 * @param gameHandler
-	 * @author Bram Pulles and Steven Bronsveld
+	 * @author Bram Pulles
+	 * @author Steven Bronsveld
 	 */
 	public Server(final ServerGameHandler gameHandler) {
 		Console.log(ConsoleTag.CONNECTION, "Starting server...");
