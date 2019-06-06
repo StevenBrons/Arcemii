@@ -12,7 +12,7 @@ import shared.abilities.Ability;
 import shared.abilities.Heal;
 import shared.abilities.Melee;
 import shared.abilities.Move;
-import shared.abilities.Range;
+import shared.abilities.Bow;
 import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
@@ -41,7 +41,7 @@ public class Player extends Entity {
 		this.ip = ip;
 		this.move = new Move(0.2);
 		abilities.add(new Heal());
-		abilities.add(new Range());
+		abilities.add(new Bow());
 		abilities.add(new Melee());
 		maxhealth = health = 50;
 	}
@@ -142,8 +142,8 @@ public class Player extends Entity {
 		if (ability instanceof Melee) {
 			super.invoke(((Melee) ability).invoke(false,5));
 		}
-		if (ability instanceof Range) {
-			super.invoke(((Range) ability).invoke(direction,false));
+		if (ability instanceof Bow) {
+			super.invoke(((Bow) ability).invoke(direction,false));
 		}
 		if (ability instanceof Heal) {
 			super.invoke(((Heal) ability).invoke(10));

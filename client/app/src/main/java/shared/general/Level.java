@@ -1,7 +1,5 @@
 package shared.general;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import shared.entities.Entity;
@@ -19,6 +17,12 @@ public class Level extends Message {
   private transient ArrayList<Object> updates = new ArrayList<>();
   private double spawnX = 0,spawnY = 0;
 
+  /**
+   * Create a level class with the specified tiles and entities as its contents
+   * @param tiles A 2D tile array with the specified tiles, tiles shouldn't be null
+   * @param entities a (potentially empty) entity array
+   * @
+   */
   public Level (Tile[][] tiles, ArrayList<Entity> entities) {
     this.tiles = tiles;
     this.entities = entities;
@@ -34,14 +38,23 @@ public class Level extends Message {
     }
   }
 
+  /**
+   * @return the width of the level, based on the tiles
+   */
   public int getWidth(){
     return tiles.length;
   }
 
+  /**
+   * @return the height of the level, based on the tiles
+   */
   public int getHeight(){
     return tiles[0].length;
   }
 
+  /**
+   * @return the tile a this grid position, returns void if the grid position falls outside of the level bounds
+   */
   public Tile getTileAt(int x, int y) {
     if (x >= 0 && x < tiles.length && y >= 0 && y < tiles[0].length) {
       return tiles[x][y];
@@ -50,6 +63,10 @@ public class Level extends Message {
     }
   }
 
+  /**
+   *
+   * @return The number of entities in the level
+   */
   public int getNumEntity(){
     return entities.size();
   }

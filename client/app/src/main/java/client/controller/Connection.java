@@ -73,7 +73,8 @@ public class Connection {
 
 	/**
 	 * Establish a connection with the server.
-	 * @author Bram Pulles and Steven Bronsveld.
+	 * @author Bram Pulles
+	 * @author Steven Bronsveld
 	 */
 	private void connectToServer(){
 		Log.d(TAG, "Connecting to server...");
