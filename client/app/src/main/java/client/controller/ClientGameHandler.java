@@ -67,10 +67,12 @@ public class ClientGameHandler {
 
 					if (gameActivity != null && level != null) {
 						gameActivity.draw(level);
-						player.invokeMove();
-						ActionMessage msg = new ActionMessage(player.getActions());
-						sendMessage(msg);
-						player.clearActions();
+						synchronized (player){
+							player.invokeMove();
+							ActionMessage msg = new ActionMessage(player.getActions());
+							sendMessage(msg);
+							player.clearActions();
+						}
 					}
 
 					long timeTook = System.currentTimeMillis() - start;
@@ -213,14 +215,14 @@ public class ClientGameHandler {
 	}
 
 	private void transferTransientPlayer(Player p) {
-		ArrayList<Ability> abilities = player.getAbilities();
-		double direction = player.direction;
-
-		player = p;
-		player.setAbilities(abilities);
-		player.setActions(new ArrayList<Ability>());
-		player.direction = direction;
-		gameActivity.updateHealth(player.getHealth());
+		synchronized (player){
+			ArrayList<Ability> abilities = player.getAbilities();
+			p.setAbilities(abilities);
+			p.setActions(new ArrayList<Ability>());
+			p.direction = player.direction;
+			player = p;
+			gameActivity.updateHealth(player.getHealth());
+		}
 	}
 
 	/**
@@ -263,8 +265,10 @@ public class ClientGameHandler {
 	 */
 	public void playerInfoMessage(PlayerInfoMessage m){
 		player = m.getPlayer();
-		player.setAbilities(m.getAbilities());
-		player.setActions(new ArrayList<Ability>());
+		synchronized (player){
+			player.setAbilities(m.getAbilities());
+			player.setActions(new ArrayList<Ability>());
+		}
 		sendPlayerInfoMessage();
 	}
 
@@ -276,9 +280,10 @@ public class ClientGameHandler {
 	public void sendPlayerInfoMessage() {
 		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
 		String username = sharedPrefs.getString("username", "-");
-
-		player.setName(username);
-		sendMessage(new PlayerInfoMessage(player));
+		synchronized (player){
+			player.setName(username);
+			sendMessage(new PlayerInfoMessage(player));
+		}
 	}
 
 	/**
