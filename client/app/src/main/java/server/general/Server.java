@@ -13,7 +13,7 @@ import shared.general.Party;
 
 public class Server {
 
-	public static final int PORT = 26194;
+	public static final int PORT = 26193;
 	private boolean running;
 	private boolean starting = true;
 

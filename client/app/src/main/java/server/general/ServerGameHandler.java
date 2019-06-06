@@ -274,11 +274,7 @@ public class ServerGameHandler {
 	 * @return a list of all the parties on the server.
 	 * @author Bram Pulles
 	 */
-	public ArrayList<Party> getParties(){
-		synchronized (parties){
-			ArrayList<Party> result = new ArrayList<>(parties.size());
-			Collections.copy(result, parties);
-			return result;
-		}
+	public ArrayList<Party> getParties() {
+		return new ArrayList<>(parties);
 	}
 }
