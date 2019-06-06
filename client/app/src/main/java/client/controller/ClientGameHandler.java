@@ -218,7 +218,7 @@ public class ClientGameHandler {
 		synchronized (player){
 			ArrayList<Ability> abilities = player.getAbilities();
 			p.setAbilities(abilities);
-			p.setActions(new ArrayList<Ability>());
+			p.setActions(new ArrayList<>());
 			p.direction = player.direction;
 			player = p;
 			gameActivity.updateHealth(player.getHealth());
@@ -267,7 +267,7 @@ public class ClientGameHandler {
 		player = m.getPlayer();
 		synchronized (player){
 			player.setAbilities(m.getAbilities());
-			player.setActions(new ArrayList<Ability>());
+			player.setActions(new ArrayList<>());
 		}
 		sendPlayerInfoMessage();
 	}
