@@ -1,5 +1,6 @@
 package shared.abilities;
 
+import shared.entities.Arrow;
 import shared.entities.Entity;
 import shared.general.Level;
 
@@ -25,7 +26,7 @@ public class Bow implements Ability {
 	public boolean execute(Level level, Entity self) {
 		double dx = Math.cos(direction)*0.4;
 		double dy = Math.sin(direction)*0.4;
-		level.addEntity(new shared.entities.Arrow(self.getX()+dx,self.getY()+dy,dx,dy,damagePlayer));
+		level.addEntity(new Arrow(self.getX()+dx,self.getY()+dy,dx,dy,damagePlayer));
 		return true;
 	}
 
