@@ -313,4 +313,6 @@ public class ClientGameHandler {
 	public Party getParty() {
 		return party;
 	}
+
+	public Level getLevel(){return level;}
 }

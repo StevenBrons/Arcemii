@@ -6,6 +6,7 @@ import shared.general.Level;
 public class Heal implements Ability {
 
 	private int healAmount = 0;
+	private long cooldown = System.currentTimeMillis();
 
 	@Override
 	public boolean execute(Level level, Entity self) {
@@ -15,8 +16,14 @@ public class Heal implements Ability {
 
 	public Ability invoke(int amount) {
 		this.healAmount = amount;
+		cooldown = System.currentTimeMillis()+3000;
 		return this;
 	}
+
+	public boolean available(Level level,Entity entity){
+		return System.currentTimeMillis() > cooldown;
+	}
+
 	@Override
 	public String getName(){
 		return "Heal";

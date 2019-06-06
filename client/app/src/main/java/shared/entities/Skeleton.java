@@ -91,7 +91,7 @@ public class Skeleton extends Entity {
 			return;
 		}
 		if (rangedAttack.available(level,this) && targetPlayer != null
-				&& shootingStart < System.currentTimeMillis()-2200){
+				&& shootingStart < System.currentTimeMillis()-3000){
 			shootingStart = System.currentTimeMillis();
 			setChanged(true);
 		}

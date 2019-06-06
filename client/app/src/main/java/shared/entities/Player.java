@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.controller.ClientGameHandler;
 import client.view.RenderItem;
 import shared.abilities.Ability;
 import shared.abilities.Heal;
@@ -139,6 +140,9 @@ public class Player extends Entity {
 	}
 
 	public void invokePlayerAbility(Ability ability) {
+		if (!ability.available(ClientGameHandler.handler.getLevel(),this)){
+			return;
+		}
 		if (ability instanceof Melee) {
 			super.invoke(((Melee) ability).invoke(false,5));
 		}
