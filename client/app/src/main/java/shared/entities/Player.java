@@ -36,7 +36,7 @@ public class Player extends Entity {
 		this.input = input;
 		this.output = output;
 		this.ip = ip;
-
+		maxhealth = health = 50;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Player extends Entity {
 	public List<RenderItem> getRenderItem(){
 		List<RenderItem> result = new ArrayList<>();
 		String textureName;
-		if (xVel*xVel+yVel*yVel>0.005){
+		if (xVel*xVel+yVel*yVel>0.0001){
 			switch (color) {
 				case 0: textureName = "player/playerBlueWalking";break;
 				case 1: textureName = "player/playerGreenWalking";break;
