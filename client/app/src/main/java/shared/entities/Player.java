@@ -42,7 +42,7 @@ public class Player extends Entity {
 		this.input = input;
 		this.output = output;
 		this.ip = ip;
-		this.abilities.add(new Move(0.1));
+		this.abilities.add(new Move(0.06));
 		maxhealth = health = 50;
 	}
 
