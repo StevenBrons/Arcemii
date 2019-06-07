@@ -255,6 +255,7 @@ public class ClientGameHandler {
 	 */
 	private void partyJoinedMessage(){
 		Intent intStartParty = new Intent(context, LobbyActivity.class);
+		intStartParty.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		context.startActivity(intStartParty);
 	}
 
