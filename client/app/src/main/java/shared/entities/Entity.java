@@ -20,8 +20,8 @@ public abstract class Entity implements Serializable {
     protected transient ArrayList<Ability> actions = new ArrayList<>();
     private transient boolean changed = false;
     private transient double hitbox = 0.2;
-    protected int health = 0;
-    protected int maxhealth = 0;
+    protected int health = 1;
+    protected int maxhealth = 1;
 
     protected double xPos = 0, yPos = 0, xVel = 0, yVel = 0;
 
@@ -120,8 +120,8 @@ public abstract class Entity implements Serializable {
         if (this.xVel > 0.01 || this.yVel > 0.01){
             setChanged(true);
         }
-        this.xVel = 0.0;
-        this.yVel = 0.0;
+        this.xVel /= Math.abs(xVel)*1000.0;
+        this.yVel /= Math.abs(yVel)*1000.0;
     }
 
     public boolean isChanged() {

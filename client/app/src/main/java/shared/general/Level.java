@@ -2,6 +2,7 @@ package shared.general;
 
 import java.util.ArrayList;
 
+import shared.entities.Boss;
 import shared.entities.Entity;
 import shared.entities.Player;
 import shared.messages.Message;
@@ -216,4 +217,14 @@ public class Level extends Message {
     }
     return true;
   }
+
+	public boolean isFinished(){
+		for(Entity entity : entities){
+			if(entity instanceof Boss){
+				return false;
+			}
+		}
+		return true;
+	}
+
 }
