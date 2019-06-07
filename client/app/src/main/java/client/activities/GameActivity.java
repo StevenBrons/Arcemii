@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.debernardi.archemii.R;
@@ -66,6 +67,15 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 			makeDrawable(i);
 		}
 
+		BitmapDrawable res = null;
+		try {
+			res = (BitmapDrawable) Drawable.createFromStream(getAssets().open("sprites/heart.png"), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		res.getPaint().setFilterBitmap(false);
+		if(res!=null)
+			((ImageView) findViewById(R.id.heartImage)).setImageDrawable(res);
 		ClientGameHandler.handler.setGameActivity(this);
 	}
 
