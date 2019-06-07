@@ -19,6 +19,11 @@ import shared.general.Level;
 import shared.messages.Message;
 import shared.tiles.Tile;
 
+/**
+ * The player entity represents a player in a level, a client in the server and for the client a representation of themselves.
+ * Certain methods and variables are only used by certain of these roles, and cannot be used by at other places
+ * @author Steven Bronsveld
+ */
 public class Player extends Entity {
 
 	private String name = "Player#" + (int)(Math.random()*99999);
@@ -37,6 +42,12 @@ public class Player extends Entity {
 	public static transient double direction = 0;
 	public static transient boolean doMove = false;
 
+	/**
+	 * Create a new player at the server side, adding the in- and output streams of the client-socket
+	 * @param ip The ip of the client
+	 * @param input The input stream of the client-socket
+	 * @param output The output stream of the client-socket
+	 */
 	public Player(InetAddress ip, ObjectInputStream input, ObjectOutputStream output) {
 		super(0,0);
 		this.input = input;
@@ -138,6 +149,10 @@ public class Player extends Entity {
 		return name;
 	}
 
+	/**
+	 * Invokes abilities in the client, ensuring the right data is given to the right abilities. New abilities should also be added to this list!
+	 * @param ability The ability to invoke at the client
+	 */
 	public synchronized void invokePlayerAbility(Ability ability) {
 		if (!ability.available(ClientGameHandler.handler.getLevel(),this)){
 			return;
@@ -159,6 +174,10 @@ public class Player extends Entity {
 		}
 	}
 
+	/**
+	 * Invoke the bottom, middle, upper and move abilities
+	 * @author Steven Bronsveld
+	 */
 	public synchronized void invokeBottom() {
 		invokePlayerAbility(abilities.get(1));
 	}

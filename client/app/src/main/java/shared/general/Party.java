@@ -88,6 +88,10 @@ public class Party extends Message {
 	}
 
 
+	/**
+	 * Start the game of the party, it generates a new level, adds the players to this level and messages all player this new level
+	 * @author Steven Bronsveld
+	 */
 	public void startGame() {
 		levelLock.lock();
 		Generator g = new Generator(22,22,2,2,5,3);
@@ -104,6 +108,10 @@ public class Party extends Message {
 		levelLock.unlock();
 	}
 
+	/**
+	 * Update party, if the players are in the lobby a heartbeat message (an empty GameUpdateMessage) is sent, otherwise the party is updated by invoking all abilities of the non-player entities, it than executes the actions of all entities. It respawns dead players and sends game-updates to all party-members
+	 * @author Steven Bronsveld
+	 */
 	public void update() {
 		if (!inLobby) {
 			levelLock.lock();

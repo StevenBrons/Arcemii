@@ -207,6 +207,10 @@ public class ClientGameHandler {
 		}
 	}
 
+	/**
+	 * Apply the updates from the server, updating all entities. If the own player receives an update, it is transferred using the transferTransientPlayer method
+	 * @param m Game update message
+	 */
 	private void updateGame(GameUpdateMessage m) {
 		for (Entity e : m.getChanges()) {
 			if (e.getUUID().equals(player.getUUID())) {

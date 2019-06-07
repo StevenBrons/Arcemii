@@ -21,7 +21,7 @@ public class Level extends Message {
    * Create a level class with the specified tiles and entities as its contents
    * @param tiles A 2D tile array with the specified tiles, tiles shouldn't be null
    * @param entities a (potentially empty) entity array
-   * @
+   * @author Steven Bronsveld
    */
   public Level (Tile[][] tiles, ArrayList<Entity> entities) {
     this.tiles = tiles;
@@ -89,6 +89,7 @@ public class Level extends Message {
 
   /**
    * Invoke abilities on all entities except for players, who invoke their own
+   * @author Steven Bronsveld
    */
   public void invoke() {
     for (Entity e : entities) {
@@ -99,11 +100,21 @@ public class Level extends Message {
   }
 
 
+  /**
+   * Add entity to level
+   * @param e Entity to add
+   * @author Steven Bronsveld
+   */
   public void addEntity(Entity e) {
     newEntities.add(e);
     e.setChanged(true);
   }
 
+  /**
+   * A string representation of the level, solid tiles are represented as "#", non solid tiles are represented as "."
+   * @return The level string
+   * @author Steven Bronsveld
+   */
   @Override
   public String toString() {
     String tot = "";
@@ -116,11 +127,22 @@ public class Level extends Message {
     return tot;
   }
 
+  /**
+   * Spawn a player in the level at the position of the Start Tile
+   * @param player The player to spawn
+   * @author Steven Bronsveld
+   * @author Jelmer Firet
+   */
   public synchronized void spawnPlayer(Player player) {
     player.setPos(spawnX,spawnY);
     entities.add(player);
   }
 
+  /**
+   * Returns changed entities, and removes all changes afterwarts.
+   * @return All changed entities in the level since last time this function was called
+   * @author Steven Bronsveld
+   */
   public ArrayList<Entity> getChanges() {
     ArrayList<Entity> changedEntities = new ArrayList();
     for (Entity e : entities) {
@@ -132,6 +154,11 @@ public class Level extends Message {
     return changedEntities;
   }
 
+  /**
+   * Update entity, dead entities are removed
+   * @param updateEntity The entity to update
+   * @author Jelmer Firet
+   */
   public void updateEntity(Entity updateEntity) {
     for (int i = entities.size() - 1; i >= 0; i--) {
       if (entities.get(i).equals(updateEntity)) {

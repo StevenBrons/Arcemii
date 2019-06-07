@@ -6,6 +6,10 @@ import java.util.List;
 
 import client.view.RenderItem;
 
+/**
+ * Instances of this class represent the tile-grid in a level
+ * @author Steven Bronsveld
+ */
 public abstract class Tile implements Serializable {
 
 
