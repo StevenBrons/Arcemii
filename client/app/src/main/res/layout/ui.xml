@@ -72,13 +72,14 @@
         android:id="@+id/textView3"
         android:layout_width="36dp"
         android:layout_height="39dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@null"
         android:text="50"
         android:textColor="#ac3232"
         android:textSize="30dp"
         android:textStyle="bold"
+        android:fontFamily="@font/dpcomic"
         app:layout_constraintEnd_toStartOf="@+id/heartImage"
         app:layout_constraintTop_toTopOf="parent" />
 
