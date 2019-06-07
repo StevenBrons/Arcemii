@@ -10,7 +10,9 @@ import server.generator.Generator;
 import shared.entities.Entity;
 import shared.entities.Player;
 import shared.messages.GameUpdateMessage;
+import shared.messages.JoinPartyMessage;
 import shared.messages.Message;
+import shared.messages.PartyJoinedMessage;
 
 public class Party extends Message {
 
@@ -107,13 +109,19 @@ public class Party extends Message {
 	public void update() {
 		if (!inLobby) {
 			levelLock.lock();
-			curLevel.invoke();
-			curLevel.execute();
-			curLevel.respawnDeadPlayers();
-			ArrayList<Entity> changes = curLevel.getChanges();
-			curLevel.removeDead();
-			levelLock.unlock();
-			messageAll(new GameUpdateMessage(changes));
+			if(curLevel.isFinished()){
+				messageAll(new PartyJoinedMessage());
+				inLobby = true;
+				levelLock.unlock();
+			} else {
+				curLevel.invoke();
+				curLevel.execute();
+				curLevel.respawnDeadPlayers();
+				ArrayList<Entity> changes = curLevel.getChanges();
+				curLevel.removeDead();
+				levelLock.unlock();
+				messageAll(new GameUpdateMessage(changes));
+			}
 		} else {
 			messageAll(new GameUpdateMessage(new ArrayList<>()));
 		}
