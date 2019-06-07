@@ -1,5 +1,6 @@
 package client.activities;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
@@ -77,12 +78,13 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 		String uri = "sprites/ability_cards/";
 
 		String temp = uri + myAbilities.get(i+1).getId() + ".png";
-		Drawable res = null;
+		BitmapDrawable res = null;
 		try {
-			res = Drawable.createFromStream(getAssets().open(temp), null);
+			res = (BitmapDrawable) Drawable.createFromStream(getAssets().open(temp), null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		res.getPaint().setFilterBitmap(false);
 		images[i].setImageDrawable(res);
 	}
 

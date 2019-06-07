@@ -76,7 +76,7 @@
         android:layout_marginEnd="8dp"
         android:contentDescription="@null"
         android:text="50"
-        android:textColor="#FF0000"
+        android:textColor="#ac3232"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
