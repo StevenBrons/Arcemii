@@ -20,7 +20,7 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill"
         android:layout_margin="10dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/rounded_corner"
         android:backgroundTint="@color/button"
         android:onClick="onChangeAbility"
@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/ability_name1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
             android:fontFamily="@font/dpcomic"
@@ -43,7 +43,7 @@
         <TextView
             android:id="@+id/ability_description1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/dpcomic"
@@ -64,7 +64,7 @@
         android:layout_column="0"
         android:layout_gravity="fill"
         android:layout_margin="10dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/rounded_corner"
         android:backgroundTint="@color/button"
         android:onClick="onChangeAbility"
@@ -73,7 +73,7 @@
         <TextView
             android:id="@+id/ability_name2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
             android:fontFamily="@font/dpcomic"
@@ -87,7 +87,7 @@
         <TextView
             android:id="@+id/ability_description2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/dpcomic"
@@ -108,7 +108,7 @@
         android:layout_column="0"
         android:layout_gravity="fill"
         android:layout_margin="10dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/rounded_corner"
         android:backgroundTint="@color/button"
         android:onClick="onChangeAbility"
@@ -117,7 +117,7 @@
         <TextView
             android:id="@+id/ability_name3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
             android:fontFamily="@font/dpcomic"
@@ -131,7 +131,7 @@
         <TextView
             android:id="@+id/ability_description3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/dpcomic"
@@ -145,8 +145,8 @@
 
     <TextView
         android:id="@+id/abilityDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_row="4"
         android:layout_column="0"
         android:layout_gravity="fill"
@@ -160,13 +160,14 @@
 
     <TextView
         android:id="@+id/game_pin"
+        android:layout_width="0dp"
         android:layout_row="0"
         android:layout_column="1"
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/dpcomic"
         android:gravity="center"
         android:text="@string/game_pin"
@@ -176,13 +177,15 @@
 
     <TextView
         android:id="@+id/playersTxtView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_row="1"
         android:layout_rowSpan="3"
         android:layout_rowWeight="1"
         android:layout_column="1"
         android:layout_gravity="fill"
         android:layout_margin="10dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/rounded_corner"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/dpcomic"
@@ -194,11 +197,12 @@
 
     <Button
         android:id="@+id/btnStartGame"
+        android:layout_width="0dp"
         android:layout_row="4"
         android:layout_column="1"
         android:layout_gravity="fill_horizontal"
         android:layout_margin="10dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/button"
         android:fontFamily="@font/dpcomic"
