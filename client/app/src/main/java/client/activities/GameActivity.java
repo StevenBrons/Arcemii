@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 import com.debernardi.archemii.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import client.controller.ClientGameHandler;
@@ -29,6 +29,9 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 	private static MediaPlayer audio;
 	private static boolean muted;
 
+	private ImageButton[] images = new ImageButton[3];
+	private ArrayList<Ability> myAbilities;
+
 	/**
 	 * Makes a new GameView view in the activity and starts the refresh loop
 	 * @param savedInstanceState
@@ -39,43 +42,48 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 		super.onCreate(savedInstanceState);
 		muted = getSharedPreferences("audioprefs", MODE_PRIVATE).contains("muted");
 		view = new GameView(this);
+
 		Texture.init(getAssets());
 		FrameLayout frame = new FrameLayout(this);
 		frame.addView(view);
 		LayoutInflater factory = LayoutInflater.from(this);
 		View UI = factory.inflate(R.layout.ui, null);
+
 		Player me = ClientGameHandler.handler.getPlayer();
-		ArrayList<Ability> myAbilities;
 		synchronized (me){
 			myAbilities = me.getAbilities();
 		}
+
 		frame.addView(UI);
 		setContentView(frame);
 
-		String uri = "@drawable/";
+		images[0] = findViewById(R.id.AbilityButtonBottom);
+		images[1] = findViewById(R.id.AbilityButtonMiddle);
+		images[2] = findViewById(R.id.AbilityButtonUpper);
 
-		final ImageButton ability1 = findViewById(R.id.AbilityButtonBottom);
-		final ImageButton ability2 = findViewById(R.id.AbilityButtonMiddle);
-		final ImageButton ability3 = findViewById(R.id.AbilityButtonUpper);
-
-		String temp = uri + myAbilities.get(1).getId();
-		int imageResource = getResources().getIdentifier(temp, null, getPackageName());
-		Drawable res = getResources().getDrawable(imageResource);
-		ability1.setImageDrawable(res);
-
-		temp = uri + myAbilities.get(2).getId();
-		imageResource = getResources().getIdentifier(temp, null, getPackageName());
-		res = getResources().getDrawable(imageResource);
-		ability2.setImageDrawable(res);
-
-		temp = uri + myAbilities.get(3).getId();
-		imageResource = getResources().getIdentifier(temp, null, getPackageName());
-		res = getResources().getDrawable(imageResource);
-		ability3.setImageDrawable(res);
-
-
+		for(int i = 0; i < images.length; i++){
+			makeDrawable(i);
+		}
 
 		ClientGameHandler.handler.setGameActivity(this);
+	}
+
+	/**
+	 * Draw the ability card on screen.
+	 * @param i
+	 * @author Bram Pulles
+	 */
+	public void makeDrawable(int i){
+		String uri = "sprites/ability_cards/";
+
+		String temp = uri + myAbilities.get(i+1).getId() + ".png";
+		Drawable res = null;
+		try {
+			res = Drawable.createFromStream(getAssets().open(temp), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		images[i].setImageDrawable(res);
 	}
 
 	public void draw(Level level) {
