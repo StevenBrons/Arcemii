@@ -61,7 +61,7 @@ public class ClientGameHandler {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				int TICKSPEED = ServerGameHandler.TICKSPEED / 10;
+				int TICKSPEED = ServerGameHandler.TICKSPEED;
 				while (true) {
 					long start = System.currentTimeMillis();
 
