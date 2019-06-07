@@ -31,7 +31,7 @@ public class Boss extends Entity {
 	 */
 	public Boss(double x, double y){
 		super(x,y);
-		maxhealth = health = 100;
+		maxhealth = health = 60;
 	}
 
   @Override
