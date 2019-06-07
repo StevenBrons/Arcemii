@@ -117,6 +117,12 @@ public class ServerGameHandler {
 		}
 	}
 
+	/**
+	 * updates ready status of a player and pushes the update to all players
+	 * @author Bram Pulles
+	 * @param m The ReadyMessage
+	 * @param player The player who sent the message
+	 * */
 	private void readyMessage(ReadyMessage m, Player player){
 		player.setReady(m.isReady());
 		Console.log(ConsoleTag.CONNECTION, "ready: " + player.getName(), player);

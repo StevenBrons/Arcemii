@@ -57,6 +57,10 @@ public class ClientGameHandler {
 		gameLoop();
 	}
 
+	/**
+	 * Handles running the game
+	 * @author Bram Pulles
+	 * */
 	public void gameLoop(){
 		new Thread(new Runnable() {
 			@Override

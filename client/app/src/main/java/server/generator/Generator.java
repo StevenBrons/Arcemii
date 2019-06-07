@@ -64,6 +64,7 @@ public class Generator {
 	}
 
     private class BlockGrid {
+	    //number of row-cells, number of column cells
         private int n_rows, n_cols;
         private Block[][] grid;
         private ArrayList<Cell> roomBottomLeft;
@@ -89,7 +90,8 @@ public class Generator {
 		/**
 		 * Uses Kruskal's algorithm to construct the minimum spanning tree that connects all rooms
 		 *
-		 * @param N, edges
+		 * @param N
+         * @param edges
 		 * @author Robert Koprinkov
 		 */
 

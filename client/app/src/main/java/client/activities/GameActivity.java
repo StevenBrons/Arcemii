@@ -216,8 +216,8 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 	}
 
 	/**
-	 *
-	 *
+	 * Resume playing music
+	 * @author Thijs van Loenhout
 	 */
 	@Override
 	protected void onResume() {
@@ -236,6 +236,11 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
 		audio.release();
 	}
 
+	/***
+	 * When the audio track is completed, start it again.
+	 * @author Thijs van Loenhout
+	 */
+	
 	@Override
 	public void onCompletion(MediaPlayer mp) {
 		audio.start();

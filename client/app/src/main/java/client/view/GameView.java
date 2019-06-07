@@ -59,7 +59,6 @@ public class GameView extends View {
 
 	/**
 	 * Construct a new GameView
-	 * TODO: Remove test drawing
 	 * @param context context to pass to View constructor
 	 * @author Jelmer Firet
 	 */

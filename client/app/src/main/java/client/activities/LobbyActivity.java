@@ -36,8 +36,11 @@ public class LobbyActivity extends AppCompatActivity {
 
 	//contains ID of the slots the ith ability is assigned to
 	private int[] assigned_to_slot = {0, 0, 0, 0};
+	//contains the id of every ability slot
 	private int[] ability_slots = {R.id.ability1, R.id.ability2, R.id.ability3};
+	//contains the id of the name field of every ability slot
 	private int[] ability_title_ids = {R.id.ability_name1, R.id.ability_name2, R.id.ability_name3};
+	//contains the id of the decsription field of every ability slot
 	private int[] ability_description_ids = {R.id.ability_description1, R.id.ability_description2, R.id.ability_description3};
 
 	private List<Player> players = new ArrayList<>();
@@ -223,7 +226,7 @@ public class LobbyActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Returns an integers [0, 2]: the ability slot to which this ID belongs. Returns -1 if this ID was not found.
+	 * Returns an integer [0, 2]: the ability slot to which this ID belongs. Returns -1 if this ID was not found.
 	 * @author Robert Koprinkov
 	 * @param id
 	 */
