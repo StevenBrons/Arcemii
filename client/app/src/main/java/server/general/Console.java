@@ -32,6 +32,7 @@ public class Console {
 						break;
 					case "log":
 						log = !log;
+						System.out.println("Logging mode is now: " + log);
 						break;
 					default:
 						help();
