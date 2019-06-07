@@ -188,7 +188,7 @@
         android:fontFamily="@font/dpcomic"
         android:lineSpacingExtra="10dp"
         android:padding="10dp"
-        android:text="test\ntest\ntest"
+        android:text="Something\nwent\nwrong :/\n\nPlease retry"
         android:textAlignment="center"
         android:textSize="24sp" />
 
