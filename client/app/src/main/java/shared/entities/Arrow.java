@@ -58,7 +58,7 @@ public class Arrow extends Entity {
 			Entity entity = level.getEntityAt(i);
 			if (entity instanceof Player && !damagePlayer) continue;
 			if (!(entity instanceof Player) && damagePlayer) continue;
-			if (this.intersects(entity) && this != entity){
+			if (this.equals(entity) && this.intersects(entity) && damagePlayer != (entity instanceof Player)){
 				intersects = true;
 			}
 		}

@@ -218,16 +218,15 @@ public class ClientGameHandler {
 
 	/**
 	 * Transfer certain transient properties from the old player to the new player
-	 * @param p The new player
+	 * @param newPlayer The new player
 	 */
-	private void transferTransientPlayer(Player p) {
+	private void transferTransientPlayer(Player newPlayer) {
 		synchronized (player) {
-			ArrayList<Ability> abilities = player.getAbilities();
-			double direction = player.direction;
-			player = p;
-			player.setAbilities(abilities);
-			player.setActions(new ArrayList<>());
-			player.direction = direction;
+			newPlayer.setAbilities(player.getAbilities());
+			newPlayer.direction = player.direction;
+			newPlayer.setActions(new ArrayList<>());
+
+			player = newPlayer;
 			if (gameActivity != null) {
 				gameActivity.updateHealth(player.getHealth());
 			}
@@ -315,7 +314,7 @@ public class ClientGameHandler {
 		this.gameActivity = gameActivity;
 	}
 
-	public Player getPlayer(){
+	public synchronized Player getPlayer(){
 		return player;
 	}
 

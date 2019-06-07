@@ -6,7 +6,7 @@ import shared.entities.Player;
 
 public class Console {
 
-	private static boolean log = true;
+	private static boolean log = false;
 
 	/**
 	 * Handles console input using the default input stream. A new thread is stared that handles all input.

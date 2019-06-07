@@ -114,6 +114,7 @@ public class GameActivity extends AppCompatActivity implements JoystickView.Joys
      * */
     public void onAbilityMiddle(View view){
         Player player = ClientGameHandler.handler.getPlayer();
+
         synchronized (player){
             ((ImageButton)findViewById(R.id.AbilityButtonMiddle)).setAlpha((float) 0.6);
             player.invokeMiddle();

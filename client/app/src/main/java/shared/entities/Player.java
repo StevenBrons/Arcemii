@@ -138,7 +138,7 @@ public class Player extends Entity {
 		return name;
 	}
 
-	public void invokePlayerAbility(Ability ability) {
+	public synchronized void invokePlayerAbility(Ability ability) {
 		if (!ability.available(ClientGameHandler.handler.getLevel(),this)){
 			return;
 		}

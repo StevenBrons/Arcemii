@@ -1,5 +1,7 @@
 package shared.entities;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,9 +83,7 @@ public abstract class Entity implements Serializable {
     public abstract void invokeAll(Level level);
 
     public void invoke(Ability ability) {
-        if (ability != null) {
-            this.actions.add(ability);
-        }
+        this.actions.add(ability);
     }
 
     public double getX() {
@@ -120,7 +120,8 @@ public abstract class Entity implements Serializable {
         if (this.xVel > 0.01 || this.yVel > 0.01){
             setChanged(true);
         }
-        this.xVel = 0.0;this.yVel = 0.0;
+        this.xVel = 0.0;
+        this.yVel = 0.0;
     }
 
     public boolean isChanged() {
