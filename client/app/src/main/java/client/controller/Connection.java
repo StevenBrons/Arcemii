@@ -47,14 +47,11 @@ public class Connection {
     this.singleplayer = singleplayer;
     this.context = context;
 
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        if (singleplayer) {
-          runLocalServer();
-        }
-        connectToServer();
+    new Thread(() -> {
+      if (singleplayer) {
+        runLocalServer();
       }
+      connectToServer();
     }).start();
   }
 
@@ -126,14 +123,11 @@ public class Connection {
    */
   public void sendMessage(final Message msg) {
     if (isConnected()){
-      new Thread(new Runnable() {
-        @Override
-        public void run() {
-          try {
-            write(msg);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
+      new Thread(() -> {
+        try {
+          write(msg);
+        } catch (IOException e) {
+          e.printStackTrace();
         }
       }).start();
     }

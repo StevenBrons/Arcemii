@@ -255,6 +255,7 @@ public class ClientGameHandler {
 	 */
 	private void partyJoinedMessage(){
 		Intent intStartParty = new Intent(context, LobbyActivity.class);
+		intStartParty.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		context.startActivity(intStartParty);
 	}
 
@@ -291,11 +292,16 @@ public class ClientGameHandler {
 	 * @author Steven Bronsveld
 	 */
 	public void sendPlayerInfoMessage() {
+		String def = "-";
+
 		SharedPreferences sharedPrefs = context.getSharedPreferences(context.getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);
-		String username = sharedPrefs.getString("username", "-");
-		synchronized (player){
-			player.setName(username);
-			sendMessage(new PlayerInfoMessage(player));
+		String username = sharedPrefs.getString("username", def);
+
+		if(!username.equals(def)) {
+			synchronized (player) {
+				player.setName(username);
+				sendMessage(new PlayerInfoMessage(player));
+			}
 		}
 	}
 

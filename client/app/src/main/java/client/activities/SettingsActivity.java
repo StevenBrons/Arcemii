@@ -79,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
 	 * @author Bram Pulles
 	 */
 	public void saveUsername(View v){
-		if(newUsername.getText().length() > 0 && newUsername.getText().length() < 15){
+		if(newUsername.getText().length() > 0 && newUsername.getText().length() < 10){
 			currentUsername.setText(newUsername.getText().toString());
 
 			SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedpref_playerinfo), MODE_PRIVATE);

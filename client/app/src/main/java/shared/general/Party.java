@@ -120,6 +120,7 @@ public class Party extends Message {
 			if(curLevel.isFinished()){
 				messageAll(new PartyJoinedMessage());
 				inLobby = true;
+				setEveryoneUnready();
 				levelLock.unlock();
 			} else {
 				curLevel.invoke();
@@ -147,6 +148,18 @@ public class Party extends Message {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Reset everyone to non ready.
+	 * @author Bram Pulles
+	 */
+	public void setEveryoneUnready(){
+		synchronized (players){
+			for(Player player : players){
+				player.setReady(false);
+			}
+		}
 	}
 
 

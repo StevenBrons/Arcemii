@@ -25,6 +25,13 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         void onJoystickMoved(float xPercent, float yPercent, int source);
     }
 
+    /**
+     *  Constructor JoystickView
+     * @param context
+     * @param attributes
+     * @author Thomas Berghuis
+     */
+
     public JoystickView (Context context, AttributeSet attributes){
         super(context, attributes);
         getHolder().addCallback(this);
@@ -35,12 +42,25 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
     }
 
+    /**
+     * sets the joystick to fit in your screen
+     * @author Thomas Berghuis
+     */
+
+
     private void setupDminensions(){
         centerX = getWidth()/2;
         centerY = getHeight()/2;
         Radius  = Math.min(getWidth(), getHeight())/3;
         HatRadius = Math.min(getWidth(), getHeight())/6;
     }
+
+    /**
+     * draws the joystick hat at NewX and NewY
+     * @param newX
+     * @param newY
+     * @author
+     */
 
     private void drawJoystick(float newX, float newY){
         if(getHolder().getSurface().isValid()){
@@ -55,21 +75,50 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
         }
     }
 
+    /**
+     * sets the dimensions and draws the joystick on surface created
+     * @param holder
+     * @author Thomas Berghuis
+     */
+
     @Override
     public void surfaceCreated(SurfaceHolder holder){
         setupDminensions();
         drawJoystick(centerX, centerY);
     }
 
+    /**
+     * Just for the interface
+     * @param holder
+     * @param format
+     * @param width
+     * @param height
+     * @author Thomas Berghuis
+     */
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
 
     }
 
+    /**
+     * Just for interface
+     * @param holder
+     * @author Thomas Berghuis
+     */
+
     @Override
     public void surfaceDestroyed(SurfaceHolder holder){
 
     }
+
+    /**
+     *  On touch method, to calculate how to draw the top hat of the joystick
+     * @param v
+     * @param me
+     * @return boolean
+     * @author Thomas Berghuis
+     */
 
     public boolean onTouch(View v, MotionEvent me){
         float displacement = (float) Math.sqrt(Math.pow(me.getX() - centerX, 2) + Math.pow(me.getY() - centerY, 2));
