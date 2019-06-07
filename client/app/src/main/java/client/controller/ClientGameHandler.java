@@ -250,7 +250,8 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 */
 	private void partyJoinedMessage(){
-		joinPartyActivity.openLobby();
+		Intent intStartParty = new Intent(context, LobbyActivity.class);
+		context.startActivity(intStartParty);
 	}
 
 	/**
