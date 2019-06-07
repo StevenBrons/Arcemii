@@ -20,7 +20,7 @@ public class Console {
 			Scanner scanner = new Scanner(System.in);
 
 			System.out.println("Type 'help' for a list of commands.");
-			log = true;
+			log = false;
 
 			while (scanner.hasNextLine()) {
 				switch (scanner.next()) {
