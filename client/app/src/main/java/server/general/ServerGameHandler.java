@@ -132,7 +132,7 @@ public class ServerGameHandler {
 	private void actionMessage(ActionMessage m, Player player) {
 		player.setActions(m.getActions());
 	}
-q
+
 	/**
 	 * This method receives information about the client on the client side and sets a new name for the client.
 	 * @param m client info message.
