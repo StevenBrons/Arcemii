@@ -34,7 +34,7 @@ In this section we give a global and detailed description of the design of Arcem
 
         The second and last class which will be instantiated is the \texttt{Connection} class. This class either starts a connection with the online server or starts a server on the background and connects to this server. The ip-address of the server is set according to the server mode. This class contains the very important method \texttt{sendMessage} which is called whenever the client wants to send a message to the server. This class also contains a \texttt{stop} method which is very important to prevent memory leaks (due to not stopped threads) and to be able to start a new connection with a server. 
 
-        \subsection{Parties}
+        \subsubsection{Parties}
         The server keeps track of all the clients using parties. The usage of parties enables the clients to play with their friends. Whenever a client is connected to the server the client can \texttt{create} or \texttt{join} a new party. This party gets assigned a random so called \texttt{party id} which can be used by the players to identify their party and join the party of their friends.
         
         As said in section \ref{sec: game logic} every party gets updated per game tick. We also want to use this update message to determine whether the client is still connected to the server. So upon connection with the server the client gets assigned a party just for that client. The game update messages from the server send to this party every game tick can then be used to determine the connection status. Note that the connection status does not make use of this feature yet, but this is for future implementations.
