@@ -84,6 +84,7 @@ public class Server {
 	 * be removed from the server.
 	 * This will not be done for emulators.
 	 * @param ip
+	 * @author Bram Pulles
 	 */
 	private void checkUniqueness(InetAddress ip){
 		List<Party> parties = gameHandler.getParties();

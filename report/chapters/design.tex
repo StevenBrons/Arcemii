@@ -2,8 +2,9 @@
 
 \begin{document}
 \pagebreak
+
 \section{Design}
-In this section we give a global and detailed description of the design of our application. Furthermore we give a justification for our design choices.
+In this section we give a global and detailed description of the design of Arcemii. Furthermore we give a justification for our design choices.
 
     \subsection{Global design}
 
@@ -11,9 +12,22 @@ In this section we give a global and detailed description of the design of our a
     In this section we give a detailed description of the design in terms of classes, methods and attributes.
 
         \subsubsection{Server-client relation}
-        Our application makes use of a server and clients to enable the possibility for playing the game in multiplayer mode. In this section we will describe the most important details of this server client relation.
+        Arcemii makes use of a server and clients to enable the possibility for playing the game in multiplayer mode. In this section we will describe the most important details of this server client relation.
 
+        Arcemii can be played in two different modes: offline and online mode (singleplayer and multiplayer). In both cases we run a server. When playing in offline mode the server is ran on the background of the mobile phone. When playing in online mode the server is ran on a dedicated server which can be connected to through the internet. Apart from this the only real difference between singleplayer and multiplayer mode is to which ip the mobile phone will try to connect. In singleplayer mode this is the so called \texttt{loop back address}, also know as \texttt{localhost} or \texttt{127.0.0.1}, whereas the multiplayer mode tries to connect to the ip of the dedicated server. 
 
+        \paragraph{Server} 
+        Let's start with a detailed description of the server. The server-side has four classes: \texttt{ArcemiiServer}, \texttt{Server}, \texttt{ServerGameHandler} and \texttt{Console}. 
+        
+        Since the server needs to be able to run on its own we have a \texttt{main} method in the \texttt{ArcemiiServer} class. This method creates a new object of all the other classes to start the server. This class also contains a \texttt{stop} method which stops the \texttt{Server} and \texttt{ServerGameHandler} classes from running. When the server is ran on a dedicated machine we can just run the program separately from the rest of the application. When the server is ran on the background of the mobile phone we just call the \texttt{main} method which simulates the exact same behavior, but then locally.
+
+        The first class we instantiate when we run the server is the \texttt{Console} class. This class creates a terminal interface for interaction with the server. This is very useful when the server is ran on a dedicated machine to enable some control over the program. The console has three commands at the moment: \texttt{help}, \texttt{stop} and \texttt{log}. The \texttt{help} command gives a list of all the available commands. The \texttt{stop} command terminates the program. And the \texttt{log} command toggles the logging on and off. The logging is very useful for debugging the server. All the classes in the server call the method \texttt{log} in the console to send debug information.
+
+        The second class we instantiate is the \texttt{ServerGameHandler} class. 
+
+        The last class we instantiate is the \texttt{Server} class.
+
+        \paragraph{Client}
 
     \subsection{Design justification}
 
