@@ -2,6 +2,9 @@
 # Created by https://www.gitignore.io/api/java,latex,android,androidstudio
 # Edit at https://www.gitignore.io/?templates=java,latex,android,androidstudio
 
+### Jelmer: Don't put pdf in git repo ###
+*.pdf
+
 ### Android ###
 # Built application files
 *.apk
