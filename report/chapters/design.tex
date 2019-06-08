@@ -34,6 +34,13 @@ In this section we give a global and detailed description of the design of Arcem
 
         The second and last class which will be instantiated is the \texttt{Connection} class. This class either starts a connection with the online server or starts a server on the background and connects to this server. The ip-address of the server is set according to the server mode. This class contains the very important method \texttt{sendMessage} which is called whenever the client wants to send a message to the server. This class also contains a \texttt{stop} method which is very important to prevent memory leaks (due to not stopped threads) and to be able to start a new connection with a server. 
 
+        \subsection{Parties}
+        The server keeps track of all the clients using parties. The usage of parties enables the clients to play with their friends. Whenever a client is connected to the server the client can \texttt{create} or \texttt{join} a new party. This party gets assigned a random so called \texttt{party id} which can be used by the players to identify their party and join the party of their friends.
+        
+        As said in section \ref{sec: game logic} every party gets updated per game tick. We also want to use this update message to determine whether the client is still connected to the server. So upon connection with the server the client gets assigned a party just for that client. The game update messages from the server send to this party every game tick can then be used to determine the connection status. Note that the connection status does not make use of this feature yet, but this is for future implementations.
+
+        A client can be in one party at the time. When the client joins a new party it first gets removed from the previous party. The party also uses the ready status of all the clients to determine if the master of a party can start a new game. This is only possible when all the clients in the party are ready (except for the master, the master is set ready automatically when it send the \texttt{StartGameMessage} to the server).
+
 		\subsubsection{Level Rendering}
         \paragraph{GameView (\tiny client/view/GameView.java\normalsize)}
         The rendering of the level with all it's entities is done in the GameView class. GameView extends the standard Android View, therefore it has to be assigned to a layout. This is done within the GameActivity class (\tiny client/activities/GameActivity.java: onCreate\normalsize). After it is assigned to a layout the init() function is called to initialize all objects used in rendering of the GameView, using the dimensions of the layout. Then two functions are used to render levels: updateLevel and onDraw. \texttt{updateLevel(Level)} prepares a level to be drawn by converting it's tiles and entities to RenderItem's, and figuring out in which order to draw them. \texttt{onDraw(Canvas)} then takes these RenderItem's and draws them to the canvas, in such a way that the player is centered. Locks are used between these functions because onDraw is executed on a different thread compared to updateLevel and they both use the renderItems list.
@@ -48,7 +55,7 @@ In this section we give a global and detailed description of the design of Arcem
         \paragraph{Generation of RenderItems} RenderItems are created in the classes of the objects they visualize (\tiny shared/entities/\dots; shared/tiles/\dots\normalsize). This was done to prevent shadow classes for each entity that only generates RenderItems. Unfortunately the objects are shared between the server and client, which means that a server can't be run without compiling all client stuff with it. We didn't find it worthwhile to fix this before the deadline, as we would run the server from within Android Studio for testing. 
 
         
-        \subsubsection{Game logic}
+        \subsubsection{Game logic}\label{sec: game logic}
         Before we can explain how the game-logic works a few definitions have to be given:
 
         \paragraph{Tile} A Tile is a building-block of the world. It can either be solid, or non solid, meaning entities can either move through it or not. A few of the tile-types in Arcemii are:
@@ -85,7 +92,7 @@ In this section we give a global and detailed description of the design of Arcem
         \end{description}
 
         \paragraph{Game logic explanation}
-        Because Arcemii is a multiplayer game, it is split into the two main sections: the server and the client. In relation to the actual game, the client acts only as the view, and a little bit as the controller part. The actual game-logic happens on the server side. The current state of the game is saved as a property of \texttt{Party}, because each party has their own game-state. This game-state is saved in the shared object \texttt{Level}. The level class contains the current world-state of the game. The server-gameloop updates all parties very \texttt{TICKSPEED} amount of time. When a party is in-game, and \texttt{update} is called the following happens:
+        Because Arcemii is a multiplayer game, it is split into the two main sections: the server and the client. In relation to the actual game, the client acts only as the view, and a little bit as the controller part. The actual game-logic happens on the server side. The current state of the game is saved as a property of \texttt{Party}, because each party has their own game-state. This game-state is saved in the shared object \texttt{Level}. The level class contains the current world-state of the game. The server-gameloop updates all parties every \texttt{TICKSPEED} amount of time. When a party is in-game, and \texttt{update} is called the following happens:
 
         \begin{enumerate}
             \item \textbf{Invoke} The \texttt{invokeAll} method of all entities except for players is called. This method invokes all abilities that the entities want to execute (based upon their A.I.). All executed abilities are saved in an \texttt{actions} list. The actions players want to take are added to their respective \texttt{actions} when they submit new actions to the server.

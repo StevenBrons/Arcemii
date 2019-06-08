@@ -111,7 +111,9 @@ public class Party extends Message {
 	}
 
 	/**
-	 * Update party, if the players are in the lobby a heartbeat message (an empty GameUpdateMessage) is sent, otherwise the party is updated by invoking all abilities of the non-player entities, it than executes the actions of all entities. It respawns dead players and sends game-updates to all party-members
+	 * Update party, if the players are in the lobby a heartbeat message (an empty GameUpdateMessage) is sent,
+	 * otherwise the party is updated by invoking all abilities of the non-player entities, it than executes the actions
+	 * of all entities. It respawns dead players and sends game-updates to all party-members
 	 * @author Steven Bronsveld
 	 */
 	public void update() {
