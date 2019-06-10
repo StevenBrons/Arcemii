@@ -102,6 +102,8 @@ Steven aims to make all game-logic that is not directly dependent on tasks given
 
 Thomas is given the task to start on the in-game UI. 
 
+Saturday, Steven implemented a simple skeleton AI, but this will need later polish, as the skeletons just run away to the upper-right corner (even walking through strees that are supposed to be solid)
+
 
 \subsection*{Week 22}
 At Steven's request, because he had an appointment, the meeting started later than usual. This meant a shorter meeting, as Thomas had to leave us in the break. Sadly, not everyone was on time, so we effectively had only 45 minutes for our meeting. This is very sub-optimal as we start to realize that there is still a \textit{lot} of work to be done before we have an presentable application.
@@ -121,4 +123,30 @@ Thursday was Ascension Day, and the university was closed. We did not arrange a 
 There were some problems with the dungeon generation (namely that rooms are not connected) that Robert fixed immediately at Wednesday.
 
 Thursday, Thomas added a joystick for movement, but this is not yet fully integrated in the app.
+\subsection*{Week 23}
+This is the final week of this project and because we still have a lot to do, we'll discuss our activities on a dya-by-day basis for this week. But first, these are the major things we'll have to work on to make our app ready for submission:
+\begin{itemize}
+	\item Most importantly: the game is not yet playable. To change this, we'll have to make sure player movement works, abilities can be cast and entities have health and can be killed. As we had these ideas already when we started coding, the structure for these properties is already present. We'll just have to implement them. Steven will work on the first two points, and Jelmer on the last. Problematic is, that Thomas needs to clean up his code behind the in-game UI first.
+	\item Multiplayer will have to work on mobile phones. In theory, this has to work, but the previous assignment has taught us that a theoretically working program isn't everything, especially not on the subject of reliability. To properly test this, the points mentioned above should be implemented first, so that we can be sure the server-client connection handles these request properly.
+	\item There needs to be a lobby activity where players can choose their abilities.
+\end{itemize}
+Additionally, there are a lot of things that need polish, or would be very nice to be implemented as well: the overall UI is pretty terrible and ugly, music would be nice, there are a lot of animations not yet used, while the situations where they should be used are present, you can still walk through walls even though stat should not be possible.
+
+Monday 10:30 was our standard meeting and it was\dots stressfull. Everyone was present. The deadline is creeping closer and closer. We discussed the main tasks mentioned above. Steven will work on movement and ability casting. Bram will make multiplayer ready for mobile phones and look into some nasty bugs. Jelmer will take on enemy UI and in-game logic like nog being able to walking through trees. Thijs will add app-icons and a melee attack animation. Thomas will have to make this ability cards in the in-game UI change dnamically and Robert will have to make the lobby activity, including choosing abilities. Everyone should finish their tasks before an additional meeting planned on Wednesday, 15:15.
+
+Today, we received our Sokoban grade, and this served as a major boost to our morale: we got a 9.5! 
+\bigbreak\noindent
+Tuesday, an unscheduled meeting happened organically. Thomas was not present, Robert was later. Thijs will make the music player this afternoon. Bram will make is so that the hosting player can only start the game when all other players are `ready', a state they can toggle to using a button. Player will also be able to press `ready' when they have chosen three abilities. All these tasks where completed this afternoon. Bram also made the first multiplayer contact where both players can walk (still using emulators though) Jelmer made health changeable and improved the AI.
+
+\bigbreak\noindent
+Wednesday, Thomas was not at the meeting. Steven added most of his documentation (others added theirs directly after writing the code). He also fixed the UI buttons, so the app won't crash anymore when pressing them and also made the player able to shoot arrows. Thijs improved the lobby UI and added general styles in the XML. Bram fixed more of the bugs occuring when trying multiplayer, and made singlelayer not crash the app again. 
+
+\bigbreak\noindent
+At Thursday's meeting, everyone was present. Thomas made these buttons change dynamically (later than the deadline). Today, we had the first mobile multiplayer test, admittedly a bit late, but earlier was not viable due to reasons explained above. And the result was\dots the app crashed alomst immediately. We suspected that Jelmer's server, which we used, was not powerfull enough. Steven's priority will now be optimalization of this process. Jelmer made a lot of  fixed with the arrows. Everyone but Thomas had a call on Discord for the entire evening making small fixes, testing, polishing. Thijs made a gif for the main activity. Multiplayer runs a lot smoother now. Not very smeartly, everyone was quickly pushing to GitHub, causing a lot of merging problems. Bram added the boss' teleport ability to the player's ability options, but this is still buggy.
+
+\bigbreak\noindent
+Today is presetation and hand-in day! Although is was not planned, everyone was making a lot of small changes this morgning: teleport is less buggy, server testing, etc. Testing is actually a lot of fun now.
+
+Bram and Jelmer gave our presentation to Jan van Bommel, our TA. This went very well. Everything ran smooth and there were no server problems. His joking reaction was `that we are crazy to have done this', hinting at the amount of work it must have been. He said everything looked good and he did not note any points of improvement. This is good news and made us relax! The afternoon was spent by making more small changes, like scaling the ability cards in-game nearest-neighor instead of bilinear, before Robert handed in the app.
+
 \end{document}
