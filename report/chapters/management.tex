@@ -7,7 +7,7 @@
 This section contains a log for the process of building our teams second app for the \textit{Research and Development} Course at Radboud University.
 Our process will be presented in a weekly description of the active tasks that week, project meetings, assignment of tasks, problems we encountered, etc. Before that though, a list of global tasks, and the division of them between group members.
 
-\subsection*{Task assignment}
+\subsection{Task assignment}
 Arcemii is a rather large project for the time available to us, so it was very important that people could work concurrently and that they not have to wait for others to finish. This actually proved rather difficult, as there were a lot of parts dependent on each other. Some examples: how would you implement player movement and ability casting, without it being displayed on your screen? How would you make a lobby activity for the party to choose their abilities, if there is no client-server connection?
 
 We realized this early on, and also realized that our idea for multiplayer was rather risky. Also, a lot of the game would depend on the multiplayer aspect, and with that the connection aspect, so this \textit{had} to be done first, albeit maybe not in its final form.
@@ -23,7 +23,9 @@ We realized this early on, and also realized that our idea for multiplayer was r
 
 Overall, it was doable to split the tasks above into smaller ones, especially bug-fixes. As the project became larger however, it was increaingly harder to be and `expert' in every part of the app, so that something in, say, the server side could only be added or changes by someone who was already familiar with it (without too much risk)
 
-\subsection*{Week 19}
+\pagebreak
+\subsection{Log by week}
+\subsubsection*{Week 19}
 After the spring break, in which we did not yet start our new project as most would've been unable to work on it, we decided that a meeting on Monday morning would be wise. This meeting took place in Mercator I, lasted from 10:30 till 12:15, and was attended by Jelmer, Robert, Steven, Thijs and halfway through also by Thomas.
 The main topic of this meeting was choosing which app idea we would run with. We had three prominent ones:
 \begin{itemize}
@@ -45,7 +47,7 @@ Thursday we had our next meeting, which was attended by everyone. In the previou
 Because of the above mentioned risks, we further discussed the possibilities of single-player games, as the idea of the app being a game remained unchanged. Thomas and Thijs were charged with the task to think about games in the rogue-like genre, in order to see if such a game would be a valuable app idea. Steven will make the structure of a client-server program. This way, we can have some extra days to decide on our idea, as we'd like the whole group to be fully behind it, hard as it is, while also getting started on some code.
 
 
-\subsection*{Week 20}
+\subsubsection*{Week 20}
 We had our first meeting of the week on Monday morning, again. Over the weekend, more doubts about the party-game idea had arisen. Everyone was present, though Robert was there only the second half. First order of business was making the final decision for our idea. We all felt this was actually long due, and were all a bit frustrated because of this. So: today we were to make a definite decision and we would stick with it.
 
 Our main two problems with the party game were design-problems: we would have to make some smaller, individually not very impressive things, that would have a very simple structure. This did not feel like enough of a challenge, even the multiplayer aspect taken into account. The second problem was that it would be hard to make it one well-rounded app. Additionally, because it had pieces that were so disjunct from others, we would evade the whole project idea of this course. To conclude: we switched back to the idea of one game. till multiplayer. The remaining of the meeting, we discussed possibilities. Firstly, we looked at possibilities to expand on one of the discussed minigames:
@@ -76,7 +78,7 @@ Main item on the agenda were dividing task:
 	\item Thomas: Looking at abilities
 \end{itemize}
 
-\subsection*{Week 21}
+\subsubsection*{Week 21}
 As usual, we had our first meeting on Monday morning. Everyone was present, though Robert only attended the second half. We started with discussing what everyone had achieved over the weekend. Actually, the divided tasks were pretty big, so everyone was still busy with them. Because of Jelmer's rendering, we could see the first animations on screen. 
 
 We then discussed the game envisioned in more detail:
@@ -121,7 +123,7 @@ Thomas is given the task to start on the in-game UI.
 Saturday, Steven implemented a simple skeleton AI, but this will need later polish, as the skeletons just run away to the upper-right corner (even walking through strees that are supposed to be solid)
 
 
-\subsection*{Week 22}
+\subsubsection*{Week 22}
 At Steven's request, because he had an appointment, the meeting started later than usual. This meant a shorter meeting, as Thomas had to leave us in the break. Sadly, not everyone was on time, so we effectively had only 45 minutes for our meeting. This is very sub-optimal as we start to realize that there is still a \textit{lot} of work to be done before we have an presentable application.
 
 Robert has completed the dungeon generator, but will make some final adjustments before he will merge it with the master branch on GitHub. 
@@ -139,7 +141,7 @@ Thursday was Ascension Day, and the university was closed. We did not arrange a 
 There were some problems with the dungeon generation (namely that rooms are not connected) that Robert fixed immediately at Wednesday.
 
 Thursday, Thomas added a joystick for movement, but this is not yet fully integrated in the app.
-\subsection*{Week 23}
+\subsubsection*{Week 23}
 This is the final week of this project and because we still have a lot to do, we'll discuss our activities on a dya-by-day basis for this week. But first, these are the major things we'll have to work on to make our app ready for submission:
 \begin{itemize}
 	\item Most importantly: the game is not yet playable. To change this, we'll have to make sure player movement works, abilities can be cast and entities have health and can be killed. As we had these ideas already when we started coding, the structure for these properties is already present. We'll just have to implement them. Steven will work on the first two points, and Jelmer on the last. Problematic is, that Thomas needs to clean up his code behind the in-game UI first.
