@@ -4,151 +4,152 @@
 \pagebreak
 
 \section{Design}
-In this section we give a global and detailed description of the design of Arcemii. Furthermore we give a justification for our design choices.
+In this section, we give a global and detailed description of the design of Arcemii. Furthermore, we give a justification for our design choices.
 
 	\subsection{Global design}
 
-    \pagebreak
-    \subsection{Detailed design}
-    In this section we give a detailed description of the design in terms of classes, methods and attributes.
+	\pagebreak
+	\subsection{Detailed design}
+	In this section, we give a detailed description of the design in terms of classes, methods, and attributes.
 
-        \subsubsection{Server-client relation}
-        Arcemii makes use of clients and a server to enable the possibility for playing the game in multiplayer mode. In this section we will describe the most important details of this server-client relation.
+		\subsubsection{Server-client relation}
+		Arcemii makes use of clients and a server to enable the possibility of playing the game in multiplayer mode. In this section, we will describe the most important details of this server-client relation.
 
-        Arcemii can be played in two different modes: offline and online mode (for singleplayer and multiplayer respectively). In both cases, we make use of a server. When playing in offline mode, the server is running in the background of the mobile phone. When playing in online mode the server is running on a dedicated server, which can be connected to through the internet. Apart from this, the only real difference between singleplayer and multiplayer mode is to which ip-address the mobile phone will try to connect. In singleplayer mode, this is the so called \texttt{loop back address}, also known as \texttt{localhost} or \texttt{127.0.0.1}, whereas in multiplayer mode, it tries to connect to the ip of the dedicated server. 
+		Arcemii can be played in two different modes: offline and online mode (for singleplayer and multiplayer respectively). In both cases, we make use of a server. When playing in offline mode, the server is running in the background of the mobile phone. When playing in online mode the server is running on a dedicated server, which can be connected to through the internet. Apart from this, the only real difference between singleplayer and multiplayer mode is to which IP-address the mobile phone will try to connect. In singleplayer mode, this is the so-called \texttt{loop back address}, also known as \texttt{localhost} or \texttt{127.0.0.1}, whereas in multiplayer mode, it tries to connect to the IP of the dedicated server. 
 
-        \paragraph{Server} 
-        Let's start with a detailed description of the server. The server-side has four classes: \texttt{ArcemiiServer}, \texttt{Server}, \texttt{ServerGameHandler} and \texttt{Console}. 
-        
-        Since the server needs to be able to run on its own, we have a \texttt{main} method in the \texttt{ArcemiiServer} class. This method creates a new object of all the other classes to start the server. \texttt{ArcemiiServer} also contains a \texttt{stop} method which stops the \texttt{Server} and \texttt{ServerGameHandler} classes from running. When the server is run on a dedicated machine, we can just run the program separately from the rest of the application. When the server is run on the background of the mobile phone we just call the \texttt{main} method which simulates the exact same behavior, but then locally.
+		\paragraph{Server} 
+		Let's start with a detailed description of the server. The server-side has four classes: \texttt{ArcemiiServer}, \texttt{Server}, \texttt{ServerGameHandler} and \texttt{Console}. 
+		
+		Since the server needs to be able to run on its own, we have a \texttt{main} method in the \texttt{ArcemiiServer} class. This method creates a new object of all the other classes to start the server. \texttt{ArcemiiServer} also contains a \texttt{stop} method which stops the \texttt{Server} and \texttt{ServerGameHandler} classes from running. When the server is run on a dedicated machine, we can just run the program separately from the rest of the application. When the server is run on the background of the mobile phone we just call the \texttt{main} method which simulates the same behavior, but then locally.
 
-        The first class we instantiate when we run the server is the \texttt{Console} class. This class creates a terminal interface for interaction with the server. This is very useful when the server is run on a dedicated machine to enable some control over the program. The console has three commands: \texttt{help}, \texttt{stop} and \texttt{log}. The \texttt{help} command gives a list of all the available commands. The \texttt{stop} command terminates the program. And the \texttt{log} command toggles the logging on and off. Logging is very useful for debugging the server. All the classes in the server call the method \texttt{log} in the console to send debug information.
+		The first class we instantiate when we run the server is the \texttt{Console} class. This class creates a terminal interface for interaction with the server. This is very useful when the server is run on a dedicated machine to enable some control over the program. The console has three commands: \texttt{help}, \texttt{stop} and \texttt{log}. The \texttt{help} command gives a list of all the available commands. The \texttt{stop} command terminates the program. And the \texttt{log} command toggles the logging on and off. Logging is very useful for debugging the server. All the classes in the server call the method \texttt{log} in the console to send debug information.
 
-        The second class we instantiate is the \texttt{ServerGameHandler} class. This class, as the name already says, handles all the game logic on the server-side. When this class starts, it creates a new thread which sends an update message to every party on the server every tick (which is set at 20 per second, in the version that was handed in). Apart from this, there are two very important methods in this class. Namely: \texttt{addPlayer} and \texttt{handlePlayerInput}. When the first method is called, a new thread is created which listens for messages coming from that specific client. Every time a message arrives, the second method is called to handle the message from the client. This method calls the appropriate method for all the possible messages. The messages are all a subclass of the abstract class \texttt{Message}. Some examples of messages are: 
+		The second class we instantiate is the \texttt{ServerGameHandler} class. This class, as the name already says, handles all the game logic on the server-side. When this class starts, it creates a new thread which sends an update message to every party on the server every tick (which is set at 20 per second, in the version that was handed in). Apart from this, there are two very important methods in this class. Namely: \texttt{addPlayer} and \texttt{handlePlayerInput}. When the first method is called, a new thread is created which listens for messages coming from that specific client. Every time a message arrives, the second method is called to handle the message from the client. This method calls the appropriate method for all the possible messages. The messages are all a subclass of the abstract class \texttt{Message}. Some examples of messages are: 
 		\begin{itemize}
 			\item \texttt{CreatePartMessage}, to indicate to the server that the client wants to create a party.
 			\item \texttt{JoinPartyMessage}, to indicate to the server that the client wants to join a specific party.
 			\item \texttt{ActionMessage}, to indicate which actions the player wants to execute while playing the game.
 		\end{itemize}
-        The last class we instantiate is the \texttt{Server} class. This class continuously listens for new clients, creates a connection with these clients and adds the client to the \texttt{ServerGameHandler}. In order to prevent overloading of the server we also check if there is already a client on the server with the same ip-address. If this is the case the old client will be removed since this one is now replaced by the new client. This reduces the load on the server, because the server does not have to listen for messages coming from the old client this way. Note that we have an exception for the \texttt{loop back address} to make it possible to connect with multiple emulators to the server for testing purposes.
+		The last class we instantiate is the \texttt{Server} class. This class continuously listens for new clients, creates a connection with these clients and adds the client to the \texttt{ServerGameHandler}. To prevent overloading of the server, we also check if there is already a client on the server with the same IP-address. If this is the case the old client will be removed since this one is now replaced by the new client. This reduces the load on the server because the server does not have to listen for messages coming from the old client this way. Note that we have an exception for the \texttt{loop back address} to make it possible to connect with multiple emulators to the server for testing purposes.
 
-        \paragraph{Client}
-        Here we will give a detailed description of the client. The client-side has two classes: \texttt{Connection} and \texttt{ClientGameHandler}.
+		\paragraph{Client}
+		Here we will give a detailed description of the client. The client-side has two classes: \texttt{Connection} and \texttt{ClientGameHandler}.
 
-        The first class, which will be instantiated already from the \texttt{MainActivity}, is the singleton \texttt{ClientGameHandler} class. The first thing this class does, is create a new connection in either offline or online mode (more about that in the next sub-paragraph). When this connection is created, the client starts listening for messages from the server. This works exactly the same as on the server. We listen for messages and handle the messages with the \texttt{handleInput} method. 
-        
-        Next up the \texttt{ClientGameHandler} starts a listener for a change is server mode (online / offline), since it is possible to change this setting in the \texttt{SettingsActivity}. Whenever a change of server mode is detected, the \texttt{ClientGameHandler} stops the old connection and starts a new one. 
-        
-        The last thing the \texttt{ClientGameHandler} does when instantiated is start the \texttt{gameLoop} method. This method draws the game on the screen and gets the actions of the player and sends these to the server every tick.
+		The first class, which will be instantiated already from the \texttt{MainActivity}, is the singleton \texttt{ClientGameHandler} class. The first thing this class does is create a new connection in either offline or online mode (more about that in the next sub-paragraph). When this connection is created, the client starts listening for messages from the server. This works the same as on the server. We listen for messages and handle the messages with the \texttt{handleInput} method. 
+		
+		Next up the \texttt{ClientGameHandler} starts a listener for a change is server mode (online / offline), since it is possible to change this setting in the \texttt{SettingsActivity}. Whenever a change of server mode is detected, the \texttt{ClientGameHandler} stops the old connection and starts a new one. 
+		
+		The last thing the \texttt{ClientGameHandler} does when instantiated is start the \texttt{gameLoop} method. This method draws the game on the screen and gets the actions of the player and sends these to the server every tick.
 
-        The second and last class which will be instantiated is the \texttt{Connection} class. This class either starts a connection with the online server or starts a server on the background and connects to this server. The ip-address of the server is set according to the server mode. This class contains the very important method \texttt{sendMessage} which is called whenever the client wants to send a message to the server. This class also contains a \texttt{stop} method which is very important to prevent memory leaks (due to not stopped threads) and to be able to start a new connection with a server. 
+		The second and last class which will be instantiated is the \texttt{Connection} class. This class either starts a connection with the online server or starts a server on the background and connects to this server. The IP-address of the server is set according to the server mode. This class contains a very important method \texttt{sendMessage} which is called whenever the client wants to send a message to the server. This class also contains a \texttt{stop} method which is very important to prevent memory leaks (due to not stopped threads) and to be able to start a new connection with a server. 
 
-        \subsubsection{Parties}
-        The server keeps track of all the clients using parties. The usage of parties enables the clients to play with their friends. Whenever a client is connected to the server the client can \texttt{create} or \texttt{join} a new party. This party gets assigned a random so called \texttt{party id} which can be used by the players to identify their party and join their friends' party.
-        
-        As stated in section \ref{sec: game logic}, every party gets updated per game tick. We also want this update message to be used to determine whether the client is still connected to the server. Upon connection with the server, the client gets assigned a party just for that client. The game update messages from the server, sent to this party every game tick, can then be used to determine the connection status. Note that the connection status does not make use of this feature yet, but this is for future implementations.
+		\subsubsection{Parties}
+		The server keeps track of all the clients using parties. The usage of parties enables the clients to play with their friends. Whenever a client is connected to the server the client can \texttt{create} or \texttt{join} a new party. This party gets assigned a random so-called \texttt{party id} which can be used by the players to identify their party and join their friends' party.
+		
+		As stated in section \ref{sec: game logic}, every party gets updated per game tick. We also want this update message to be used to determine whether the client is still connected to the server. Upon connection with the server, the client gets assigned a party just for that client. The game update messages from the server, sent to this party every game tick, can then be used to determine the connection status. Note that the connection status does not make use of this feature yet, but this is for future implementations.
 
-        A client can only be in one party at the time. When the client joins a new party, it gets removed from the previous party. The party also uses the ready status of all the clients to determine if the master of a party can start a new game. This is only possible when all the clients in the party are ready (except for the master, the master-client is set ready automatically when it sends the \texttt{StartGameMessage} to the server).
+		A client can only be in one party at the time. When the client joins a new party, it gets removed from the previous party. The party also uses the ready status of all the clients to determine if the master of a party can start a new game. This is only possible when all the clients in the party are ready (except for the master, the master-client is set ready automatically when it sends the \texttt{StartGameMessage} to the server).
 
 		\subsubsection{Level design}\label{sec: level design}
 		Levels are generated each time a new game is started. Levels have to fulfill a number of requirements:
 		\begin {enumerate}
-			\item {The Level should consist of a number of different rooms, connected with roads}.
+			\item {The Level should consist of many different rooms, connected with roads}.
 			\item {The roads connecting different rooms should not intersect (so the graph should be planar).}
 		\end {enumerate}
-		In order to generate a level, we start off with a small grid that represents the final level on a more global scale. Each cell on this grid is called a \texttt{Block} because it represents a cluster of tiles on the full map, and it takes on of the values from the enum \texttt{Block} (\texttt{Empty}, \texttt{Room}, \texttt{Road} or \texttt{RoomEdge}). On this globalized map of the grid, we randomly pick a number of cells and designate them rooms. Then, we increase the size of the rooms by adding cells bordering room cells to the room, so we get bigger rooms. All of these room tiles are their own `island' still. So, we have a lot of individual rooms that are not connected. 
+		To generate a level, we start with a small grid that represents the final level on a more global scale. Each cell on this grid is called a \texttt{Block} because it represents a cluster of tiles on the full map, and it takes on of the values from the enum \texttt{Block} (\texttt{Empty}, \texttt{Room}, \texttt{Road} or \texttt{RoomEdge}). On this globalized map of the grid, we randomly pick some cells and designate them rooms. Then, we increase the size of the rooms by adding cells bordering room cells to the room, so we get bigger rooms. All of these room tiles are their own `island' still. So, we have a lot of individual rooms that are not connected. 
 		
-		In order to connect the rooms, we see each room as a node in the graph representing the grid and we add an edge between every two rooms of length equal to the manhattan distance between them. This is a better approximation than the euclidean distance, considering roads will only be added above, to the left, to the right and to the top of a room. To get a subset of edges such that none of them overlap, we use the minimum spanning tree, which we find by applying Kruskal's algorithm. The method \texttt{kruskals()} returns an ArrayList of \texttt{Edges} showing all the edges in the minimum spanning tree. We will use these edges to connect all the rooms. We go through all the edges and do a breadth-first-search from the beginning to the end of every edge and connect the two points with the shortest path. All nodes the shortest path passes through are marked on the global grid as $1\times1$ tiles (as \texttt{Road} from the enum \texttt{Block}). However, as rooms contain multiple cells, roads are thinner than rooms. Now we have a level that is connected and is planar. To avoid the begin and the end points of the level spawning too close to eachother, we also monitored the two nodes which are the furthest apart, and put the begin point in one room and the end point in the other. So, the player will always have to walk the maximum distance. 
+		To connect the rooms, we see each room as a node in the graph representing the grid and we add an edge between every pair of rooms with length equal to the Manhattan distance between them. This is a better approximation than the Euclidean distance, considering roads only go in cardinal directions. To get a subset of edges such that none of them overlap, we use the minimum spanning tree, which we find by applying Kruskal's algorithm. The method \texttt{kruskals()} returns an ArrayList of \texttt{Edges} showing all the edges in the minimum spanning tree. We will use these edges to connect all the rooms. We go through all the edges and do a breadth-first-search from the beginning to the end of every edge and connect the two points with the shortest path. All nodes the shortest path passes through are marked on the global grid as $1\times1$ tiles (as \texttt{Road} from the enum \texttt{Block}). However, as rooms contain multiple cells, roads are thinner than rooms. Now we have a level that is connected and is planar. To avoid the begin and the end points of the level spawning too close to each other, we also monitored the two nodes which are the furthest apart and put the start in one room and the finish in the other. So, the player will always have to walk the maximum distance. 
 		
 		Now, we are ready to enlarge the miniature grid with which we have worked until now. For that we create a new grid that contains for every cell \texttt{blockheight} rows and \texttt{blockwidth} columns, and we simply enlarge the miniature grid, copying every cell from the miniature grid into the bigger grid but \texttt{blockwidth} $\times$ \texttt{blockheight} times bigger. In this process, everything that is \texttt{Empty} (so not a road or a room) is converted to an empty tile. Empty tiles are converted to walls.
 		
 			Now we have an empty level and have to fill it with monsters. We go through all the cells, randomly assigning turning a room into a room with skeletons, with slimes and with slimes and skeletons. If we find that a cell is the end point, we spawn the boss in that cell.
 		\subsubsection{Game rendering}
-		Arcemii makes use of animations and static sprites in-game. These have to be displayed on the screen properly. In this section, everything concerning this, is explained.
-        \paragraph{GameView}
-        The rendering of the level with all it's entities is done in the GameView class. GameView extends the standard Android View, therefore it has to be assigned to a layout. This is done within the \texttt{GameActivity} class (\tiny client/activities/GameActivity.java: onCreate\normalsize). After it is assigned to a layout, the \texttt{init()} method is called to initialize all objects used in rendering of the GameView, using the dimensions of the layout. Then two methods are used to render levels: \texttt{updateLevel} and \texttt{onDraw}. \texttt{updateLevel(Level)} prepares a level to be drawn by converting it's tiles and entities to \texttt{RenderItem}s, and figuring out in which order to draw them. \texttt{onDraw(Canvas)} then takes these \texttt{RenderItem}s and draws them to the canvas in such a way that the player is centered. Locks are used between these functions because \texttt{onDraw} is executed on a different thread than \texttt{updateLevel} and they both use the \texttt{renderItems} list.
+		Arcemii makes use of animations and static sprites in-game. These have to be displayed on the screen properly. In this section, everything concerning this is explained.
+		\paragraph{GameView}
+		The rendering of the level with all its entities is done in the GameView class. GameView extends the standard Android View, therefore it has to be assigned to a layout. This is done within the \texttt{GameActivity} class (\tiny client/activities/GameActivity.java: onCreate\normalsize). After it is assigned to a layout, the \texttt{init()} method is called to initialize all objects used in the rendering of the GameView, using the dimensions of the layout. Then two methods are used to render levels: \texttt{updateLevel} and \texttt{onDraw}. \texttt{updateLevel(Level)} prepares a level to be drawn by converting it's tiles and entities to \texttt{RenderItem}s and figuring out in which order to draw them. \texttt{onDraw(Canvas)} then takes these \texttt{RenderItem}s and draws them to the canvas in such a way that the player is centered. Locks are used between these functions because \texttt{onDraw} is executed on a different thread than \texttt{updateLevel} and they both use the \texttt{renderItems} list.
 
-        \paragraph{RenderItem} All aspects of rendering a single texture are handled in the \texttt{RenderItem} class. A \texttt{RenderItem} contains the following attributes: 
-        \begin{itemize}
-        	\item \texttt{texture} defines which bitmap to draw.
-        	\item \texttt{x,y} defines the position where the texture should be drawn.
-        	\item \texttt{refX,refY} defines the position within the bitmap used for alignment.
-        	\item \texttt{layer} defines the layer on which this object is drawn.
-        	\item \texttt{animationOffset} the number of frames this object's animation is ahead of the default animation
-        	\item \texttt{rotation} defines the number of degrees to turn this image counter-clockwise.
-        	\item \texttt{flip} defines whether this image should be flipped horizontally.
-        \end{itemize}
-        The function \texttt{compareTo(RenderItem)} determines which of two RenderItems should be drawn first. The function \texttt{renderTo(Canvas)} renders this RenderItem to the canvas, applying all transformations specified.
+		\paragraph{RenderItem} All aspects of rendering a single texture are handled in the \texttt{RenderItem} class. A \texttt{RenderItem} contains the following attributes: 
+		\begin{itemize}
+			\item \texttt{texture} defines which bitmap to draw.
+			\item \texttt{x,y} defines the position where the texture should be drawn.
+			\item \texttt{refX,refY} defines the position within the bitmap used for alignment.
+			\item \texttt{layer} defines the layer on which this object is drawn.
+			\item \texttt{animationOffset} the number of frames this object's animation is ahead of the default animation
+			\item \texttt{rotation} defines the number of degrees to turn this image counter-clockwise.
+			\item \texttt{flip} defines whether this image should be flipped horizontally.
+		\end{itemize}
+		The function \texttt{compareTo(RenderItem)} determines which of two RenderItems should be drawn first. The function \texttt{renderTo(Canvas)} renders this RenderItem to the canvas, applying all transformations specified.
 
-        \paragraph{Texture} This class handles the loading of textures, to prevent a \texttt{Bitmap} to be loaded every time it needs to be drawn. It has a \texttt{HashMap} that stores all textures using a \texttt{String} as a key. The key corresponds to the path of the texture within the assets/sprites folder. \texttt{getTexture} is a factory method that loads a \texttt{Bitmap} to the \texttt{HashMap} if necessary and returns the corresponding ]texttt{Texture}. \texttt{getBitmap} returns the Bitmap associated with a Texture object.
+		\paragraph{Texture} This class handles the loading of textures, to prevent a \texttt{Bitmap} to be loaded every time it needs to be drawn. It has a \texttt{HashMap} that stores all textures using a \texttt{String} as a key. The key corresponds to the path of the texture within the assets/sprites folder. \texttt{getTexture} is a factory method that loads a \texttt{Bitmap} to the \texttt{HashMap} if necessary and returns the corresponding \texttt{Texture}. \texttt{getBitmap} returns the Bitmap associated with a Texture object.
 
-        \paragraph{Animation} \texttt{Animation} is a decoration of the \texttt{Texture} class, in order to be able to handle animations. It's \texttt{getBitmap} method takes the current time into account to return a certain frame of the animation.
+		\paragraph{Animation} \texttt{Animation} is a decoration of the \texttt{Texture} class, in order to be able to handle animations. It's \texttt{getBitmap} method takes the current time into account to return a certain frame of the animation.
 
-        \paragraph{Generation of RenderItems} RenderItems are created in the classes of the objects they visualize (\tiny shared/entities/\dots; shared/tiles/\dots\normalsize). This was done to prevent shadow classes for each entity that only generates RenderItems. Unfortunately the objects are shared between the server and client, which means that a server can't be run without compiling all the client code with it. We didn't find it worthwhile to adjust this before the deadline, as we would run the server from within Android Studio for testing. 
+		\paragraph{Generation of RenderItems} RenderItems are created in the classes of the objects they visualize (\tiny shared/entities/\dots; shared/tiles/\dots\normalsize). This was done to prevent shadow classes for each entity that only generates RenderItems. Unfortunately, the entities and tiles are shared between the server and client, which means that a server can't be run without compiling all the client code with it. We didn't find it worthwhile to adjust this before the deadline, as we would run the server from within Android Studio for testing. 
 
-        
-        \subsubsection{Game logic}\label{sec: game logic}
-        Before we can explain how the game logic works, a few definitions have to be given:
+		
+		\subsubsection{Game logic}\label{sec: game logic}
+		Before we can explain how the game logic works, a few definitions have to be given:
 
-        \paragraph{Tile} \texttt{Tile}s are the building blocks of Arcemii's levels. A \texttt{Tile} can either be solid or non solid, meaning entities can either move through it or not. The most important \texttt{Tile}-types are:
-        \begin{description}
-            \item[Wall] A solid tile.
-            \item[Empty] A non-solid tile.
-            \item[Void] A tile outside of the bounds of the level.
-            \item[Start] A tile on which players are spawned at the start of a game.
-            \item[Finish] A tile denoting the final room of a level.
-        \end{description}
+		\paragraph{Tile} \texttt{Tile}s are the building blocks of Arcemii's levels. A \texttt{Tile} can either be solid or non solid, meaning entities can either move through it or not. The most important \texttt{Tile}-types are:
+		\begin{description}
+			\item[Wall] A solid tile.
+			\item[Empty] A non-solid tile.
+			\item[Void] A tile outside of the bounds of the level.
+			\item[Start] A tile on which players are spawned at the start of a game.
+			\item[Finish] A tile denoting the final room of a level.
+		\end{description}
 
-        \paragraph{Entity} An \texttt{Entity} is a non-tile game-object with a specific position within a level. An \texttt{Entity}'s position is not limited to whole numbers (where the a \texttt{Tile}'s position is). Every \texttt{Entity} is identified by an unique UUID. The entities currently implemented are:
-        \begin{description}
-            \item[Player] Controlled by the actual players of the game.
-            \item[Skeleton] Enemy of player, shoot arrows and flees from the player.
-            \item[Slime] Enemy of player, attacks player by jumping toward them.
-            \item[Boss] Enemy of player, teleports and summons slime entities.
-            \item[Arrow] Flies in certain direction, can either hit player or non-player entities. Deals damage to entities it hits.
-        \end{description}
+		\paragraph{Entity} An \texttt{Entity} is a non-tile game-object with a specific position within a level. An \texttt{Entity}'s position is not limited to whole numbers (where a \texttt{Tile}'s position is). Every \texttt{Entity} is identified by an unique UUID. The entities currently implemented are:
+		\begin{description}
+			\item[Player] Controlled by the actual players of the game.
+			\item[Skeleton] Enemy of player, shoot arrows and flees from the player.
+			\item[Slime] Enemy of player, attacks the player by jumping toward them.
+			\item[Boss] Enemy of player, teleports and summons slime entities.
+			\item[Arrow] Flies in a certain direction, can either hit player or non-player entities. Deals damage to entities it hits.
+		\end{description}
 
-        \paragraph{Level}
-        A level contains a grid of tiles (instances of the \texttt{Tile} class). These tiles represent the world. Furthermore the level contains a list of entities (instances of the 
-        \texttt{Entity} class). A more detailed description can be found in \ref{sec: level design}.
+		\paragraph{Level}
+		A level contains a grid of tiles (instances of the \texttt{Tile} class). These tiles represent the world. Furthermore, the level contains a list of entities (instances of the 
+		\texttt{Entity} class). A more detailed description can be found in \ref{sec: level design}.
 
-        \paragraph{Ability}
-        Arcemii is based on the notion of abilities. Players can choose the abilities they want to use in the game at the beginning of a run. Every entity has abilities. An \texttt{Ability} can be executed with \texttt{execute}. When a \texttt{Ability} is executed, its action is performed on the level or the entity that performed the \texttt{Ability}. An \texttt{Ability} can be executed directly, or in some cases it can be invoked first. If an ability is invoked, certain parameters needed to execute the abilities are set. For example: if an entity wants to execute the \texttt{Move} ability, it needs to specify in which direction it wants to move, so the entity has to invoke the ability with a \texttt{direction} parameter. How invocation a execution works in practice is explained in more detail later. What follows is a list of some of the abilities present in Arcemii:
-        \begin{description}
-            \item[Bow] When \texttt{executed}: create a new arrow entity. \\
-            To \texttt{invoke}: The direction in which to shoot, as well as information about wether the it can hit the player or not.
-            \item[Heal] When \texttt{executed}: heal the entity that executed the ability \\
-            To \texttt{invoke}: The amount to heal is needed
-            \item[Melee] When \texttt{executed}: deals damage to entities in range of the entity that executed the ability.\\
-            To \texttt{invoke}: whether to damage players and the amount of damage is needed.
-            \item[Teleport] When \texttt{executed}: teleports the entity that uses it.\\
-            To \texttt{invoke}: The direction is which to teleport is needed.
-        \end{description}
+		\paragraph{Ability}
+		Arcemii is based on the notion of abilities. Players can choose the abilities they want to use in the game at the beginning of a run. Every entity has abilities. An \texttt{Ability} can be executed with \texttt{execute}. When a \texttt{Ability} is executed, its action is performed on the level or the entity that performed the \texttt{Ability}. A \texttt{Ability} can be executed directly, or in some cases, it can be invoked first. If an ability is invoked, certain parameters needed to execute the abilities are set. For example: if an entity wants to execute the \texttt{Move} ability, it needs to specify in which direction it wants to move, so the entity has to invoke the ability with a \texttt{direction} parameter. How invocation and execution work in practice is explained in more detail later. What follows is a list of some of the abilities present in Arcemii:
+		\begin{description}
+			\item[Bow] When \texttt{executed}: create a new arrow entity. \\
+			To \texttt{invoke}: The direction in which to shoot, as well as information about wether the it can hit the player or not.
+			\item[Heal] When \texttt{executed}: heal the entity that executed the ability \\
+			To \texttt{invoke}: The amount to heal is needed
+			\item[Melee] When \texttt{executed}: deals damage to entities in range of the entity that executed the ability.\\
+			To \texttt{invoke}: whether to damage players and the amount of damage is needed.
+			\item[Teleport] When \texttt{executed}: teleports the entity that uses it.\\
+			To \texttt{invoke}: The direction is which to teleport is needed.
+		\end{description}
 		Additionally, \texttt{Move} and \texttt{Spawn}, etc, are also abilities, albeit not explicitly for the user. Everything a player can do, is seen as an ability, and every \texttt{Ability} could theoretically be executed by every \texttt{Entity}. 
 		
-        \paragraph{Game logic explanation}
-        Because Arcemii is a multiplayer game, it is split into two main sections: the server and the client. In relation to the actual game, the client acts only as the view, and a little bit as the controller part. The actual game logic happens on the server side. The current state of the game is saved as a property of \texttt{Party}, because each party has their own game-state. This game-state is saved in the shared object \texttt{Level}. The level class contains the current world-state of the game. The server-gameloop updates all parties every \texttt{TICKSPEED} amount of time. When a party is in-game, and \texttt{update} is called the following happens:
+		\paragraph{Game logic explanation}
+		Because Arcemii is a multiplayer game, it is split into two main sections: the server and the client. Concerning the actual game, the client only acts as the view, and a little bit as the controller part. The actual game logic happens on the server side. The current state of the game is saved as a property of \texttt{Party} because each party controls its game-state. This game-state is saved in the shared object \texttt{Level}. The level class contains the current world-state of the game. The game loop on the server updates all parties every \texttt{TICKSPEED} amount of time. When a party is in-game, and \texttt{update} is called the following happens:
 
-        \begin{enumerate}
-            \item \textbf{Invoke} The \texttt{invokeAll} method of all entities, except for players, is called. This method invokes all abilities that the entities want to execute (based on their A.I.). All executed abilities are saved in an \texttt{actions} list. The actions players want to take are added to their respective \texttt{actions} when they submit new actions to the server.
-            \item \textbf{Execute} All entities now have a list of the actions they want to execute. The execute method of these actions (abilities) are called and the changes are recorded.
-            \item \textbf{Send updates} All changed entities are collected and sent to all party members.
-        \end{enumerate}
-    \subsubsection{Enemy AI}
-        \paragraph{Slime}
-        As previously mentioned, the slime moves to a player and then attacks it. For this it first checks which players it can see. The slime chooses it's target player as the visible player where the value of (slime.UUID xor player.UUID) is smallest. This is to ensure that slimes don't all target the same player. It then moves to it's target player and attacks it.
-        \paragraph{Skeleton}
-        The skeleton chooses it's target player in the same way as the Slime. It also checks whether there are any player within 3 tiles, and computes the average position of any such players. If players are too close it moves in the opposite direction of this average position. Otherwise it starts shooting at it's target player. For this it sets the shootingStart to the current time, and after 1.6-1.8 seconds it invokes the shoot ability; in sync with the animation.
-        \paragraph{Boss}
-        The boss chooses a target player in the same way the Slime and Skeleton did. If it can see it's target player and it's last action was 1 s ago it does one of three things: teleport, summon an explosion (no visualisation) or spawn a slime. The teleport and spawn of slime occur in a random direction; The explosion is directed at the target player.
-    \pagebreak 
+		\begin{enumerate}
+			\item \textbf{Invoke} The \texttt{invokeAll} method of all entities, except for players, is called. This method invokes all abilities that the entities want to execute (based on their A.I.). All executed abilities are saved in a \texttt{actions} list. The actions players want to take are added to their respective \texttt{actions} when they submit new actions to the server.
+			\item \textbf{Execute} All entities now have a list of the actions they want to execute. The execute method of these actions (abilities) is called and the changes are recorded.
+			\item \textbf{Send updates} All changed entities are collected and sent to all party members.
+		\end{enumerate}
+	\subsubsection{Enemy AI}
+		\paragraph{Slime}
+		As previously mentioned, the slime moves to a player and then attacks it. For this, it first checks which players it can see. The slime chooses its target player as the visible player where the value of (slime.UUID xor player.UUID) is the smallest. This is to ensure that slimes don't all target the same player. It then moves to its target player and attacks it.
+		\paragraph{Skeleton}
+		The skeleton chooses its target player in the same way as the Slime. It also checks whether there are any players within 3 tiles, and computes the average position of these players. If players are too close it moves in the opposite direction of this average position. Otherwise, it starts shooting at its target player. For this, it sets the \texttt{shootingStart} to the current time, and after 1.6-1.8 seconds it invokes the \texttt{Shoot} ability; in sync with the animation.
+		\paragraph{Boss}
+		The boss chooses a target player in the same way the Slime and Skeleton did. If it can see it's target player and its last action was 1 second ago it does one of three things: teleport, summon an explosion (no visualization) or spawn a slime. The teleport and spawn of slime occur in a random direction; The explosion is directed at the target player.
+	\pagebreak 
 	\subsection{Design justification}
-    During the design process, we had to make a lot of decisions about the structure the project. Because we had to deal with a server-client relation, our project structure became considerably more complex. In a lot of cases, we chose `the obvious' solution. Because there have been a lot of decisions, we fill focus the less obvious or more outstanding ones.
-    
-    First, we will justify why we chose to take abilities as the basis of game. By making it so that every action an entity takes is part of an ability, we created a scalable and generalized system. All entities are equal, because they all use abilities to perform actions. The ability \texttt{Teleport} was originally only used by the \texttt{Boss} entity. We wanted a fourth ability for the player, and only had to add this ability to the possible ability pool of the player. If we had coded the abilities in a different way, we wouldn't be able to just add and remove abilities so easily.
-    
-    We made use of the \texttt{Message} class, instead of plain strings or the object directly, because we could add the \texttt{getType} method to the messages and we had a clear understanding of which classes could be sent between the server and the client. If a class extends the \texttt{Message} class, care needs to be taken, for example when adding new properties (by adding the \texttt{transient} keyword).
-    
-    We chose to use one single class for one entitiy. It would be possible to create three separate classes for the different ways an entity is used: on the server side, during transfer, and on the client side. We made a conscious decision not to do this. First of all, we would have to create a lot of classes (three times as many). Additionally, we would need to create transform functions to turn one of the classes into the other when we need the other kind. (We would, for example, need to transform a server-entity to a transfer-entity and then in the client to a client-entity). This decision had, however, a few side effects, which may seem weird at first. The texttt{Player} class that is used in the client still has two null-variables for the in and output streams. They are not needed in the client at all, but still exist in the client. Furthermore, the \texttt{Tile} classes contain the \texttt{getRenderItem} method. This method is only used on the client for drawing the tile. Strictly speaking, this has nothing to do with the server, but still the \texttt{Tile} classes in the server have these methods too. The advantages of using a single class outweigh the disadvantages by a lot. The gained elegance and the easy serialization, has value too. Lastly, it may seem that this method decreases the speed or efficiently of the program, but this is not the case. By  using the \texttt{transient} keyword, variables that only belong on the server or client are kept there, and are not sent through the internet.    
+	During the design process, we had to make a lot of decisions about the structure of the project. Because we had to deal with a server-client relation, our project structure became considerably more complex. In a lot of cases, we chose `the obvious' solution. Because there have been a lot of decisions, we will focus on the less obvious or more outstanding ones.
+	
+	First, we will justify why we chose to take abilities as the basis of the game. By making it so that every action an entity takes is part of an ability, we created a scalable and generalized system. All entities are equal because they all use abilities to perform actions. The ability \texttt{Teleport} was originally only used by the \texttt{Boss} entity. We wanted a fourth ability for the player and only had to add this ability to the possible ability pool of the player. If we had coded the abilities differently, we wouldn't be able to just add and remove abilities so easily.
+	
+	We made use of the \texttt{Message} class, instead of plain strings or the object directly, because we could add the \texttt{getType} method to the messages and we had a clear understanding of which classes could be sent between the server and the client. If a class extends the \texttt{Message} class, care needs to be taken, for example when adding new properties (by adding the \texttt{transient} keyword).
+	
+	We chose to use one single class for one entity. It would be possible to create three separate classes for the different ways an entity is used: on the server side, during transfer, and on the client side. We made a conscious decision not to do this. First of all, we would have to create a lot of classes (three times as many). Additionally, we would need to create transform functions to turn one of the classes into the other when we need the other kind. (We would, for example, need to transform a server-entity to a transfer-entity and then in the client to a client-entity). This decision had, however, a few side effects, which may seem weird at first. The texttt{Player} class that is used in the client still has two null-variables for the in and output streams. They are not needed in the client at all but still exist in the client. Furthermore, the \texttt{Tile} and \texttt{Entity} classes contain the \texttt{getRenderItem} method. This method is only used on the client for drawing these objects. Strictly speaking, this has nothing to do with the server, but the \texttt{Tile} classes on the server have these methods too. The advantages of using a single class outweigh the disadvantages by a lot. The gained elegance and the easy serialization have value too. Lastly, it may seem that this method decreases the speed or efficiently of the program, but this is not the case. By using the \texttt{transient} keyword, variables that only belong on the server or client are kept there and are not sent through the internet.    
 
 \end{document}
+
