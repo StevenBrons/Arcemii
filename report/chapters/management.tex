@@ -5,7 +5,23 @@
 \section{Project management}
 \subsection*{Introduction}
 This section contains a log for the process of building our teams second app for the \textit{Research and Development} Course at Radboud University.
-Our process will be presented in a weekly description of the active tasks that week, project meetings, assignment of tasks, problems we encountered, etc.
+Our process will be presented in a weekly description of the active tasks that week, project meetings, assignment of tasks, problems we encountered, etc. Before that though, a list of global tasks, and the division of them between group members.
+
+\subsection*{Task assignment}
+Arcemii is a rather large project for the time available to us, so it was very important that people could work concurrently and that they not have to wait for others to finish. This actually proved rather difficult, as there were a lot of parts dependent on each other. Some examples: how would you implement player movement and ability casting, without it being displayed on your screen? How would you make a lobby activity for the party to choose their abilities, if there is no client-server connection?
+
+We realized this early on, and also realized that our idea for multiplayer was rather risky. Also, a lot of the game would depend on the multiplayer aspect, and with that the connection aspect, so this \textit{had} to be done first, albeit maybe not in its final form.
+
+\begin{itemize}
+	\item Server-Client Connection: as stated above, this is very important and a lot of the app depended on it. Steven took it upon himself to make this part's `skeleton'. Bram and Steven became our server experts. Bram was assigned the subtask of making a singleplayer mode using the structure already established.
+	\item Sprites and animations: not a part that is very important code-wise, but is important for the app's presentation. Making Sokoban taught us that visual feedback is a good motivator: once you have something touchable, more concrete, it becomes more fun to work on it. Also, we decided on using animations for this app, and those take a lot of time to make, so it was a good idea to start early with making them. This task was assigned to Thijs.
+	\item Rendering: The sprites had to be displayed on screen. This was Jelmer's task. A good communication between him and Thijs was needed, as Thijs must deliver Sprites Jelmer was ready to implement, or vice versa.
+	\item Game logic: we had talked this through with the whole group a lot, we felt like everyone should be part of the way the game would play out. Steven provided the structure for the game-logic. Later on, everyone could add to it (this was doable, because of the way we structured abilities, entities, etc.) Jelmer was assigned the subtask of making \textit{A.I.} (patterns in which they behave) for the enemies. 
+	\item Level generation: this was a task seperate from the rest, but crucial to making the app a game. This task was assigned to Robert.
+	\item UI and app look and feel. This task could only really be done later on, as it required some structure and game to already be there. Thomas was assigned the subtask of making in-game UI. Thijs was responsible for making the app as a whole look decent. He was also assigned the subtask of adding music to the game.
+\end{itemize}
+
+Overall, it was doable to split the tasks above into smaller ones, especially bug-fixes. As the project became larger however, it was increaingly harder to be and `expert' in every part of the app, so that something in, say, the server side could only be added or changes by someone who was already familiar with it (without too much risk)
 
 \subsection*{Week 19}
 After the spring break, in which we did not yet start our new project as most would've been unable to work on it, we decided that a meeting on Monday morning would be wise. This meeting took place in Mercator I, lasted from 10:30 till 12:15, and was attended by Jelmer, Robert, Steven, Thijs and halfway through also by Thomas.
