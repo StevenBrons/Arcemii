@@ -71,9 +71,8 @@ public class Slime extends Entity {
 				}
 			}
 		}
-		if (targetPlayer != null){
-			invoke(this.move.invoke(Math.atan2(targetPlayer.getY()-yPos,targetPlayer.getX()-xPos)));
-		}
+		if (targetPlayer == null)return;
+		invoke(this.move.invoke(Math.atan2(targetPlayer.getY()-yPos,targetPlayer.getX()-xPos)));
 		if (this.melee.available(level,this)){
 			invoke(this.melee.invoke(true,5));
 		}

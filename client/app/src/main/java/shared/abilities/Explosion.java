@@ -1,7 +1,6 @@
 package shared.abilities;
 
 import shared.entities.Entity;
-import shared.entities.Slime;
 import shared.general.Level;
 
 public class Explosion implements Ability {
@@ -47,7 +46,7 @@ public class Explosion implements Ability {
 		double y = self.getY();
 		double dx = Math.cos(direction)*dist;
 		double dy = Math.sin(direction)*dist;
-		if (!level.freeLine(x,y,x+dx,y+dy))
+		if (level.freeLine(x,y,x+dx,y+dy))
 			for (int i = 0;i<level.getNumEntity();i++){
 				Entity entity = level.getEntityAt(i);
 				if (level.freeLine(x+dx,y+dy,entity.getX(),entity.getY()) &&

@@ -134,7 +134,13 @@ In this section we give a global and detailed description of the design of Arcem
             \item \textbf{Execute} All entities now have a list of the actions they want to execute. The execute method of these actions (abilities) are called and the changes are recorded.
             \item \textbf{Send updates} All changed entities are collected and sent to all party members.
         \end{enumerate}
-        
+    \subsubsection{Enemy AI}
+        \paragraph{Slime}
+        As previously mentioned, the slime moves to a player and then attacks it. For this it first checks which players it can see. The slime chooses it's target player as the visible player where the value of (slime.UUID xor player.UUID) is smallest. This is to ensure that slimes don't all target the same player. It then moves to it's target player and attacks it.
+        \paragraph{Skeleton}
+        The skeleton chooses it's target player in the same way as the Slime. It also checks whether there are any player within 3 tiles, and computes the average position of any such players. If players are too close it moves in the opposite direction of this average position. Otherwise it starts shooting at it's target player. For this it sets the shootingStart to the current time, and after 1.6-1.8 seconds it invokes the shoot ability; in sync with the animation.
+        \paragraph{Boss}
+        The boss chooses a target player in the same way the Slime and Skeleton did. If it can see it's target player and it's last action was 1 s ago it does one of three things: teleport, summon an explosion (no visualisation) or spawn a slime. The teleport and spawn of slime occur in a random direction; The explosion is directed at the target player.
     \pagebreak 
 	\subsection{Design justification}
     During the design process, we had to make a lot of decisions about the structure the project. Because we had to deal with a server-client relation, our project structure became considerably more complex. In a lot of cases, we chose `the obvious' solution. Because there have been a lot of decisions, we fill focus the less obvious or more outstanding ones.
