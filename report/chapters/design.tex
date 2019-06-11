@@ -50,7 +50,7 @@ In this section we give a global and detailed description of the design of Arcem
 
         A client can only be in one party at the time. When the client joins a new party, it gets removed from the previous party. The party also uses the ready status of all the clients to determine if the master of a party can start a new game. This is only possible when all the clients in the party are ready (except for the master, the master-client is set ready automatically when it sends the \texttt{StartGameMessage} to the server).
 
-		\subsubsection{Level design}
+		\subsubsection{Level design}\label{sec: level design}
 		Levels are generated each time a new game is started. Levels have to fullfill a number of requirements:
 		\begin {enumerate}
 			\item {The Level should consist of a number of different rooms, connected with roads}.
@@ -88,9 +88,9 @@ In this section we give a global and detailed description of the design of Arcem
 
         
         \subsubsection{Game logic}\label{sec: game logic}
-        Before we can explain how the game-logic works a few definitions have to be given:
+        Before we can explain how the game logic works, a few definitions have to be given:
 
-        \paragraph{Tile} A Tile is a building-block of the world. It can either be solid, or non solid, meaning entities can either move through it or not. A few of the tile-types in Arcemii are:
+        \paragraph{Tile} \texttt{Tile}s are the building blocks of Arcemii's levels. A \texttt{Tile} can either be solid or non solid, meaning entities can either move through it or not. The most important \texttt{Tile}-types are:
         \begin{description}
             \item[Wall] A solid tile.
             \item[Empty] A non-solid tile.
@@ -99,7 +99,7 @@ In this section we give a global and detailed description of the design of Arcem
             \item[Finish] A tile denoting the final room of a level.
         \end{description}
 
-        \paragraph{Entity} An entity is a non-tile game-object with a specific position within a level. An entity's position is not limited to whole numbers (where the a tile's position is). Every entity is identified by an unique UUID. A few of the entity-types in Arcemii are:
+        \paragraph{Entity} An \texttt{Entity} is a non-tile game-object with a specific position within a level. An \texttt{Entity}'s position is not limited to whole numbers (where the a \texttt{Tile}'s position is). Every \texttt{Entity} is identified by an unique UUID. The entities currently implemented are:
         \begin{description}
             \item[Player] Controlled by the actual players of the game.
             \item[Skeleton] Enemy of player, shoot arrows and flees from the player.
@@ -110,24 +110,27 @@ In this section we give a global and detailed description of the design of Arcem
 
         \paragraph{Level}
         A level contains a grid of tiles (instances of the \texttt{Tile} class). These tiles represent the world. Furthermore the level contains a list of entities (instances of the 
-        \texttt{Entity} class).
+        \texttt{Entity} class). A more detailed description can be found in \ref{sec: level design}.
 
         \paragraph{Ability}
-        The game Arcemii is based upon the notion of abilities. Player can choose the abilities they want to use in-game. Every entity has abilities. An ability can be \textbf{executed}. When a ability is executed, its action is performed on the level or the entity that performed the ability. A ability can be executed directly, or in some cases it can be \textbf{invoked} first. If an ability is invoked, certain parameters needed to execute the abilities are set. For example: If an entity wants to execute the \texttt{Move} ability, it needs to specify in which direction it wants to move, so the entity has to invoke the ability with a \texttt{direction} parameter. How invocation a execution works in practice is explained in more detail later. What follows is a list of some of the abilities present in Arcemii:
+        Arcemii is based on the notion of abilities. Players can choose the abilities they want to use in the game at the beginning of a run. Every entity has abilities. An \texttt{Ability} can be executed with \texttt{execute}. When a \texttt{Ability} is executed, its action is performed on the level or the entity that performed the \texttt{Ability}. An \texttt{Ability} can be executed directly, or in some cases it can be invoked first. If an ability is invoked, certain parameters needed to execute the abilities are set. For example: if an entity wants to execute the \texttt{Move} ability, it needs to specify in which direction it wants to move, so the entity has to invoke the ability with a \texttt{direction} parameter. How invocation a execution works in practice is explained in more detail later. What follows is a list of some of the abilities present in Arcemii:
         \begin{description}
-            \item[Bow] \texttt{When executed:} Create a new arrow entity. \\
-            \texttt{To invoke:} The direction in which to shoot and whether to hit player is needed.
-            \item[Heal] \texttt{When executed:} Heal the entity that executed the ability \\
-            \texttt{To invoke:} The amount to heal is needed
-            \item[Melee] \texttt{When executed:} Deals damage to entities in range of the entity that executed the ability.\\
-            \texttt{To invoke:} Whether to damage players and the amount of damage is needed.
+            \item[Bow] When \texttt{executed}: create a new arrow entity. \\
+            To \texttt{invoke}: The direction in which to shoot, as well as information about wether the it can hit the player or not.
+            \item[Heal] When \texttt{executed}: heal the entity that executed the ability \\
+            To \texttt{invoke}: The amount to heal is needed
+            \item[Melee] When \texttt{executed}: deals damage to entities in range of the entity that executed the ability.\\
+            To \texttt{invoke}: whether to damage players and the amount of damage is needed.
+            \item[Teleport] When \texttt{executed}: teleports the entity that uses it.\\
+            To \texttt{invoke}: The direction is which to teleport is needed.
         \end{description}
-
+		Additionally, \texttt{Move} and \texttt{Spawn}, etc, are also abilities, albeit not explicitly for the user. Everything a player can do, is seen as an ability, and every \texttt{Ability} could theoretically be executed by every \texttt{Entity}. 
+		
         \paragraph{Game logic explanation}
-        Because Arcemii is a multiplayer game, it is split into the two main sections: the server and the client. In relation to the actual game, the client acts only as the view, and a little bit as the controller part. The actual game-logic happens on the server side. The current state of the game is saved as a property of \texttt{Party}, because each party has their own game-state. This game-state is saved in the shared object \texttt{Level}. The level class contains the current world-state of the game. The server-gameloop updates all parties every \texttt{TICKSPEED} amount of time. When a party is in-game, and \texttt{update} is called the following happens:
+        Because Arcemii is a multiplayer game, it is split into two main sections: the server and the client. In relation to the actual game, the client acts only as the view, and a little bit as the controller part. The actual game logic happens on the server side. The current state of the game is saved as a property of \texttt{Party}, because each party has their own game-state. This game-state is saved in the shared object \texttt{Level}. The level class contains the current world-state of the game. The server-gameloop updates all parties every \texttt{TICKSPEED} amount of time. When a party is in-game, and \texttt{update} is called the following happens:
 
         \begin{enumerate}
-            \item \textbf{Invoke} The \texttt{invokeAll} method of all entities except for players is called. This method invokes all abilities that the entities want to execute (based upon their A.I.). All executed abilities are saved in an \texttt{actions} list. The actions players want to take are added to their respective \texttt{actions} when they submit new actions to the server.
+            \item \textbf{Invoke} The \texttt{invokeAll} method of all entities, except for players, is called. This method invokes all abilities that the entities want to execute (based on their A.I.). All executed abilities are saved in an \texttt{actions} list. The actions players want to take are added to their respective \texttt{actions} when they submit new actions to the server.
             \item \textbf{Execute} All entities now have a list of the actions they want to execute. The execute method of these actions (abilities) are called and the changes are recorded.
             \item \textbf{Send updates} All changed entities are collected and sent to all party members.
         \end{enumerate}
