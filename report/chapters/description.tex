@@ -2,9 +2,25 @@
 
 \begin{document}
 \pagebreak
+
 \section{Description}
+In this section we will give a description of our overall system as well as a justification for our system and diagrams to support the description of the overall system.
 
     \subsection{Focus on properties}
+	Our system contains a lot of properties, in order to make all of these properties clear we use an enumeration.
+	\begin{enumerate}
+		\item The user can see the connection status to the server on the top right of the home-screen. The user can also create a party from here and go the the settings and join a party screen.
+		\item If the user's phone is disconnected to the server, then the player cannot use the create and join party buttons.
+		\item Our application has a few settings: the user can change and save his/her name, this name will be shown in the lobby, the user can select offline/online mode using a button and the user can (un)mute the music using a button.
+		\item The user can join a party by filling in the game pin of that party and clicking on enter.
+		\item The user can select abilities in the lobby. The user can select three abilities which will be displayed in the game in the order they are chosen. The user can also see the master of the party, all the other party members, the ready status of the other party members and the corresponding game pin.
+		\item If the user is the master of their party he/she can start the game by pressing the button. If the user is not the master of their party he/she can get (un)ready by pressing the button.
+		\item The user can see the health of their character in the top right corner when in-game. This value changes in real-time when the character takes damage or is healed.
+		\item While in-game the user can walk around using the joystick and activate abilities, when they are not on a cooldown (they will appear opaque when on cooldown), using the corresponding buttons on the bottom right. 
+		\item The abilities have various effects, but in our current implementation the user can teleport 4 tiles in the direction the character is facing, the user can damage other entities using arrows and a melee attack and the user can heal itself with ten health.
+		\item The enemies fight back using their well developed AI.
+		\item When the boss is defeated the user returns to the lobby.
+    \end{enumerate}
 
     \subsection{Product justification}
 
