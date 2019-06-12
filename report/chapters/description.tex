@@ -59,6 +59,13 @@ Most roguelikes are also tile-based and have a turn-based gameflow, this is also
 	\subsection{Specifications}
 	In section \ref{sec: properties}, we presented a list of properties of our application. As we'll go pretty in-depth in the next section, we decided not do that too here, as we'd only be explaining ourselves twice. 
 	
-	We do want to discuss some of the structures used in our code. For Reference, see sppendix \ref{fig: uml}. We decided not to expand every square present there, showing their methods and such, because the figure would become much too large and not easily readable that way.
+	We do want to discuss some of the structures used in our code. For Reference, see appendix \ref{fig: uml}. We decided not to expand every square present there, showing their methods and such, because the figure would become much too large and not easily readable that way.
+	
+	\begin{description}
+		\item[Ability] \texttt{Ability} is an interface, that is implemented by all other abilities. An interface is an obvious choice here, as all abilities need to have some function implemented, but not all these functions share the exact same code. Some examples include \texttt{getName()}, \texttt{getDescription()} and \texttt{getId()}.
+		\item[Entity] \texttt{Entity} is an abstract class. All entities, players and enemies alike, extends this class. We've chosen to use an abstract class, as there is common code that all entities share, so this did not need to be written for every entity seperately.
+		\item[Tile] The same goes for \texttt{Tile}. This is also an abstract class, for the same reasons \texttt{Entity} is.
+		\item[Message] \texttt{Message} is a class that is neither an interface nor an abstract class, but is extened by other classes a lot (namely, all classes with `Message' in their name). Because Message implements the \texttt{Serializable} interface, these messages can be used to transfer information between server and client side.
+	\end{description}
 
 \end{document}
