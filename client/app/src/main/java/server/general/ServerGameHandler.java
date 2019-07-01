@@ -27,26 +27,23 @@ public class ServerGameHandler {
 	public ServerGameHandler() {
 		running = true;
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (isRunning()) {
-					long start = System.currentTimeMillis();
-					synchronized (parties){
-						for (Party p : parties) {
-							p.update();
-						}
+		new Thread(() -> {
+			while (isRunning()) {
+				long start = System.currentTimeMillis();
+				synchronized (parties){
+					for (Party p : parties) {
+						p.update();
 					}
+				}
 
-					long timeTook = System.currentTimeMillis() - start;
-					try {
-						if (timeTook > TICKSPEED) {
-							timeTook = TICKSPEED;
-						}
-						Thread.sleep(TICKSPEED - timeTook);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+				long timeTook = System.currentTimeMillis() - start;
+				try {
+					if (timeTook > TICKSPEED) {
+						timeTook = TICKSPEED;
 					}
+					Thread.sleep(TICKSPEED - timeTook);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}).start();
@@ -67,19 +64,16 @@ public class ServerGameHandler {
 		createParty(player);
 		player.sendMessage(new PlayerInfoMessage(player));
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (isRunning() && player.isUnique()) {
-					try {
-						Message m = (Message) player.getInputStream().readObject();
-						handlePlayerInput(m, player);
-					} catch (Exception e) {
-					}
+		new Thread(() -> {
+			while (isRunning() && player.isUnique()) {
+				try {
+					Message m = (Message) player.getInputStream().readObject();
+					handlePlayerInput(m, player);
+				} catch (Exception e) {
 				}
-				leaveParty(player);
-				Console.log(ConsoleTag.CONNECTION, "has left.", player);
 			}
+			leaveParty(player);
+			Console.log(ConsoleTag.CONNECTION, "has left.", player);
 		}).start();
 	}
 

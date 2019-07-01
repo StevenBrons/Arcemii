@@ -62,34 +62,31 @@ public class ClientGameHandler {
 	 * @author Bram Pulles
 	 * */
 	public void gameLoop(){
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				int TICKSPEED = ServerGameHandler.TICKSPEED;
-				while (true) {
-					long start = System.currentTimeMillis();
+		new Thread(() -> {
+			int TICKSPEED = ServerGameHandler.TICKSPEED;
+			while (true) {
+				long start = System.currentTimeMillis();
 
-					if (gameActivity != null && level != null) {
-						gameActivity.draw(level);
-						synchronized (player){
-							player.invokeMove();
-							if (player.getActions().size() > 0) {
-								ActionMessage msg = new ActionMessage(player.getActions());
-								sendMessage(msg);
-							}
-							player.clearActions();
+				if (gameActivity != null && level != null) {
+					gameActivity.draw(level);
+					synchronized (player){
+						player.invokeMove();
+						if (player.getActions().size() > 0) {
+							ActionMessage msg = new ActionMessage(player.getActions());
+							sendMessage(msg);
 						}
+						player.clearActions();
 					}
+				}
 
-					long timeTook = System.currentTimeMillis() - start;
-					try {
-						if (timeTook > TICKSPEED) {
-							timeTook = TICKSPEED;
-						}
-						Thread.sleep(TICKSPEED - timeTook);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+				long timeTook = System.currentTimeMillis() - start;
+				try {
+					if (timeTook > TICKSPEED) {
+						timeTook = TICKSPEED;
 					}
+					Thread.sleep(TICKSPEED - timeTook);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}).start();
@@ -120,27 +117,24 @@ public class ClientGameHandler {
 	 * @author Steven Bronsveld
 	 */
 	public void listenForMessages() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// Wait until the connection is established.
-				while(connection.isStarting()){
-				}
-
-				while (connection.isConnected()) {
-					try {
-						Message m = (Message) connection.getInputStream().readObject();
-						handleInput(m);
-					} catch (Exception e) {
-						if ((e.getMessage() != null && e.getMessage().equals("Socket closed")) || e instanceof StreamCorruptedException) {
-							Log.d("CONNECTION", "Connection to server was lost.");
-							break;
-						}
-						e.printStackTrace();
-					}
-				}
-				Log.d(Connection.TAG, "Stopped listening for messages.");
+		new Thread(() -> {
+			// Wait until the connection is established.
+			while(connection.isStarting()){
 			}
+
+			while (connection.isConnected()) {
+				try {
+					Message m = (Message) connection.getInputStream().readObject();
+					handleInput(m);
+				} catch (Exception e) {
+					if ((e.getMessage() != null && e.getMessage().equals("Socket closed")) || e instanceof StreamCorruptedException) {
+						Log.d("CONNECTION", "Connection to server was lost.");
+						break;
+					}
+					e.printStackTrace();
+				}
+			}
+			Log.d(Connection.TAG, "Stopped listening for messages.");
 		}).start();
 	}
 
@@ -154,11 +148,9 @@ public class ClientGameHandler {
 		SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.sharedpref_servermodeinfo), MODE_PRIVATE);
 
 		// Set up a listener for connection information.
-		listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-				Log.d("CONNECTION", "Changing connection to: " + (isSingleplayer() ? "singleplayer" : "multiplayer"));
-				newConnection();
-			}
+		listener = (prefs1, key) -> {
+			Log.d("CONNECTION", "Changing connection to: " + (isSingleplayer() ? "singleplayer" : "multiplayer"));
+			newConnection();
 		};
 
 		prefs.registerOnSharedPreferenceChangeListener(listener);
